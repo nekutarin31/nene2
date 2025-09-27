@@ -364,6 +364,32 @@ body.show-result .result-root {
   animation: resultFade .35s ease;
 }
 @keyframes resultFade { from{opacity:0} to{opacity:1} }
+
+/* ナビが fixed で重なる場合の代替 */
+@media (max-width: 640px) {
+  .nav { position: sticky; top: 0; z-index: 1000; background: #fff; }
+}
+
+/* ==== モバイル時に固定ナビの下へ余白を作る ==== */
+@media (max-width: 640px) {
+  /* 固定ナビの高さ（あなたのナビの高さに合わせて調整） */
+  :root { --nav-h: 88px; }  /* 80〜100pxの範囲で微調整してOK */
+
+  /* ページのメイン領域（あなたの外側ラッパに合わせて選んでください）*/
+  /* 例: .main-root や .result-root、.container の最上位など */
+  .main-root,
+  .result-root,
+  body > .container {
+    padding-top: var(--nav-h);
+  }
+
+  /* 見出しにアンカーで飛んだ時もナビに隠れないようにする */
+  h1, h2, h3, [id^="sec-"] {
+    scroll-margin-top: calc(var(--nav-h) + 8px);
+  }
+}
+
+
 </style>
 
 
