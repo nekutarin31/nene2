@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ワンオラクル 結果</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+ /*------------------------
+    カスタムプロパティ
+  ------------------------*/
+  :root {
+    --header-height-mobile: 70px;
+    --header-height-desktop: 80px;
+    --icon-size-mobile: 100px;
+    --icon-size-desktop: 100px;
+    --nav-gap-mobile: 8px;
+    --nav-gap-desktop: 16px;
+    --btn-radius: 12px;
+  }
+
+  /*------------------------
+    リセット & グローバル
+  ------------------------*/
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height-mobile);
+  }
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: var(--header-height-desktop);
+    }
+  }
+  body {
+    background-color: #fcebff;   /* クリーム色 */
+    font-family: sans-serif;
+    text-align: center;
+    line-height: 1.6;
+    margin: 0;
+
+  }
+
+  /*------------------------
+    中央コンテナ（白帯）
+  ------------------------*/
+.container {
+  background-color: #FFFFFF;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+@media (max-width: 767px) {
+  .container {
+    width: 100%;
+  }
+}
+  /*------------------------
+    固定ヘッダー
+  ------------------------*/
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height-mobile);
+    background-color: #f2f2f2;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    header {
+      height: var(--header-height-desktop);
+    }
+  }
+ /* ナビを.container と同じ幅に */
+header nav {
+  /* もともとの高さ・内部レイアウトはそのまま */
+  width: 90%;            /* .container と同じ */
+  max-width: 800px;      /* .container の max-width と同じ */
+  margin: 0 auto;        /* 中央寄せ */
+  padding: 0;            /* 既存の左右 padding は不要になるのでリセット */
+}
+
+  @media (min-width: 768px) {
+    header nav {
+      padding: 0 var(--nav-gap-desktop);
+    }
+  }
+
+  header nav ul li a span {
+  color: #441c26 !important;
+}
+/* ───────────────────────────────────────────────
+   ヘッダーナビ：アイコンを大きく＆幅を均等に配置
+──────────────────────────────────────────────── */
+
+/* ① li を flex:1 で均等幅に */
+header nav ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+header nav ul li {
+  flex: 1;                /* 各アイテムを等幅に */
+  display: flex;
+  justify-content: center;
+}
+
+/* ② a を大きく・正方形に */
+header nav ul li a {
+  width: 64px;            /* モバイル時のサイズ */
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+@media (min-width: 768px) {
+  header nav ul li a {
+    width: 80px;          /* デスクトップ時のサイズ */
+    height: 80px;
+  }
+}
+
+/* ③ アイコン画像を拡大 */
+header nav ul li a img {
+  width: 40px;            /* モバイル時 */
+  height: auto;
+}
+@media (min-width: 768px) {
+  header nav ul li a img {
+    width: 40px;          /* デスクトップ時 */
+  }
+}
+
+/* ④ ラベル（span）との間隔調整 */
+header nav ul li a span {
+  margin-top: 4px;
+  font-size: 0.75rem;
+}
+  /*------------------------
+    セクション共通
+  ------------------------*/
+  section {
+    padding: 2em 1em;
+  }
+ section#hero {
+  /* 上下左右の余白を増やしてゆったり見せる */
+  margin-top: 2em;       /* 上にマージン */
+  padding: 7em 1em 2em;  /* 上:4em 右左:1em 下:3em */
+}
+  section#hero,
+  section#hints,
+  section#cards {
+    text-align: center;
+  }
+
+  /*―――― 4. 中央コンテナ ――――*/
+  .container {
+    background: #fff;
+    width: 90%; max-width: 800px;
+    margin: 0 auto;
+    padding: 1em;
+    position: relative;
+    z-index: 5;
+  }
+  @media (max-width: 767px) {
+    .container {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 1em;
+    }
+  }
+
+       /* リセット＆本文中央寄せ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: #daa0e9; }
+    /* ボタン共通 */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0.5em;
+      background: #dbabf0;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* カード表示 */
+    #cardContainer { max-width: 600px; margin: 0 auto 2em; text-align: center; }
+    #cardTitle { font-size: 1.8em; margin-top: 0.5em; }
+    #cardSubTitle { font-size: 1.2em; color: #666; margin-bottom: 0.5em; }
+    #cardImg { display: block; margin: 0.5em auto; width: 80%; max-width: 300px; height: auto; }
+
+    /* 詳細セクション：常に1列、中央揃え */
+    .details { display: flex; flex-direction: column; gap: 1.5em; align-items: center; }
+    .detail-section { text-align: center; max-width: 600px; }
+    .detail-section h3 { font-size: 1.4em; margin-bottom: 0.5em; color: #347; }
+    .detail-section p { line-height: 1.6; }
+
+/* ―― A. 詳細セクションとボタン群のあいだを広げる ―― */
+.details {
+  margin-bottom: 2em;    /* 元は gap:1.5em だけだった箇所に、下部マージンを追加 */
+}
+
+/* ―― B. ナビゲーションボタン群 ―― */
+.nav-buttons {
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  gap: 0.5em;             /* ボタン間の間隔 */
+  align-items: center;
+  margin-top: 1.5em;      /* 詳細→ナビボタンのすき間 */
+}
+
+/* ―― C. シェアボタンとの距離 ―― */
+.share-buttons {
+  margin-top: 2em;        /* ナビボタン群→シェアのすき間 */
+  gap: 1em;               /* Flexbox の gap でボタン間 */
+  display: flex;
+  flex-direction: row;    /* 横並び */
+  justify-content: center;
+}
+
+/* ―― D. 余分なマージン／ハイフンをリセット ―― */
+.btn {
+  margin: 0;              /* すべての .btn の余白リセット */
+}
+
+/* ―― E. 必要ならアイコンサイズを調整 ―― */
+.share-btn img {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+/* ヒント三か条のスタイル */
+section#hints {
+  margin-top: 2em;               /* 上の要素（details）とのすき間 */
+}
+section#hints h2 {
+  font-size: 1.4em;
+  margin-bottom: 0.8em;
+  color: #347;
+}
+.hints-list {
+  list-style: decimal inside;
+  display: inline-block;
+  text-align: left;
+  margin-bottom: 1em;
+}
+.hints-list li {
+  margin-bottom: 0.5em;
+}
+/* ヒントと「やり方を見る」ボタンの間の余白 */
+section#hints {
+  margin-top: 2em;     /* details との隙間 */
+  margin-bottom: 3em;  /* ボタン群との隙間を広めに */
+}
+
+/* ヒントリスト自体の下余白 */
+.hints-list {
+  margin-bottom: 2em;  /* リンクボタンまでの余白 */
+}
+
+/* 「別のカード」「トップに戻る」ボタン群との間 */
+.nav-buttons {
+  margin-top: 2.5em;   /* ヒント ↓ ナビボタン の間隔 */
+  gap: 1em;            /* ボタン同士の間隔強調 */
+}
+
+/* Xシェアボタンとの間 */
+.share-buttons {
+  margin-top: 2.5em;   /* ナビボタン群 ↓ シェアボタン の間隔 */
+  gap: 1em;
+}
+
+/* もし .btn の上下マージンが小さすぎる場合は上書き */
+.nav-buttons .btn,
+.share-buttons .btn {
+  margin: 0.5em 0;     /* ボタン上下の余白を 0.5em に */
+}
+
+
+  /*―――― 5. タイトルをヘッダー下にずらす ――――*/
+  #cardTitle,
+  #cardSubTitle {
+    margin-top: 1em;
+  }
+
+.container {
+  background-color: #fff;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  /* ヘッダー分だけ上に引き上げ */
+  margin-top: calc(-1 * var(--header-height-mobile));
+  /* ヘッダー高さ + 1.5em の余白を内側に */
+  padding-top: calc(var(--header-height-mobile) + 1.5em);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 5;
+}
+@media (min-width: 768px) {
+  .container {
+    margin-top: calc(-1 * var(--header-height-desktop));
+    padding-top: calc(var(--header-height-desktop) + 6em);
+  }
+}
+  </style>
+<style>
+/* ===== Cloud Transition (共通) ===== */
+.cloud-overlay{
+  position:fixed; inset:0; overflow:hidden; z-index:9999;
+  pointer-events:none; background:transparent;
+}
+.cloud{
+  position:absolute; will-change:transform,opacity;
+  opacity:0; filter: drop-shadow(0 2px 0 rgba(0,0,0,.06));
+}
+/* ゆめ可愛い雲の塗り＆アウトライン */
+.cloud svg .fill{ fill:#fff7ff; }
+.cloud svg .stroke{ stroke:#caa8ff; stroke-width:2; fill:none; }
+
+/* 覆うとき（index → result 遷移前） */
+@keyframes cloudIn {
+  0%   { transform: translate(var(--tx),var(--ty)) scale(0.6) rotate(var(--rot)); opacity:0; }
+  60%  { opacity:1; }
+  100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:1; }
+}
+/* 晴れていくとき（result で） */
+@keyframes cloudOut {
+  0%   { transform: translate(0,0) scale(1); opacity:1; }
+  100% { transform: translate(var(--otx),var(--oty)) scale(1.1); opacity:0; }
+}
+
+/* 低速回線や簡易モーション配慮（必要なら） */
+@media (prefers-reduced-motion: reduce){
+  .cloud{ animation-duration:200ms !important; }
+}
+</style>
+
+<style>
+/* 晴れるまでは結果を見せない */
+body:not(.show-result) .result-root {
+  visibility: hidden;
+  opacity: 0;
+}
+body.show-result .result-root {
+  visibility: visible;
+  opacity: 1;
+  animation: resultFade .35s ease;
+}
+@keyframes resultFade { from{opacity:0} to{opacity:1} }
+</style>
+
+
+</head>
+<body>
+   <div class="result-root">
+   <div class="container">
+ <header>
+      <nav>
+        <ul>
+           <li><a href="index.html#hero"><img src="icons/00.png" alt="トップアイコン"><span>draw</span></a></li>
+          <li><a href="index.html#cards"><img src="icons/01.png" alt="一覧"><span>list</span></a></li>
+          <li><a href="index.html#explanation"><img src="icons/02.png" alt="やり方"><span>How to</span></a></li>
+          <li><a href="index.html#qa"><img src="icons/03.png" alt="Q&A"><span>Q&A</span></a></li>
+          <li><a href="index.html#about"><img src="icons/04.png" alt="About"><span>About</span></a></li>
+        </ul>
+      </nav>
+    </header>
+  <!-- カード表示 -->
+  <div id="cardContainer">
+    <h2 id="cardTitle"></h2>
+    <p id="cardSubTitle"></p>
+    <img id="cardImg" src="cards/0.png" alt="カードイメージサンプル">
+  </div>
+
+  <!-- 詳細を一気に表示 -->
+  <div class="details">
+    <div class="detail-section">
+      <h3>仕事</h3>
+      <p id="workDetail"></p>
+    </div>
+    <div class="detail-section">
+      <h3>対人</h3>
+      <p id="relationDetail"></p>
+    </div>
+    <div class="detail-section">
+      <h3>恋愛</h3>
+      <p id="loveDetail"></p>
+    </div>
+    <div class="detail-section">
+      <h3>その他</h3>
+      <p id="otherDetail"></p>
+    </div>
+  </div>
+
+
+ <!-- ★ ここから「ヒント三か条」セクションを追加 -->
+  <section id="hints">
+    <h2>占うときのヒント</h2>
+    <ul class="hints-list">
+       <li>同じ質問は繰り返さないで</li>
+      <li>引く前に深呼吸してリラックスして</li>
+      <li>引いたカードの行動をしてみよう</li>
+    </ul>
+    <p><a class="btn" href="index.html#explanation">ワンオラクルのやり方を見る</a></p>
+  </section>
+
+<!-- ―― ① まず「別のカードを引く」と「サイトトップに戻る」をまとめる ―― -->
+  <div class="nav-buttons">
+    <a id="reroll" class="btn" href="result.html">別のカードを引く</a>
+    <a id="homeBtn" class="btn" href="index.html">サイトトップに戻る</a>
+  </div>
+
+  <!-- ―― ② 余分なハイフンは消しました ―― -->
+
+ <a id="shareX" class="btn share-btn" target="_blank">
+  <img src="icons/logo-black.png" alt="Xアイコン">
+</a>
+
+  <footer style="padding:2em 0">
+    <p>&copy; 2025 ワンオラクル</p>
+  </footer>
+
+  <script>
+    const titles = [
+      "愚者","魔術師","女教皇","女帝","皇帝",
+      "法王","恋人","戦車","力","隠者",
+      "運命の輪","正義","吊された男","死神","節制",
+      "悪魔","塔","星","月","太陽",
+      "審判","世界"
+    ];
+    const messages = [
+      "自由に飛び立つ心を大切に。",
+      "新たな可能性があなたに舞い込む。",
+      "内なる声に耳を傾けよう。",
+      "愛と豊かさが広がる時。",
+      "力強いリーダーシップが開花する。",
+      "伝統と知恵を学び、ひらめきを受け取る。",
+      "心の絆を深めるチャンス。",
+      "挑戦を力に変えて前進しよう。",
+      "勇気と優しさを持って進む。",
+      "ひとりの時間で答えを見つける。",
+      "人生のサイクルが転換期を迎える。",
+      "公正とバランスを保つ。",
+      "視点を変えて新しい道を見つける。",
+      "古いものを手放し、新たな始まりへ。",
+      "調和と節度を持って歩む。",
+      "影に潜む欲望と向き合う。",
+      "突然の変化が成長を促す。",
+      "希望の光が道を照らす。",
+      "感情の揺れを受け入れる。",
+      "喜びと成功を享受する。",
+      "内なる呼び声に応える。",
+      "完成と達成の証が訪れる。"
+    ];
+    const details = [
+      { love: "無垢な好奇心が新しい恋を呼びます。恐れず一歩踏み出して。", work: "型にとらわれない発想で、自由なプロジェクトに挑戦を。", relation: "素直な心が人を惹きつけます。緊張せず自分らしく接しましょう。", other: "純粋さと可能性の象徴。新たな旅立ちのカードです。" },
+      { love: "言葉と行動で自分の魅力を伝えるとき。積極的にアプローチを。", work: "あなたのスキルが光る場面。新しい企画にリーダーシップを発揮。", relation: "コミュニケーション能力がカギ。言葉選びを丁寧に。", other: "創造力と行動力の象徴。何かを“作り出す”力を示します。" },
+      { love: "直感を信じて、心の声に従った選択を。", work: "冷静な判断が吉。情報収集と分析を徹底して。", relation: "沈黙の中にも深い交流があることを思い出して。", other: "知識と直感のバランスを表します。内面を磨く時期。" },
+      { love: "優しさと愛情に包まれる予感。大切な人との時間を楽しんで。", work: "クリエイティブな成果が得られます。プロジェクトに愛情を注いで。", relation: "温かな気配りで周囲との絆を深めましょう。", other: "豊穣・育みの象徴。実りある時期を示します。" },
+      { love: "安定した関係を築くチャンス。頼りがいのあるあなたを見せて。", work: "リーダーシップを発揮し、秩序とルールを整えましょう。", relation: "明確な意見表明が信頼を呼びます。", other: "権威と統率の象徴。組織や規律がテーマです。" },
+      { love: "伝統や価値観を共有することで心が通じます。", work: "マニュアルや規則を守り、堅実に進めると吉。", relation: "年長者や先輩との絆が深まります。", other: "教えと学びの象徴。知恵を分かち合う時期。" },
+      { love: "大切な絆が深まる予感。心からの会話を大切に。", work: "チームワークが成功の鍵。協力体制を築きましょう。", relation: "相手の気持ちを尊重することで信頼が生まれます。", other: "選択と調和の象徴。真剣な選択を示します。" },
+      { love: "積極的なアプローチが功を奏します。迷わず突き進んで。", work: "目標に向かって突進する時。集中力が成功を呼ぶ。", relation: "リーダーシップを持って関係を前進させましょう。", other: "意志と勝利の象徴。強い決意がカギ。" },
+      { love: "優しさと思いやりで、強い絆が生まれます。", work: "内なる勇気で困難を乗り越えられる時期。", relation: "寛容さが対人関係を円滑にします。", other: "内なる強さとコントロールの象徴。" },
+      { love: "一度立ち止まり、内省することで真実の愛に気づきます。", work: "慎重なリサーチが吉。ひとりで深く考える時間を。", relation: "静かな交流で心の通い合いが深まります。", other: "探求と内省の象徴。自分自身を見つめ直す時。" },
+      { love: "運命的な出会いが期待できます。チャンスを逃さないで。", work: "大きな転機が訪れます。直感を信じて乗り越えて。", relation: "人との縁が巡ってくる時期。感謝を忘れずに。", other: "変化と循環の象徴。流れに身を任せましょう。" },
+      { love: "公平で誠実な対応が信頼を築きます。", work: "バランス感覚が成功を呼ぶ。判断は慎重に。", relation: "正直なコミュニケーションが鍵。", other: "公正と秩序の象徴。正しい選択を促します。" },
+      { love: "一歩引いて状況を俯瞰することで新たな理解が生まれます。", work: "急がずタイミングを待つことが大切。", relation: "忍耐と受容が対人トラブルを解消します。", other: "自己犠牲と視点の転換を示唆。" },
+      { love: "古いパターンを手放し、新しい愛を迎え入れましょう。", work: "不要なプロセスを一掃し、刷新の時期です。", relation: "関係の終焉と再生を経験するかも。", other: "終焉と再生の象徴。変革期を示します。" },
+      { love: "バランスを保ち、相手との調和を心がけて。", work: "ペース配分を大切に。無理なく進めると吉。", relation: "中庸を意識した交流が円滑に。", other: "調和と節制の象徴。バランスが鍵。" },
+      { love: "情熱が過熱に変わりやすいので注意。", work: "執着や誘惑に注意し、冷静な判断を。", relation: "依存関係に気をつけて。", other: "束縛と欲望の象徴。警告の意味あり。" },
+      { love: "突然の変化が訪れるかも。恐れず向き合って。", work: "計画が崩れる可能性あり。柔軟に対応を。", relation: "価値観の崩壊と再構築を経験するかも。", other: "破壊と解放の象徴。激変を示唆。" },
+      { love: "希望に満ちた恋が芽生えます。夢を語り合って。", work: "インスピレーションが高まる時期。", relation: "癒しと信頼を提供する存在に。", other: "希望と癒しの象徴。明るい未来を示します。" },
+      { love: "感情が揺れ動きやすいので慎重に。", work: "不確実さがあるが、直感を信じて。", relation: "誤解や不安に注意し、言葉を選んで。", other: "不安と直感の象徴。影に注意。" },
+      { love: "喜びと祝福に満ちた時期。積極的に楽しんで。", work: "成功と認知が得られます。自信を持って。", relation: "ポジティブな交流が広がるでしょう。", other: "繁栄と喜びの象徴。光を浴びるカード。" },
+      { love: "過去の誤解が溶け、新たな理解が深まります。", work: "評価の時期。成果が認められるかも。", relation: "赦しと再生のチャンスを得るでしょう。", other: "再生と評価の象徴。決断を促します。" },
+      { love: "円満で満足感のある愛を享受できます。", work: "プロジェクトが完結し、達成感を味わう時。", relation: "すべての人との調和が得られるでしょう。", other: "完成と統合の象徴。大きな一区切りを示します。" }
+    ];
+
+    const params = new URLSearchParams(location.search);
+    let idx = parseInt(params.get("index"), 10);
+    if (isNaN(idx) || idx < 0 || idx > 21) idx = Math.floor(Math.random() * 22);
+
+    document.getElementById("cardTitle").textContent = `#${idx} ${titles[idx]}`;
+    document.getElementById("cardSubTitle").textContent = messages[idx];
+    document.getElementById("cardImg").src = `cards/${idx}.png`;
+
+    document.getElementById("workDetail").textContent = details[idx].work;
+    document.getElementById("relationDetail").textContent = details[idx].relation;
+    document.getElementById("loveDetail").textContent = details[idx].love;
+    document.getElementById("otherDetail").textContent = details[idx].other;
+
+
+
+
+const topPageUrl = 'https://nekutarin31.github.io/nene/index.html';
+const tweetText  = 'ワンオラクル タロットで１枚引いてみよう！';
+shareX.href = 
+  'https://twitter.com/intent/tweet?' +
+  `text=${encodeURIComponent(tweetText)}` +
+  `&url=${encodeURIComponent(topPageUrl)}`;
+  </script>
+    </div><!-- /.container -->
+      </div>
+
+<script>
+/* ===== Cloud Transition (result側) ===== */
+(function(){
+  window.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'cloud-overlay';
+    overlay.setAttribute('aria-hidden','true');
+    document.body.appendChild(overlay);
+
+    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth||0);
+    const vh = Math.max(document.documentElement.clientHeight, window.innerHeight||0);
+
+   // 🪄 雲の枚数と大きさをモバイル対応で調整
+let base = (vw*vh)/20000;
+if (vw < 600) base = (vw*vh)/15000; // 幅600px未満（スマホ）なら密度アップ
+const count = Math.round(base) + 30;
+
+for(let i=0;i<count;i++){
+  const cloud = document.createElement('div');
+  cloud.className = 'cloud';
+  const size = rand(18, 45); // 雲を少し大きめに
+
+      const x = rand(-6, 86);   // 画面だいぶ広めに敷き詰める
+      const y = rand(-8, 86);
+      const delay = i*10;       // 少しずつ晴れていく
+      const dur = rand(600, 1200);
+
+      cloud.style.left = x+'vw';
+      cloud.style.top  = y+'vh';
+      cloud.style.width = size+'vw';
+      // 晴れていく方向をランダムに
+      cloud.style.setProperty('--otx', (Math.random()>.5? '-18vw':'18vw'));
+      cloud.style.setProperty('--oty', (Math.random()>.5? '-14vh':'14vh'));
+      cloud.style.animation = `cloudOut ${dur}ms ease-in ${delay}ms forwards`;
+
+      cloud.innerHTML = cloudSVG();
+      overlay.appendChild(cloud);
+    }
+
+    // 全部晴れたらDOMから削除
+    const total = 1200 + count*10 + 150;
+    setTimeout(()=>{ overlay.remove(); }, total);
+
+    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+    function cloudSVG(){
+      return `
+      <svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img">
+        <defs>
+          <radialGradient id="g2" cx="50%" cy="45%" r="70%">
+            <stop offset="0%"  stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#fff7ff"/>
+          </radialGradient>
+        </defs>
+        <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g2)"/>
+        <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
+        <circle cx="70" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
+        <circle cx="130" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
+      </svg>`;
+    }
+  });
+})();
+</script>
+
+<script>
+/* ===== Cloud Transition (result側) ===== */
+(function(){
+  window.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'cloud-overlay';
+    overlay.setAttribute('aria-hidden','true');
+    document.body.appendChild(overlay);
+
+    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth||0);
+    const vh = Math.max(document.documentElement.clientHeight, window.innerHeight||0);
+
+    const count = Math.round((vw*vh)/30000) + 18;
+
+    for(let i=0;i<count;i++){
+      const cloud = document.createElement('div');
+      cloud.className = 'cloud';
+      const size = rand(12, 32);
+      const x = rand(-6, 86);   // 画面だいぶ広めに敷き詰める
+      const y = rand(-8, 86);
+      const delay = i*10;       // 少しずつ晴れていく
+      const dur = rand(600, 1200);
+
+      cloud.style.left = x+'vw';
+      cloud.style.top  = y+'vh';
+      cloud.style.width = size+'vw';
+      // 晴れていく方向をランダムに
+      cloud.style.setProperty('--otx', (Math.random()>.5? '-18vw':'18vw'));
+      cloud.style.setProperty('--oty', (Math.random()>.5? '-14vh':'14vh'));
+      cloud.style.animation = `cloudOut ${dur}ms ease-in ${delay}ms forwards`;
+
+      cloud.innerHTML = cloudSVG();
+      overlay.appendChild(cloud);
+    }
+
+// 全部晴れたらDOMから削除
+const total = 1200 + count*10 + 150;
+setTimeout(()=>{
+  overlay.remove();
+  // ← これを追加：晴れたタイミングで結果を見せる
+  document.body.classList.add('show-result');
+}, total);
+
+
+    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+    function cloudSVG(){
+      return `
+      <svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img">
+        <defs>
+          <radialGradient id="g2" cx="50%" cy="45%" r="70%">
+            <stop offset="0%"  stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#fff7ff"/>
+          </radialGradient>
+        </defs>
+        <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g2)"/>
+        <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
+        <circle cx="70" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
+        <circle cx="130" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
+      </svg>`;
+    }
+  });
+})();
+</script>
+
+</body>
+
+</html>
