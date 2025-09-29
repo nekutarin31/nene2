@@ -10,6 +10,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
 
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+
  <style>
   /*------------------------
     カスタムプロパティ
@@ -1057,57 +1062,7 @@ body.fade-out .main-root {
   filter: blur(0.2px);
 }
 
-/* セクション共通：やさしい“もや”背景（cards/hints などに） */
-/* 既存 .yume-soft-bg::before に追記（行末あたりでOK） */
-.yume-soft-bg::before{
-  animation: yumeDrift 26s ease-in-out infinite;
-  will-change: transform;
-}
-@keyframes yumeDrift{
-  0%   { transform: translateY(0) rotate(0deg); }
-  50%  { transform: translateY(-10px) rotate(.4deg); }
-  100% { transform: translateY(0) rotate(0deg); }
-}
 
-/* ============ きらめき（Sparkles） ============ */
-.yume-sparkles{ position:relative; }
-.yume-sparkles .sparkle{
-  position:absolute; pointer-events:none;
-  width:var(--s,10px); height:var(--s,10px);
-  left:0; top:0; translate: var(--x,0) var(--y,0);
-  opacity:.9;
-  background: radial-gradient(circle, #fff 0 45%, rgba(255,255,255,0) 70%);
-  filter: drop-shadow(0 2px 4px rgba(180,130,255,.25));
-  border-radius:50%;
-  animation: floatY var(--d,8s) linear infinite,
-             driftX calc(var(--d,8s) * 1.2) ease-in-out infinite;
-}
-/* 星型（8角形） */
-.yume-sparkles .sparkle.is-star{
-  clip-path: polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
-  background: radial-gradient(circle at 50% 45%, #fff 0 35%, var(--c,#fff0) 36% 70%, transparent 71%);
-}
-
-/* ふわっと上下 */
-@keyframes floatY{
-  0%{ transform:translateY(0) }
-  50%{ transform:translateY(-18px) }
-  100%{ transform:translateY(0) }
-}
-/* 左右にゆらゆら */
-@keyframes driftX{
-  0%{ transform:translateX(0) }
-  50%{ transform:translateX(10px) }
-  100%{ transform:translateX(0) }
-}
-
-/* ホバー時はほんの少しだけ賑やかに（重くしない範囲） */
-.yume-hero:hover .sparkle{ animation-duration: calc(var(--d,8s) * .8); }
-
-/* 動きを苦手とする環境配慮 */
-@media (prefers-reduced-motion: reduce){
-  .yume-sparkles .sparkle{ animation-duration: .01ms; animation-iteration-count:1; }
-}
 
 /* ============ セクション間のウェーブ ============ */
 .yume-wave{
@@ -1269,10 +1224,7 @@ section#cards::after{
   --yume-brown:#5C3B34;
 }
 
-/* 背景色（ピンク）に統一 */
-header{
-  background-color: var(--yume-pink) !important;
-}
+
 
 /* ナビ内の丸ボタンの見た目を統一（白地＋淡い枠＋軽い影） */
 header nav ul li a{
@@ -1332,11 +1284,282 @@ h1, h2, h3 { line-height: 1.4; letter-spacing: .01em; }
 small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
 
 
+/* === 虹色グラデのヘッダー（共通・最後に入れる）=== */
+header{
+  /* 虹色の材料（やさしい夢かわトーン） */
+  --r1:#ffd7f7; --r2:#ffe8d7; --r3:#fff3c9; --r4:#d7f7ff; --r5:#e8d7ff;
+  background: linear-gradient(90deg, var(--r1), var(--r2), var(--r3), var(--r4), var(--r5), var(--r1)) !important;
+  background-size: 400% 100%;
+  animation: headerRainbow 18s ease-in-out infinite;
+}
+
+@keyframes headerRainbow{
+  0%   { background-position:   0% 0; }
+  50%  { background-position: 100% 0; }
+  100% { background-position:   0% 0; }
+}
+
+/* === 初回だけのローディング === */
+#first-visit-loader {
+  position: fixed; inset: 0; z-index: 4000;
+  display: grid; place-items: center;
+  background: radial-gradient(1000px 800px at 50% 50%, rgba(255,255,255,.85) 0 40%, rgba(255,255,255,.5) 70%, transparent 100%);
+  transition: opacity .6s ease, visibility .6s ease;
+}
+
+/* ゆめかわ背景にじみ円 */
+#first-visit-loader .blob {
+  position: absolute; border-radius: 50%; filter: blur(38px);
+  opacity: .85; mix-blend-mode: screen;
+  animation: blobMove var(--d, 18s) ease-in-out infinite;
+}
+#first-visit-loader .b1 {
+  background: radial-gradient(circle at 30% 30%, var(--yume-pink,#FFD7F7) 0 55%, transparent 60%);
+  width: 55vmin; height: 55vmin; left: -10%; top: -6%; --d: 18s;
+}
+#first-visit-loader .b2 {
+  background: radial-gradient(circle at 65% 40%, var(--yume-lav,#E8D7FF) 0 55%, transparent 60%);
+  width: 60vmin; height: 60vmin; right: -8%; top: 10%; --d: 20s; animation-delay: -3s;
+}
+#first-visit-loader .b3 {
+  background: radial-gradient(circle at 40% 70%, var(--yume-mint,#D7F7FF) 0 55%, transparent 60%);
+  width: 68vmin; height: 68vmin; left: 10%; bottom: -12%; --d: 22s; animation-delay: -6s;
+}
+@keyframes blobMove {
+  0% { transform: translate(0,0) scale(1);}
+  40%{ transform: translate(5%,-3%) scale(1.05);}
+  70%{ transform: translate(-3%,4%) scale(1.04);}
+  100%{ transform: translate(0,0) scale(1);}
+}
+
+/* 泡ぽこアニメ */
+.loader-bubbles{
+  display:flex; gap:10px;
+}
+.loader-bubbles .b{
+  width:18px; height:18px; border-radius:50%;
+  background: var(--yume-lav,#883688);
+  opacity:.6; animation: bubble 1.5s infinite ease-in-out;
+}
+.loader-bubbles .b:nth-child(2){ animation-delay:.25s; }
+.loader-bubbles .b:nth-child(3){ animation-delay:.5s; }
+@keyframes bubble{
+  0%,80%,100%{ transform: translateY(0); opacity:.5; }
+  40%{ transform: translateY(-12px); opacity:1; }
+}
+
+.loader-text{
+  font-family:"Kaisei Opti","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  font-size:18px; color:var(--yume-brown,#5C3B34);
+  margin-top:12px;
+}
+
+/* 消えるアニメ */
+#first-visit-loader.hide{
+  opacity:0; visibility:hidden; pointer-events:none;
+}
+
+
+
+
+</style>
+<style>
+/* === ゆめかわローディング（背景が透けない・滲んだ玉が動く） === */
+#first-visit-loader {
+  position: fixed; inset: 0; z-index: 4000;
+  display: grid; place-items: center;
+  background: rgb(218, 146, 202); /* 背景を濃くして透け防止 */
+  overflow: hidden;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+
+/* 動く滲んだグラデーション玉 */
+#first-visit-loader .blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px); /* 滲みを強く */
+  opacity: 0.85;
+  mix-blend-mode: screen;
+  animation: blobFloat var(--d, 20s) ease-in-out infinite;
+}
+
+/* 玉それぞれの色とサイズ */
+#first-visit-loader .b1 {
+  background: radial-gradient(circle at 30% 30%, var(--yume-pink,#FFD7F7) 0 60%, transparent 70%);
+  width: 70vmin; height: 70vmin;
+  left: -10%; top: -10%;
+  --d: 24s;
+}
+#first-visit-loader .b2 {
+  background: radial-gradient(circle at 70% 40%, var(--yume-lav,#E8D7FF) 0 60%, transparent 70%);
+  width: 75vmin; height: 75vmin;
+  right: -15%; top: 5%;
+  --d: 26s;
+  animation-delay: -4s;
+}
+#first-visit-loader .b3 {
+  background: radial-gradient(circle at 40% 70%, var(--yume-mint,#D7F7FF) 0 60%, transparent 70%);
+  width: 80vmin; height: 80vmin;
+  left: 5%; bottom: -15%;
+  --d: 28s;
+  animation-delay: -8s;
+}
+
+/* ゆっくり動くアニメーション */
+@keyframes blobFloat {
+  0%   { transform: translate(0,0) scale(1); }
+  25%  { transform: translate(8%, -6%) scale(1.05); }
+  50%  { transform: translate(-6%, 8%) scale(1.1); }
+  75%  { transform: translate(5%, -4%) scale(1.03); }
+  100% { transform: translate(0,0) scale(1); }
+}
+
+/* ローディングの中身 */
+#first-visit-loader .loader-bubbles{
+  display:flex; gap:10px;
+}
+#first-visit-loader .bubbles .b,
+#first-visit-loader .loader-bubbles .b {
+  width:18px; height:18px; border-radius:50%;
+  background: var(--yume-lav,#a382ce);
+  opacity:.6; animation: bubble 1.5s infinite ease-in-out;
+}
+#first-visit-loader .bubbles .b:nth-child(2),
+#first-visit-loader .loader-bubbles .b:nth-child(2){ animation-delay:.25s; }
+#first-visit-loader .bubbles .b:nth-child(3),
+#first-visit-loader .loader-bubbles .b:nth-child(3){ animation-delay:.5s; }
+
+@keyframes bubble {
+  0%,80%,100%{ transform: translateY(0); opacity:.5; }
+  40%{ transform: translateY(-12px); opacity:1; }
+}
+
+#first-visit-loader .loader-text {
+  font-family:"Kaisei Opti","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  font-size:18px;
+  color:var(--yume-brown,#5C3B34);
+  margin-top:12px;
+}
+
+/* フェードアウト */
+#first-visit-loader.hide {
+  opacity:0; visibility:hidden; pointer-events:none;
+}
+
+
+/* === 1) 背景はピンクのまま、玉が沈まないようチューニング === */
+#first-visit-loader{
+  /* 既存のピンク背景はそのまま活かす */
+  background: rgb(218, 146, 202);
+  /* 下の内容がにじみと混ざらないよう、すこしだけ白のベールを足すとコントラストUP */
+  background-image:
+    radial-gradient(1200px 900px at 50% 40%, rgba(255,255,255,.12) 0 50%, transparent 70%);
+}
+
+/* === 2) にじみ玉（blobs）：中央の玉 b2 を“目立つ色”＆ブレンド変更で浮かせる === */
+#first-visit-loader .blob{
+  filter: blur(70px);             /* にじみUP（既存より強め） */
+  opacity: .88;
+  mix-blend-mode: screen;         /* デフォは screen のまま */
+}
+#first-visit-loader .b2{
+  /* ピンク背景に沈まない“相補系”のミントブルー寄りに強調 */
+  --mint-strong: color-mix(in oklab, var(--yume-mint, #D7F7FF) 85%, #9EE7FF);
+  background: radial-gradient(circle at 55% 45%, var(--mint-strong) 0 62%, transparent 72%);
+  /* ここがポイント：screen だとピンクに溶ける→ normal にして前面へ */
+  mix-blend-mode: normal !important;
+  opacity: .95;                   /* ほんのり濃く */
+  filter: blur(60px) saturate(1.25);
+  /* 位置とサイズも少しだけ主張 */
+  width: 82vmin; height: 82vmin;
+  right: -10%; top: -2%;
+}
+/* ふわっとした白いハロー（輪郭）を足して“存在感”を上げる */
+#first-visit-loader .b2::after{
+  content:""; position:absolute; inset:-8%;
+  border-radius:50%;
+  box-shadow:
+    0 0 0 12px rgba(255,255,255,.20),
+    0 0 80px 30px rgba(255,255,255,.18);
+}
+
+/* === 3) 小さな“ぽこぽこ玉”をもっと目立たせる（コントラスト＆輪郭＆発光） === */
+#first-visit-loader .loader-bubbles{ 
+  position: relative; z-index: 3;   /* 背景の blobs より前に */
+  gap: 12px;
+}
+#first-visit-loader .loader-bubbles .b{
+  width: 22px; height: 22px;        /* ちょい大きく */
+  border-radius: 50%;
+  /* 立体っぽい内側グラデ＋白いハローで埋もれない */
+  background:
+    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #FFE9FF 36% 72%, #C27BFF 73% 100%);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.90),       /* 白フチでピンク背景から分離 */
+    0 6px 16px rgba(150, 70, 255, .35),    /* 発光っぽい影 */
+    inset 0 -4px 10px rgba(130, 60, 230, .25);
+  mix-blend-mode: normal;                  /* ここも“溶けない”ように normal */
+  opacity: 1;                              /* くっきり */
+}
+/* 3色交互にして華やかさUP（ピンク背景で映える色） */
+#first-visit-loader .loader-bubbles .b:nth-child(1){
+  background:
+    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #E7F6FF 36% 72%, #5EB7FF 73% 100%);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.92), 0 6px 16px rgba(50,140,255,.35), inset 0 -4px 10px rgba(30,120,240,.22);
+}
+#first-visit-loader .loader-bubbles .b:nth-child(2){
+  background:
+    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #FFF5D6 36% 72%, #FFC957 73% 100%);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.92), 0 6px 16px rgba(255,170,70,.35), inset 0 -4px 10px rgba(220,140,40,.22);
+}
+#first-visit-loader .loader-bubbles .b:nth-child(3){
+  background:
+    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #F2E3FF 36% 72%, #B07CFF 73% 100%);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.92), 0 6px 16px rgba(176,124,255,.35), inset 0 -4px 10px rgba(150,90,240,.22);
+}
+
+/* アニメの上下幅も少し大きくして目に入りやすく */
+@keyframes bubble{
+  0%,80%,100%{ transform: translateY(0); opacity:.9; }
+  40%{ transform: translateY(-16px); opacity:1; }
+}
+
+/* === 4) ローダー中央のテキスト＆バブルを最前面に固定（背景に埋もれない） === */
+#first-visit-loader .loader-stage > div:last-child{
+  position: relative;
+  z-index: 4;   /* blobs より確実に前へ */
+}
+#first-visit-loader .loader-text{
+  color: var(--yume-brown, #5C3B34);
+  text-shadow: 0 2px 10px rgba(255,255,255,.6); /* ピンク面でも読みやすく */
+}
+
+
+
 </style>
 
 
 </head>
 <body>
+<!-- ★ 初回だけの可愛いローディング -->
+<div id="first-visit-loader" hidden>
+  <div class="loader-stage">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div style="display:grid;place-items:center;z-index:1;position:relative;">
+      <div class="loader-bubbles">
+        <div class="b"></div><div class="b"></div><div class="b"></div>
+      </div>
+      <p class="loader-text">はじめまして…読み込み中</p>
+    </div>
+  </div>
+</div>
+
+
     <div class="main-root">
    <div class="container">
 
@@ -1393,6 +1616,7 @@ small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
 </header>
   <!-- ヒーロー -->
  <section id="hero" class="yume-hero yume-sparkles" data-sparkles="26">
+   <div class="sparkles" aria-hidden="true"></div>
     <h1>ワンオラクル</h1>
 
     <b>聞きたいことを具体的に思い浮かべて</b><br>今日の過ごし方・恋愛・仕事・金運など…<br>今あなたが知りたいことは？<br>下に続く占い方のヒント・やり方も参考にしてね</p>
@@ -1470,7 +1694,6 @@ small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
             <li><a href="#h3_2">すぐに使える質問例</a></li>
           </ol>
         </li>
-      </li>
       </ol>
     </div>
       <div class="articles">
@@ -1814,6 +2037,40 @@ small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
     </svg>`;
   }
 })();
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const loader = document.getElementById('first-visit-loader');
+    if (!loader) return;
+    loader.hidden = false;
+
+    const html = document.documentElement;
+    const prevOverflow = html.style.overflow;
+    html.style.overflow = 'hidden';
+
+    const MIN_SHOW = 3000;
+    let minTimePassed = false;
+    let pageLoaded = false;
+
+    setTimeout(() => { minTimePassed = true; tryHide(); }, MIN_SHOW);
+    window.addEventListener('load', () => { pageLoaded = true; tryHide(); });
+
+    const FORCE_CLOSE = setTimeout(() => {
+      minTimePassed = true;
+      pageLoaded = true;
+      tryHide();
+    }, 10000);
+
+    function tryHide(){
+      if (minTimePassed && pageLoaded) {
+        clearTimeout(FORCE_CLOSE);
+        loader.classList.add('hide');
+        html.style.overflow = prevOverflow || '';
+        setTimeout(() => loader.remove(), 700);
+      }
+    }
+  });
 </script>
 
 

@@ -4,11 +4,15 @@
   <meta charset="utf-8">
   <title>ワンオラクル 結果</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
- <!-- ① フォント（先頭の <head> 内に追加）-->
-<!-- Kaisei Opti を読み込む -->
+ <!-- Kaisei Opti を読み込む -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
   <style>
  /*------------------------
@@ -534,10 +538,7 @@ header{
   --yume-brown:#5C3B34;
 }
 
-/* 背景色（ピンク）に統一 */
-header{
-  background-color: var(--yume-pink) !important;
-}
+
 
 /* ナビ内の丸ボタンの見た目を統一（白地＋淡い枠＋軽い影） */
 
@@ -593,29 +594,34 @@ header nav ul li a span{
 }
 
 
-/* === Kaisei Opti に全体統一（最終オーバーライド） === */
-:root{
-  /* 必要なら文字色などもここで統一できます（任意） */
-  --text-color: var(--yume-brown, #5C3B34);
+/* === 虹色グラデのヘッダー（共通・最後に入れる）=== */
+header{
+  /* 虹色の材料（やさしい夢かわトーン） */
+  --r1:#ffd7f7; --r2:#ffe8d7; --r3:#fff3c9; --r4:#d7f7ff; --r5:#e8d7ff;
+  background: linear-gradient(90deg, var(--r1), var(--r2), var(--r3), var(--r4), var(--r5), var(--r1)) !important;
+  background-size: 400% 100%;
+  animation: headerRainbow 18s ease-in-out infinite;
 }
 
-/* 本文・見出し・ナビなどサイト全体を Kaisei Opti に */
+@keyframes headerRainbow{
+  0%   { background-position:   0% 0; }
+  50%  { background-position: 100% 0; }
+  100% { background-position:   0% 0; }
+}
+
+/* 動きを苦手な人の設定を尊重（端末の“簡易アニメ”設定） */
+@media (prefers-reduced-motion: reduce){
+  header{ animation: none; background-position: 50% 0; }
+}
+
+
+/* ★ Kaisei Opti をページ全体で使う指定（result.html に追加） */
 html, body, header, nav, section, article,
 h1, h2, h3, h4, h5, h6,
-p, a, li, button, input, textarea, .btn, .toc-block, .for_more_detail {
+p, a, li, button, input, textarea, .btn {
   font-family: "Kaisei Opti", "Hiragino Mincho ProN", "Yu Mincho",
                "Noto Serif JP", serif !important;
-  color: var(--text-color);
 }
-
-/* 読みやすさの基本（和文セリフ向けの行高＆字間） */
-body { line-height: 1.8; letter-spacing: .02em; }
-
-/* 見出しは少しタイトに（お好みで調整可） */
-h1, h2, h3 { line-height: 1.4; letter-spacing: .01em; }
-
-/* ナビのラベルなど、小さめ文字のにじみ軽減 */
-small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
 
 
 </style>
@@ -623,6 +629,7 @@ small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
 
 </head>
 <body>
+  
   <header>
       <nav>
         <ul>
@@ -763,7 +770,7 @@ small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
 
 
 
-
+  const shareX = document.getElementById('shareX'); // 追加
 const topPageUrl = 'https://nekutarin31.github.io/nene2/';
 const tweetText  = 'ワンオラクル タロットで１枚引いてみよう！';
 shareX.href = 
@@ -849,5 +856,4 @@ shareX.href =
 </script>
 
 </body>
-
 </html>
