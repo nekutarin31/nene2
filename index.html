@@ -147,7 +147,7 @@ header nav ul li a img {
 
 /* ④ ラベル（span）との間隔調整 */
 header nav ul li a span {
-  margin-top: 4px;
+  margin-top: 0px;
   font-size: 0.75rem;
 }
   /*------------------------
@@ -952,7 +952,122 @@ section#intro .intro-cta .btn {
   font-size: 1rem;
 }
 
+/* ================================
+   🎀 ゆめかわ まるっこいデザイン
+   ================================ */
 
+/* 背景を淡いグラデーションに */
+body {
+  background: linear-gradient(180deg, #fff6ff 0%, #fef9ff 40%, #f7f3ff 100%);
+  font-family: "Zen Maru Gothic", "M PLUS Rounded 1c", sans-serif;
+  color: #55415e;
+}
+
+/* コンテナをふんわり丸く */
+.container {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  box-shadow: 0 6px 20px rgba(225, 195, 255, 0.3);
+  padding: 2em 1.5em;
+  backdrop-filter: blur(6px);
+}
+
+/* 見出しをゆめかわフォント風に */
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #b76cf5;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
+}
+
+/* ボタンをまるく可愛く */
+.btn {
+  background: linear-gradient(135deg, #e7a8ff, #f9c7ff);
+  border-radius: 9999px;
+  border: 2px solid #f2d9ff;
+  padding: 12px 28px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(180, 100, 255, 0.25);
+  transition: all 0.25s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(180, 100, 255, 0.4);
+}
+
+/* ナビアイコンをふわっと */
+header nav ul li a {
+  background: linear-gradient(145deg, #fff, #f7ecff);
+  border: 2px solid #ead3ff;
+  box-shadow: 0 4px 8px rgba(180, 130, 255, 0.15);
+  transition: all 0.3s ease;
+}
+header nav ul li a:hover {
+  transform: scale(1.05);
+  background: linear-gradient(145deg, #fdf6ff, #f0e1ff);
+}
+
+/* アイコンテキスト */
+header nav ul li a span {
+  color: #b483ff !important;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+}
+
+/* カードイメージの枠をふんわり */
+#cardImg {
+  border-radius: 20px;
+  border: 3px solid #f3dcff;
+  box-shadow: 0 8px 20px rgba(200, 170, 255, 0.25);
+  background: #fff;
+  padding: 6px;
+}
+
+/* 詳細カードセクション */
+.detail-section {
+  background: linear-gradient(180deg, #fff, #fef8ff);
+  border-radius: 20px;
+  padding: 1.2em;
+  box-shadow: 0 3px 10px rgba(200, 150, 255, 0.15);
+}
+
+/* フッター */
+footer {
+  color: #aa88cc;
+  font-size: 0.9em;
+  text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
+}
+
+/* 雲の色味もゆめかわ寄りに調整 */
+.cloud svg .fill { fill: #fffaff; }
+.cloud svg .stroke { stroke: #d6b7ff; stroke-width: 2; fill: none; }
+
+/* ===============================
+   🍫 深いブラウンの読みやすいテキスト
+   =============================== */
+
+/* 全体のテキストカラー */
+body {
+  color: #4a2f2b; /* あたたかみのあるダークブラウン */
+}
+
+/* 見出しは少し赤みを残して統一感を出す */
+h1, h2, h3 {
+  color: #7a3f3b; /* 少し華やかなブラウン寄り */
+}
+
+/* ナビや小さなテキストもコントラスト調整 */
+header nav ul li a span,
+footer {
+  color: #5c3b34 !important;
+}
+
+/* ボタン文字は白でコントラストを保つ */
+.btn {
+  color: #ffffff;
+}
 
 </style>
 
