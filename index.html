@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <title>ワンオラクル</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- ① フォント（先頭の <head> 内に追加）-->
+ <!-- Kaisei Opti を読み込む -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;600;700&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
 
  <style>
   /*------------------------
@@ -1305,6 +1305,31 @@ header nav{ width: 90%; max-width: 800px; margin: 0 auto; padding: 0; }
   transform:translate(-50%,-50%);
   pointer-events:none;
 }
+
+
+/* === Kaisei Opti に全体統一（最終オーバーライド） === */
+:root{
+  /* 必要なら文字色などもここで統一できます（任意） */
+  --text-color: var(--yume-brown, #5C3B34);
+}
+
+/* 本文・見出し・ナビなどサイト全体を Kaisei Opti に */
+html, body, header, nav, section, article,
+h1, h2, h3, h4, h5, h6,
+p, a, li, button, input, textarea, .btn, .toc-block, .for_more_detail {
+  font-family: "Kaisei Opti", "Hiragino Mincho ProN", "Yu Mincho",
+               "Noto Serif JP", serif !important;
+  color: var(--text-color);
+}
+
+/* 読みやすさの基本（和文セリフ向けの行高＆字間） */
+body { line-height: 1.8; letter-spacing: .02em; }
+
+/* 見出しは少しタイトに（お好みで調整可） */
+h1, h2, h3 { line-height: 1.4; letter-spacing: .01em; }
+
+/* ナビのラベルなど、小さめ文字のにじみ軽減 */
+small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
 
 
 </style>
