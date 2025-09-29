@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>ワンオラクル 結果</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- ① フォント（先頭の <head> 内に追加）-->
+ <!-- ① フォント（先頭の <head> 内に追加）-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;600;700&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
@@ -21,7 +21,18 @@
     --nav-gap-mobile: 8px;
     --nav-gap-desktop: 16px;
     --btn-radius: 12px;
-  }
+  --yume-white:#fff;
+  --yume-pink:#FFD7F7;
+  --yume-lav:#E8D7FF;
+  --yume-mint:#D7F7FF;
+  --yume-brown:#5C3B34;
+
+
+}
+
+
+
+  
 
   /*------------------------
     リセット & グローバル
@@ -40,14 +51,7 @@
       scroll-padding-top: var(--header-height-desktop);
     }
   }
-  body {
-    background-color: #fcebff;   /* クリーム色 */
-    font-family: sans-serif;
-    text-align: center;
-    line-height: 1.6;
-    margin: 0;
-
-  }
+  
 
   /*------------------------
     中央コンテナ（白帯）
@@ -99,9 +103,7 @@ header nav {
     }
   }
 
-  header nav ul li a span {
-  color: #441c26 !important;
-}
+
 /* ───────────────────────────────────────────────
    ヘッダーナビ：アイコンを大きく＆幅を均等に配置
 ──────────────────────────────────────────────── */
@@ -149,11 +151,6 @@ header nav ul li a img {
   }
 }
 
-/* ④ ラベル（span）との間隔調整 */
-header nav ul li a span {
-  margin-top: 0px;
-  font-size: 0.75rem;
-}
   /*------------------------
     セクション共通
   ------------------------*/
@@ -171,23 +168,6 @@ header nav ul li a span {
     text-align: center;
   }
 
-  /*―――― 4. 中央コンテナ ――――*/
-  .container {
-    background: #fff;
-    width: 90%; max-width: 1000px;
-    margin: 0 auto;
-    padding: 1em;
-    position: relative;
-    z-index: 5;
-  }
-  @media (max-width: 1000px) {
-    .container {
-      width: 100%;
-      max-width: none;
-      margin: 0;
-      padding: 1em;
-    }
-  }
 
        /* リセット＆本文中央寄せ */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -213,7 +193,6 @@ header nav ul li a span {
     /* 詳細セクション：常に1列、中央揃え */
     .details { display: flex; flex-direction: column; gap: 1.5em; align-items: center; }
     .detail-section { text-align: center; max-width: 600px; }
-    .detail-section h3 { font-size: 1.4em; margin-bottom: 0.5em; color: #347; }
     .detail-section p { line-height: 1.6; }
 
 /* ―― A. 詳細セクションとボタン群のあいだを広げる ―― */
@@ -377,78 +356,6 @@ body.show-result .result-root {
 }
 
 
-/* ================================
-   🎀 ゆめかわ まるっこいデザイン
-   ================================ */
-
-/* 背景を淡いグラデーションに */
-body {
-  background: linear-gradient(180deg, #fff6ff 0%, #fef9ff 40%, #f7f3ff 100%);
-  font-family: "Zen Maru Gothic", "M PLUS Rounded 1c", sans-serif;
-  color: #55415e;
-}
-
-/* コンテナをふんわり丸く */
-.container {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 24px;
-  box-shadow: 0 6px 20px rgba(225, 195, 255, 0.3);
-  padding: 2em 1.5em;
-  backdrop-filter: blur(6px);
-}
-
-/* 見出しをゆめかわフォント風に */
-h1, h2, h3 {
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #b76cf5;
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
-}
-
-/* ボタンをまるく可愛く */
-.btn {
-  background: linear-gradient(135deg, #e7a8ff, #f9c7ff);
-  border-radius: 9999px;
-  border: 2px solid #f2d9ff;
-  padding: 12px 28px;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  box-shadow: 0 4px 10px rgba(180, 100, 255, 0.25);
-  transition: all 0.25s ease;
-}
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(180, 100, 255, 0.4);
-}
-
-/* ナビアイコンをふわっと */
-header nav ul li a {
-  background: linear-gradient(145deg, #fff, #f7ecff);
-  border: 2px solid #ead3ff;
-  box-shadow: 0 4px 8px rgba(180, 130, 255, 0.15);
-  transition: all 0.3s ease;
-}
-header nav ul li a:hover {
-  transform: scale(1.05);
-  background: linear-gradient(145deg, #fdf6ff, #f0e1ff);
-}
-
-/* アイコンテキスト */
-header nav ul li a span {
-  color: #b483ff !important;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-}
-
-/* カードイメージの枠をふんわり */
-#cardImg {
-  border-radius: 20px;
-  border: 3px solid #f3dcff;
-  box-shadow: 0 8px 20px rgba(200, 170, 255, 0.25);
-  background: #fff;
-  padding: 6px;
-}
 
 /* 詳細カードセクション */
 .detail-section {
@@ -468,31 +375,6 @@ footer {
 /* 雲の色味もゆめかわ寄りに調整 */
 .cloud svg .fill { fill: #fffaff; }
 .cloud svg .stroke { stroke: #d6b7ff; stroke-width: 2; fill: none; }
-
-/* ===============================
-   🍫 深いブラウンの読みやすいテキスト
-   =============================== */
-
-/* 全体のテキストカラー */
-body {
-  color: #4a2f2b; /* あたたかみのあるダークブラウン */
-}
-
-/* 見出しは少し赤みを残して統一感を出す */
-h1, h2, h3 {
-  color: #7a3f3b; /* 少し華やかなブラウン寄り */
-}
-
-/* ナビや小さなテキストもコントラスト調整 */
-header nav ul li a span,
-footer {
-  color: #5c3b34 !important;
-}
-
-/* ボタン文字は白でコントラストを保つ */
-.btn {
-  color: #ffffff;
-}
 
 
 /* ==== 最終オーバーライド：タイトルが固定ナビに被らない ==== */
@@ -643,6 +525,71 @@ header{
 }
 .yume-wave path{ fill:#fff; } /* 下のセクションと自然につなぐ */
 </style>
+<style>
+
+/* === Header/Nav を index の見た目に統一（上書き用） === */
+:root{
+  --yume-pink:#FFD7F7;
+  --yume-brown:#5C3B34;
+}
+
+/* 背景色（ピンク）に統一 */
+header{
+  background-color: var(--yume-pink) !important;
+}
+
+/* ナビ内の丸ボタンの見た目を統一（白地＋淡い枠＋軽い影） */
+
+
+header nav ul li a:hover{
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(92,59,52,.18);
+}
+
+/* ラベル（span）の色をブラウンで統一 */
+header nav ul li a span{
+  color: var(--yume-brown) !important;
+}
+
+/* 幅合わせ（どちらのページでも同じレイアウト幅に） */
+header nav{ width: 90%; max-width: 800px; margin: 0 auto; padding: 0; }
+
+
+
+/* === index と同じフォント＆色に統一（result.html に追記） === */
+:root{
+  --yume-brown:#5C3B34; /* index 側の締め色に合わせる */
+}
+
+
+/* 見出し色をピンク(#b76cf5)からブラウンへ統一 */
+h1, h2, h3{
+  color: var(--yume-brown) !important;
+  text-shadow: none; /* index 側に合わせて装飾は控えめに */
+}
+
+/* ナビのラベル色を統一 */
+header nav ul li a span{
+  color: var(--yume-brown) !important;
+  font-weight: 600;
+}
+
+/* 詳細セクション見出しの局所色(#347)を統一 */
+.detail-section h3{
+  color: var(--yume-brown) !important;
+}
+
+
+/* 雲をちらすための “お部屋”（まんなかに固定） */
+.cloud-stage{
+  position:absolute;
+  width:1200px;
+  height:1000px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none; /* クリックをじゃましない */
+}
 
 
 </style>
@@ -801,130 +748,77 @@ shareX.href =
     </div><!-- /.container -->
       </div>
 
-<script>
-/* ===== Cloud Transition (result側) ===== */
-(function(){
-  window.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.createElement('div');
-    overlay.className = 'cloud-overlay';
-    overlay.setAttribute('aria-hidden','true');
-    document.body.appendChild(overlay);
-
-    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth||0);
-    const vh = Math.max(document.documentElement.clientHeight, window.innerHeight||0);
-
-   // 🪄 雲の枚数と大きさをモバイル対応で調整
-let base = (vw*vh)/20000;
-if (vw < 200) base = (vw*vh)/15000; // 幅600px未満（スマホ）なら密度アップ
-const count = Math.round(base) + 30;
-
-for(let i=0;i<count;i++){
-  const cloud = document.createElement('div');
-  cloud.className = 'cloud';
-  const size = rand(18, 45); // 雲を少し大きめに
-
-      const x = rand(-6, 86);   // 画面だいぶ広めに敷き詰める
-      const y = rand(-8, 86);
-      const delay = i*10;       // 少しずつ晴れていく
-      const dur = rand(600, 1200);
-
-      cloud.style.left = x+'vw';
-      cloud.style.top  = y+'vh';
-      cloud.style.width = size+'vw';
-      // 晴れていく方向をランダムに
-      cloud.style.setProperty('--otx', (Math.random()>.5? '-18vw':'18vw'));
-      cloud.style.setProperty('--oty', (Math.random()>.5? '-14vh':'14vh'));
-      cloud.style.animation = `cloudOut ${dur}ms ease-in ${delay}ms forwards`;
-
-      cloud.innerHTML = cloudSVG();
-      overlay.appendChild(cloud);
-    }
-
-    // 全部晴れたらDOMから削除
-    const total = 1200 + count*10 + 150;
-    setTimeout(()=>{ overlay.remove(); }, total);
-
-    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
-    function cloudSVG(){
-      return `
-      <svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img">
-        <defs>
-          <radialGradient id="g2" cx="50%" cy="45%" r="70%">
-            <stop offset="0%"  stop-color="#ffffff"/>
-            <stop offset="100%" stop-color="#fff7ff"/>
-          </radialGradient>
-        </defs>
-        <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g2)"/>
-        <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
-        <circle cx="70" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-        <circle cx="130" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-      </svg>`;
-    }
-  });
-})();
-</script>
 
 <script>
-/* ===== Cloud Transition (result側) ===== */
+/* ==== リザルト画面：30この雲を1200x1000にちらしてから晴れる ==== */
 (function(){
-  window.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.createElement('div');
-    overlay.className = 'cloud-overlay';
-    overlay.setAttribute('aria-hidden','true');
-    document.body.appendChild(overlay);
+  // 1) ぜんたいをおおう うすいシート（overlay）
+  const overlay = document.createElement('div');
+  overlay.className = 'cloud-overlay';
+  overlay.setAttribute('aria-hidden','true');
+  document.body.appendChild(overlay);
 
-    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth||0);
-    const vh = Math.max(document.documentElement.clientHeight, window.innerHeight||0);
+  // 2) 1200x1000 の “お部屋”（ここに雲をならべる）
+  const stage = document.createElement('div');
+  stage.className = 'cloud-stage';
+  overlay.appendChild(stage);
 
-    const count = Math.round((vw*vh)/30000) + 18;
+  // 3) きまり（数・ひろさ）
+  const STAGE_W = 1200;
+  const STAGE_H = 1000;
+  const COUNT   = 30;
 
-    for(let i=0;i<count;i++){
-      const cloud = document.createElement('div');
-      cloud.className = 'cloud';
-      const size = rand(12, 32);
-      const x = rand(-6, 86);   // 画面だいぶ広めに敷き詰める
-      const y = rand(-8, 86);
-      const delay = i*10;       // 少しずつ晴れていく
-      const dur = rand(600, 1200);
+  // 4) 雲をつくって お部屋に ちりばめる
+  for (let i = 0; i < COUNT; i++) {
+    const cloud = document.createElement('div');
+    cloud.className = 'cloud';
 
-      cloud.style.left = x+'vw';
-      cloud.style.top  = y+'vh';
-      cloud.style.width = size+'vw';
-      // 晴れていく方向をランダムに
-      cloud.style.setProperty('--otx', (Math.random()>.5? '-18vw':'18vw'));
-      cloud.style.setProperty('--oty', (Math.random()>.5? '-14vh':'14vh'));
-      cloud.style.animation = `cloudOut ${dur}ms ease-in ${delay}ms forwards`;
+    // ← ここがポイント！ px できめるからPCでも大きくなりすぎない
+    const size = rand(100, 200);             // 雲の大きさ（px）
+    const x = rand(0, STAGE_W - size);      // よこ位置（px）
+    const y = rand(0, STAGE_H - size*0.6);  // たて位置（px）
+    const dur = rand(480, 900);             // うごく時間（ミリ秒）
 
-      cloud.innerHTML = cloudSVG();
-      overlay.appendChild(cloud);
-    }
+    // 見た目とアニメのきまり
+    Object.assign(cloud.style, {
+      position: 'absolute',
+      left:  x + 'px',
+      top:   y + 'px',
+      width: size + 'px',                   // ★ vw じゃなくて px 固定！
+      // 晴れていく方向（ちょっとだけ四方に流れる）
+      '--otx': (x < STAGE_W/2 ? '-60px' : '60px'),
+      '--oty': (y < STAGE_H/2 ? '-40px' : '40px')
+    });
 
-// 全部晴れたらDOMから削除
-const total = 1200 + count*10 + 150;
-setTimeout(()=>{
-  overlay.remove();
-  // ← これを追加：晴れたタイミングで結果を見せる
-  document.body.classList.add('show-result');
-}, total);
+    // 雲の絵
+    cloud.innerHTML = cloudSVG();
+    stage.appendChild(cloud);
 
+    // すこしずつ順番に晴れていく
+    setTimeout(() => {
+      cloud.style.animation = `cloudOut ${dur}ms ease-in ${i*14}ms forwards`;
+    }, 30);
+  }
 
-    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
-    function cloudSVG(){
-      return `
-      <svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img">
-        <defs>
-          <radialGradient id="g2" cx="50%" cy="45%" r="70%">
-            <stop offset="0%"  stop-color="#ffffff"/>
-            <stop offset="100%" stop-color="#fff7ff"/>
-          </radialGradient>
-        </defs>
-        <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g2)"/>
-        <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
-        <circle cx="70" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-        <circle cx="130" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-      </svg>`;
-    }
-  });
+  // 5) 雲が晴れたら、結果を表示して シートを消す
+  const maxDelay = 900 + COUNT*14 + 160;
+  setTimeout(() => {
+    document.body.classList.add('show-result'); // 結果を見せる（CSSですでに用意）
+    setTimeout(() => overlay.remove(), 500);    // シートを片づける
+  }, maxDelay);
+
+  // きすうを作る小さな関数
+  function rand(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+  // 雲のSVG（そのままでOK）
+  function cloudSVG(){
+    return `<svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+      <defs><radialGradient id="g2" cx="50%" cy="45%" r="70%">
+        <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#fff7ff"/></radialGradient></defs>
+      <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g2)"/>
+      <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
+    </svg>`;
+  }
 })();
 </script>
 

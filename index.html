@@ -22,14 +22,20 @@
     --nav-gap-mobile: 8px;
     --nav-gap-desktop: 16px;
     --btn-radius: 12px;
-      --yume-pink:#ffd7f7;
-  --yume-lav:#e8d7ff;
-  --yume-mint:#d7f7ff;
-  --yume-yellow:#fff3c9;
-  --yume-line:#ead3ff;
-  --yume-brown:#4a2f2b;
+  /* ベース（色白） */
+  --yume-white:#ffffff;
+
+  /* パステル（主役3色） */
+  --yume-pink:#FFD7F7;   /* 可愛さ */
+  --yume-lav:#E8D7FF;    /* やさしさ */
+  --yume-mint:#D7F7FF;   /* 透明感 */
+
+  /* 締め色（文字/強調） */
+  --yume-brown:#5C3B34;
+
   }
 
+  
   /*------------------------
     リセット & グローバル
   ------------------------*/
@@ -73,7 +79,8 @@
     left: 0;
     width: 100%;
     height: var(--header-height-mobile);
-    background-color: #ecbee5;
+    background-color:#FFD7F7;   /* 可愛さ */
+;
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -217,7 +224,7 @@ section {
 .articles {
   display: flex;
   flex-direction: column;
-  gap: 2em; /* 記事同士の間隔 */
+  gap: 0.5em; /* 記事同士の間隔 */
 }
 
 /*--------------------------
@@ -400,8 +407,21 @@ section {
   .for_more_detail.tarot {
     max-width: 800px;
     margin: 0 auto;
-    padding: 2em;
-    background-color: #ffffff;   /* 白背景 */
+  background:
+    radial-gradient(28rem 22rem at 8% 10%,  color-mix(in oklab, var(--yume-lav) 38%, transparent) 0 45%, transparent 60%),
+    radial-gradient(26rem 20rem at 90% 85%, color-mix(in oklab, var(--yume-pink) 32%, transparent) 0 45%, transparent 65%),
+    var(--yume-white);
+  border: 1px solid color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
+  border-radius: 12px;
+  box-shadow: 0 10px 26px rgba(180,130,255,.10);
+  padding: 2em 1.25em;
+}
+.for_more_detail.tarot .article,
+.for_more_detail.tarot .topic_img{
+  background:#fff;       /* 内側は白で読みやすく */
+  border-radius: 10px;
+
+
     border-radius: 8px;
     margin-top: calc(var(--header-height-mobile) + 1em);
   }
@@ -450,8 +470,11 @@ section {
 
   /* 質問例ブロック */
 .example-block {
-  background: #fff0f5;
-  border: 1px solid #ffd3e2;
+ background:
+    radial-gradient(28rem 22rem at 8% 10%,  color-mix(in oklab, var(--yume-lav) 45%, transparent) 0 45%, transparent 60%),
+    radial-gradient(26rem 20rem at 90% 85%, color-mix(in oklab, var(--yume-pink) 40%, transparent) 0 45%, transparent 65%),
+    var(--yume-white);
+  border:1px solid color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
   border-radius: 8px;
   padding: 1.2em;
   margin-bottom: 2em; /* ブロック間の余白 */
@@ -831,7 +854,11 @@ section#hints::before {
    目次全体のラッパー
    ------------------- */
 .toc-block {
-  background-color: #f5eaf2;  /* 既存の紫 */
+ background:
+    radial-gradient(28rem 22rem at 8% 10%,  color-mix(in oklab, var(--yume-lav) 45%, transparent) 0 45%, transparent 60%),
+    radial-gradient(26rem 20rem at 90% 85%, color-mix(in oklab, var(--yume-pink) 40%, transparent) 0 45%, transparent 65%),
+    var(--yume-white);
+  border:1px solid color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
   border-radius: 8px;         /* お好みで */
   max-width: 700px;           /* 必要に応じて */
   margin: 2rem auto;          /* 自動センター + 上下余白 */
@@ -877,13 +904,12 @@ section#hints::before {
 .toc-block .toc-list a {
   display: block;
   padding: .25rem 0;          /* リンク内の上下空間 */
-  color: #333;
+  color: #5C3B34;
   text-decoration: none;
 }
 
 /* index.html の <style> 内、セクション共通の下あたりに追加してください */
 section#intro {
-  background-color: #ffffff;
   border-radius: 8px;
    margin: 0 auto 0em;
   padding: 2em 1.5em;
@@ -900,7 +926,7 @@ section#intro .intro-text {
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 1.5em;
-  color: #441c26;
+  color: #5C3B34;
 }
 
 section#intro .intro-cta .btn {
@@ -967,26 +993,6 @@ footer {
 
 
 
-/* ===============================
-   🍫 深いブラウンの読みやすいテキスト
-   =============================== */
-
-
-/* 見出しは少し赤みを残して統一感を出す */
-h1, h2, h3 {
-  color: #7a3f3b; /* 少し華やかなブラウン寄り */
-}
-
-/* ナビや小さなテキストもコントラスト調整 */
-header nav ul li a span,
-footer {
-  color: #5c3b34 !important;
-}
-
-/* ボタン文字は白でコントラストを保つ */
-.btn {
-  color: #ffffff;
-}
 
 </style>
 
@@ -1038,6 +1044,7 @@ body.fade-out .main-root {
 
 /* ヒーロー：ふわ雲＋光の粒（背景専用レイヤー） */
 .yume-hero::before{
+  
   content:"";
   position:absolute; inset:-10%;
   z-index:-1;
@@ -1051,13 +1058,15 @@ body.fade-out .main-root {
 }
 
 /* セクション共通：やさしい“もや”背景（cards/hints などに） */
+/* 既存 .yume-soft-bg::before に追記（行末あたりでOK） */
 .yume-soft-bg::before{
-  content:"";
-  position:absolute; inset:-6%;
-  z-index:-1;
-  background:
-    radial-gradient(28rem 22rem at 8% 10%, rgba(232,215,255,.55) 0 45%, transparent 60%),
-    radial-gradient(26rem 20rem at 90% 85%, rgba(255,215,247,.45) 0 45%, transparent 65%);
+  animation: yumeDrift 26s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes yumeDrift{
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-10px) rotate(.4deg); }
+  100% { transform: translateY(0) rotate(0deg); }
 }
 
 /* ============ きらめき（Sparkles） ============ */
@@ -1126,6 +1135,178 @@ section#about p{ max-width: 70ch; }
 }
 </style>
 
+<style>
+/* --- 見出しの色を統一（締め色に） --- */
+.section-title,
+.article_ttl_h1,
+section#hero h1,
+section#cards h2,
+section#hints h2 {
+  color: var(--yume-brown);
+}
+
+/* 下線や区切り線もブラウン系に */
+.section-title { border-bottom: 1px solid color-mix(in oklab, var(--yume-brown) 55%, #fff); }
+.toc-title { border-bottom: 1px solid color-mix(in oklab, var(--yume-brown) 45%, #fff); }
+
+/* TOCのリンク色（本文と一貫） */
+.toc-block .toc-list a,
+.toc-block .toc-sublist a {
+  color: var(--yume-brown);
+}
+
+/* ボタン本体は白ベース＋ブラウン枠に */
+header nav ul li a{
+  background: #fff;
+  border: 2px solid color-mix(in oklab, var(--yume-brown) 25%, #fff);
+  box-shadow: 0 4px 8px rgba(92,59,52,.10);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+/* ラベル文字色をブラウンに統一 */
+header nav ul li a span{
+  color: var(--yume-brown);
+  font-weight: 700;
+}
+
+/* ホバー時は枠を少し濃く＋ほんのりリフト */
+header nav ul li a:hover{
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--yume-brown) 45%, #fff);
+  box-shadow: 0 6px 14px rgba(92,59,52,.18);
+}
+/* #hints に複数のポップな丸（レイヤー）を敷く */
+section#hints{ position:relative; overflow:hidden; }
+section#hints::before,
+section#hints::after{
+  content:"";
+  position:absolute; inset:-10% -5% -5% -5%;
+  z-index:0; pointer-events:none;
+  background:
+    radial-gradient(180px 140px at 20% 25%,  color-mix(in oklab, var(--yume-pink) 55%, transparent) 0 60%, transparent 61%),
+    radial-gradient(220px 160px at 85% 30%,  color-mix(in oklab, var(--yume-lav) 55%,  transparent) 0 60%, transparent 61%),
+    radial-gradient(160px 120px at 60% 80%,  color-mix(in oklab, var(--yume-mint) 55%, transparent) 0 60%, transparent 61%),
+    radial-gradient(120px 90px  at 10% 90%,  color-mix(in oklab, var(--yume-pink) 45%, transparent) 0 60%, transparent 61%);
+  filter: blur(.2px);
+}
+section#hints::after{
+  inset:-12% -8% -8% -8%;
+  opacity:.6;
+  animation: hintsDrift 24s ease-in-out infinite;
+}
+@keyframes hintsDrift{
+  0%   { transform: translateY(0) }
+  50%  { transform: translateY(-10px) }
+  100% { transform: translateY(0) }
+}
+/* 前景（本文）を上に */
+section#hints > *{ position:relative; z-index:1; }
+
+/* 画面全体の背景（ページ最背面） */
+body{
+  background:
+    radial-gradient(60rem 40rem at -10% -10%, color-mix(in oklab, var(--yume-lav) 22%, #fff) 0 40%, transparent 60%),
+    radial-gradient(50rem 30rem at 110% 10%, color-mix(in oklab, var(--yume-mint) 22%, #fff) 0 35%, transparent 60%),
+    radial-gradient(70rem 50rem at 50% 120%, color-mix(in oklab, var(--yume-pink) 18%, #fff) 0 40%, transparent 65%),
+    var(--yume-white);
+}
+
+/* メインの白帯（.container）は既存どおり白で可読性を担保 */
+.container{
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(180,130,255,.08);
+}
+
+/* 既存の translate: var(--x) var(--y) を無効化し、位置は left/top% で決める */
+.yume-sparkles .sparkle{
+  translate: 0 0;  /* ← 位置決めはJSで left/top% を直接セット */
+}
+
+/* 追記：個々の雲を絶対配置に（left/top/width が効くように）*/
+.cloud { position: absolute; }
+
+
+/* 共通 */
+section#hints, section#cards{ position:relative; overflow:hidden; }
+section#hints > *, section#cards > *{ position:relative; z-index:1; }
+
+/* ヒント：ポップな丸＋ゆる揺れ（軽量） */
+section#hints::before,
+section#hints::after{
+  content:""; position:absolute; inset:-12% -8% -8% -8%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(180px 140px at 18% 26%, color-mix(in oklab, var(--yume-pink) 55%, transparent) 0 60%, transparent 61%),
+    radial-gradient(220px 160px at 88% 30%, color-mix(in oklab, var(--yume-lav) 55%,  transparent) 0 60%, transparent 61%),
+    radial-gradient(160px 120px at 62% 78%, color-mix(in oklab, var(--yume-mint) 55%, transparent) 0 60%, transparent 61%),
+    radial-gradient(120px 90px  at 10% 88%, color-mix(in oklab, var(--yume-pink) 40%, transparent) 0 60%, transparent 61%);
+}
+section#hints::after{ opacity:.65; animation:hintsDrift 24s ease-in-out infinite; }
+@keyframes hintsDrift{ 0%{transform:translateY(0)} 50%{transform:translateY(-10px)} 100%{transform:translateY(0)} }
+
+/* カード一覧：淡雲 + ドットパターン */
+section#cards::before{
+  content:""; position:absolute; inset:-10%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(60rem 40rem at 0% -10%,  color-mix(in oklab, var(--yume-lav) 22%, #fff) 0 40%, transparent 60%),
+    radial-gradient(50rem 30rem at 105% 10%, color-mix(in oklab, var(--yume-mint) 22%, #fff) 0 35%, transparent 60%),
+    radial-gradient(70rem 50rem at 50% 120%, color-mix(in oklab, var(--yume-pink) 18%, #fff) 0 40%, transparent 65%),
+    var(--yume-white);
+}
+/* 細かいドットで“布感”をプラス（超軽量SVG） */
+section#cards::after{
+  content:""; position:absolute; inset:0; z-index:0; opacity:.25; pointer-events:none;
+  background-image: radial-gradient(currentColor 1px, transparent 1.5px);
+  color: color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
+  background-size: 14px 14px;
+  mix-blend-mode: multiply;
+}
+
+
+/* === Header/Nav を index の見た目に統一（上書き用） === */
+:root{
+  --yume-pink:#FFD7F7;
+  --yume-brown:#5C3B34;
+}
+
+/* 背景色（ピンク）に統一 */
+header{
+  background-color: var(--yume-pink) !important;
+}
+
+/* ナビ内の丸ボタンの見た目を統一（白地＋淡い枠＋軽い影） */
+header nav ul li a{
+  background: #fff !important;
+  border: 2px solid color-mix(in oklab, var(--yume-brown) 25%, #fff) !important;
+  box-shadow: 0 4px 8px rgba(92,59,52,.10) !important;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+header nav ul li a:hover{
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(92,59,52,.18);
+}
+
+/* ラベル（span）の色をブラウンで統一 */
+header nav ul li a span{
+  color: var(--yume-brown) !important;
+}
+
+/* 幅合わせ（どちらのページでも同じレイアウト幅に） */
+header nav{ width: 90%; max-width: 800px; margin: 0 auto; padding: 0; }
+
+
+/* 1200x1000 の中央ステージ */
+.cloud-stage{
+  position:absolute;
+  width:1200px;
+  height:1000px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+
+
 </style>
 
 
@@ -1135,7 +1316,7 @@ section#about p{ max-width: 70ch; }
    <div class="container">
 
      <!-- ① ここからイントロを追加 -->
-    <section id="intro" class="intro">
+  <section id="intro" class="intro yume-soft-bg">
       <h1 class="section-title">はじめに</h1>
       <p class="intro-text">
         ワンオラクルは、〈あなたの今〉にフォーカスしたシンプルな1枚引きのオラクルカード占いサイトです。  
@@ -1144,7 +1325,7 @@ section#about p{ max-width: 70ch; }
       <p class="intro-cta">
         <a class="btn" href="#hero">まずはカードを引いてみる</a>
       </p>
-    </section>
+</section>
     <!-- ① ここまで -->
   <!-- ヘッダー -->
  <header>
@@ -1193,8 +1374,7 @@ section#about p{ max-width: 70ch; }
     <img src="images/hero.png" alt="タロットイメージ" style="max-width:100%;height:300px;">
     <p><a class="btn" href="result.html">カードを引く</a></p>
 
-      <!-- きらめきを差し込む入れ物（JSで中身を生成） -->
-  <div class="sparkles" aria-hidden="true"></div>
+   
   </section>
 
   <!-- ヒーローの直後に“波”の仕切り（セクション間のつなぎ） -->
@@ -1422,6 +1602,7 @@ section#about p{ max-width: 70ch; }
     </div>
 
     <!-- 各セクション -->
+  <div class="article">
     <h3 id="about_h3_1">カード制作背景</h3>
     <p>
       このオラクルカードは、現在の日常に根ざしたモチーフを下に制作しました。
@@ -1429,7 +1610,8 @@ section#about p{ max-width: 70ch; }
        カード一枚一枚に、具体的な行動を描き、わかりやすく日常に取り入れる事ができるようにしています。
         制作の際にはデジタルを用い、「ポップでゆめかわいい」を心がけました。
     </p>
-
+    </div>
+ <div class="article">
     <h3 id="about_h3_2">カードに込めた思い</h3>
     <p>
       私がこのカードに込めたのは「小さな気づきが人生を豊かにする」というメッセージです。
@@ -1437,13 +1619,15 @@ section#about p{ max-width: 70ch; }
       日々の中で見過ごしがちなサインや直感を大切にしてほしいという願いを込め、
       カード一つひとつに具体的なメッセージを添えています。
     </p>
-
+    </div>
+ <div class="article">
     <h3 id="about_h3_3">作者紹介</h3>
     <p>
       Miasyです。
        <br>
        私もオラクルカードに救われた一人です。皆さんのセルフケアに役に立てば幸いです。
     </p>
+    </div>
 
   </div>
 </section>
@@ -1470,90 +1654,6 @@ section#about p{ max-width: 70ch; }
     });
   </script>
 
-<script>
-/* ===== Cloud Transition (index側) ===== */
-(function(){
-  // 1) result.html へのリンクだけ捕まえる
-document.addEventListener('click', function(e){
-  const a = e.target.closest('a[href]');
-  if(!a) return;
-  const href = a.getAttribute('href');
-  if(!href || !href.startsWith('result.html')) return;
-
-  e.preventDefault();
-
-  // 🔹 ページをフェードアウト（非表示に）
-  document.body.classList.add('fade-out');
-
-  // 🔹 少し時間をおいて雲を出す（フェード後）
-  setTimeout(() => {
-    runCloudCover(href);
-  }, 400); // ← CSSのtransitionと合わせる
-});
-
-
-  function runCloudCover(targetHref){
-    const overlay = document.createElement('div');
-    overlay.className = 'cloud-overlay';
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(overlay);
-
-    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth||0);
-    const vh = Math.max(document.documentElement.clientHeight, window.innerHeight||0);
-
- // 🪄 雲の枚数と大きさをモバイル対応で調整
-let base = (vw*vh)/20000;
-if (vw < 200) base = (vw*vh)/15000; // 幅600px未満（スマホ）なら密度アップ
-const count = Math.round(base) + 45;
-
-for(let i=0;i<count;i++){
-  const cloud = document.createElement('div');
-  cloud.className = 'cloud';
-  const size = rand(18, 40); // 雲を少し大きめに
-
-      const x = rand(-10, 80);   // 初期の散り位置
-      const y = rand(-20, 80);
-      const dur = rand(500, 1100); // 入場時間msを軽くばらす
-      const rot = rand(-12, 12);
-
-      cloud.style.left = x+'vw';
-      cloud.style.top  = y+'vh';
-      cloud.style.width = size+'vw';
-      cloud.style.setProperty('--tx', (x>40? '-8vw':'8vw'));
-      cloud.style.setProperty('--ty', (y>40? '-6vh':'6vh'));
-      cloud.style.setProperty('--rot', rot+'deg');
-      cloud.style.animation = `cloudIn ${dur}ms ease-out ${i*12}ms forwards`;
-
-      cloud.innerHTML = cloudSVG(); // かわいい雲
-      overlay.appendChild(cloud);
-    }
-
-    // “覆い切った頃”に遷移させる（最長アニメ時間＋少し余裕）
-    const maxDelay = 1100 + count*12 + 120;
-    setTimeout(()=>{ window.location.href = targetHref; }, maxDelay);
-
-    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
-  }
-
-  function cloudSVG(){
-    // シンプルでゆめ可愛い雲（塗り＋ラベンダー系アウトライン）
-    return `
-    <svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img">
-      <defs>
-        <radialGradient id="g" cx="50%" cy="45%" r="70%">
-          <stop offset="0%" stop-color="#ffffff"/>
-          <stop offset="100%" stop-color="#fff7ff"/>
-        </radialGradient>
-      </defs>
-      <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g)"/>
-      <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
-      <!-- ほっぺっぽい飾り -->
-      <circle cx="70" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-      <circle cx="130" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-    </svg>`;
-  }
-})();
-</script>
 
 <script>
 /* ==== ゆめかわ Sparkles ==== */
@@ -1590,6 +1690,107 @@ for(let i=0;i<count;i++){
   });
 })();
 </script>
+
+
+
+<script>
+/* ===== Cloud Transition (index側) — フェイルセーフ付き ===== */
+(function(){
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a[href]');
+    if(!a) return;
+    const href = a.getAttribute('href') || "";
+    if(!href.startsWith('result.html')) return;
+
+    e.preventDefault();
+
+    // 1) まずフェードアウト
+    document.body.classList.add('fade-out');
+
+    // 2) フォールバック：万一アニメ失敗でも確実に遷移（最大2.8s後）
+    let navigated = false;
+    const fallback = setTimeout(() => {
+      if (!navigated) { navigated = true; window.location.href = href; }
+    }, 2800);
+
+    // 3) 雲アニメ→完了時に遷移
+    setTimeout(() => {
+      runCloudCover(() => {
+        if (!navigated) {
+          navigated = true;
+          clearTimeout(fallback);
+          window.location.href = href;
+        }
+      });
+    }, 400);
+  });
+
+  // ★★★ この関数 全体を置き換え ★★★
+  function runCloudCover(onDone){
+    // 画面全体のオーバーレイ
+    const overlay = document.createElement('div');
+    overlay.className = 'cloud-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(overlay);
+
+    // 1200x1000 の“舞台”を中央に
+    const stage = document.createElement('div');
+    stage.className = 'cloud-stage';
+    overlay.appendChild(stage);
+
+    // 固定範囲 & 固定個数
+    const STAGE_W = 1200;
+    const STAGE_H = 1000;
+    const COUNT   = 30;
+
+    for(let i=0;i<COUNT;i++){
+      const cloud = document.createElement('div');
+      cloud.className = 'cloud';
+
+      // 雲サイズは px 固定（PCでもスマホと同じ見た目）
+      const size = rand(100, 200);
+      const x = rand(0, STAGE_W - size);
+      const y = rand(0, STAGE_H - Math.floor(size*0.6));
+      const dur = rand(480, 900);
+      const rot = rand(-12, 12);
+
+      Object.assign(cloud.style, {
+        position: 'absolute',
+        left: x + 'px',
+        top:  y + 'px',
+        width: size + 'px',                // ← ここが px 固定
+        '--tx': (x > STAGE_W/2 ? '-40px' : '40px'),
+        '--ty': (y > STAGE_H/2 ? '-30px' : '30px'),
+        '--rot': rot + 'deg',
+        animation: `cloudIn ${dur}ms ease-out ${i*14}ms forwards`
+      });
+
+      cloud.innerHTML = cloudSVG();
+      stage.appendChild(cloud);
+    }
+
+    // 終了タイミング（COUNT を使う！）
+    const maxDelay = 900 + COUNT*14 + 160;
+    setTimeout(()=>{ onDone && onDone(); }, maxDelay);
+
+    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  }
+  // ★★★ 置き換え ここまで ★★★
+
+  function cloudSVG(){
+    return `
+    <svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img">
+      <defs><radialGradient id="g" cx="50%" cy="45%" r="70%">
+        <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#fff7ff"/></radialGradient></defs>
+      <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g)"/>
+      <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
+      <circle cx="70" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
+      <circle cx="130" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
+    </svg>`;
+  }
+})();
+</script>
+
 
 </body>
 </html>
