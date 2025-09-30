@@ -1688,10 +1688,10 @@ header nav ul li a span{
 /* ☁️ 雲の透明・乗算スタイル改良 */
 .cloud-puff {
   position: absolute;
-  opacity: 0.5; /* ← 薄め（0.3〜0.5の範囲でお好みでOK） */
+  opacity: 0.3; /* ← 薄め（0.3〜0.5の範囲でお好みでOK） */
   mix-blend-mode: multiply; /* ← 下の色と混ざる（乗算っぽく） */
   animation: cloudFloat var(--cd, 18s) ease-in-out infinite;
-  filter: drop-shadow(0 2px 4px rgba(180,130,255,.1));
+  filter: drop-shadow(0 3px 6px rgba(180,130,255,.1));
   pointer-events: none; /* ← クリックできるボタンを邪魔しない */
   transition: opacity .4s ease;
 }
@@ -1706,6 +1706,31 @@ header nav ul li a span{
 /* ホバーでちょっと濃くして動きを強調（オプション） */
 .cloud-puff:hover {
   opacity: 0.55;
+}
+/* さらに薄く＆下の色と自然に混ざる */
+.cloud-puff{
+  mix-blend-mode: multiply;   /* ← 乗算っぽいブレンドで透け感UP */
+  position: absolute;
+  pointer-events: none;
+  /* 左右スライド（外側）＋ふわっと上下（内側 .cloud-body で付与） */
+  animation: cloudSlide var(--slide, 8s) linear infinite alternate;
+  transition: opacity .3s ease;
+}
+/* 内側（SVG）が上下にゆらぐ：transformを分けて衝突しないようにするのがポイント */
+.cloud-puff .cloud-body{
+  animation: cloudFloat var(--cd, 8s) ease-in-out infinite;
+}
+
+/* 左右スライド用（外側でX方向だけ） */
+@keyframes cloudSlide{
+  from { transform: translateX(var(--from, -25vw)); }
+  to   { transform: translateX(var(--to,    25vw)); }
+}
+
+/* 既存の上下ゆらぎ（Y方向だけ） */
+@keyframes cloudFloat{
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-25px); }
 }
 
 </style>
@@ -2321,18 +2346,37 @@ header nav ul li a span{
   }
 
   // ☁️ 雲をつくる（SVG雲：線と塗りは既存のゆめかわ配色に寄せる）
-  function createCloud(){
-    const wrap = document.createElement('div');
-    wrap.className = 'cloud-puff';
-    const width = Math.round(120 + Math.random()*220);    // 120〜340px
-    const height = Math.round(width * (0.55 + Math.random()*0.15));
-    wrap.style.width = width+'px';
-    wrap.style.height = height+'px';
-    wrap.style.setProperty('--cd', (14 + Math.random()*10) + 's');
+ /* ……すでにある即時関数の中の createCloud を置き換え …… */
+function createCloud(){
+  const wrap = document.createElement('div');
+  wrap.className = 'cloud-puff';
 
-    // シンプルな雲SVG（やさしい塗り＋ラベンダーの線）
-    wrap.innerHTML = `
-      <svg viewBox="0 0 200 110" width="100%" height="100%" aria-hidden="true">
+  // サイズ（小さめで軽い雲に）
+  const width  = Math.round(120 + Math.random()*180);   // 120〜300px
+  const height = Math.round(width * (0.55 + Math.random()*0.15));
+  wrap.style.width  = width+'px';
+  wrap.style.height = height+'px';
+
+  // ふわふわ上下のスピード
+  wrap.style.setProperty('--cd', (14 + Math.random()*10) + 's');
+
+  // 左右スライドの幅と速さ（小さめにして“ボタンを横切りにくい”よう配慮）
+  const slideDur = (24 + Math.random()*14) + 's';   // 24〜38s
+  const rangeVW  = (4 + Math.random()*4) + 'vw';    // 4〜8vw（横ゆれ幅）
+  // 右→左スタート or 左→右スタートをランダムに
+  const invert   = Math.random() > 0.5 ? 1 : -1;
+  wrap.style.setProperty('--slide', slideDur);
+  wrap.style.setProperty('--from',  `calc(${invert * -1} * ${rangeVW})`);
+  wrap.style.setProperty('--to',    `calc(${invert *  1} * ${rangeVW})`);
+
+  // 初期座標はこれまで通り「避けたい場所」をよけて配置
+  const maxWH = Math.max(width, height);
+  placeWithoutOverlap(wrap, maxWH);
+
+  // 内側に SVG を入れる（内側だけ上下ふわふわ）
+  wrap.innerHTML = `
+    <div class="cloud-body" aria-hidden="true">
+      <svg viewBox="0 0 200 110" width="100%" height="100%">
         <defs>
           <linearGradient id="cloudFill" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%"  stop-color="var(--yume-white)"/>
@@ -2351,11 +2395,11 @@ header nav ul li a span{
               stroke="color-mix(in oklab, var(--yume-lav) 55%, #caa8ff)"
               stroke-width="2" />
       </svg>
-    `;
+    </div>
+  `;
 
-    placeWithoutOverlap(wrap, Math.max(width, height));
-    cloudLayer.appendChild(wrap);
-  }
+  cloudLayer.appendChild(wrap);
+}
 
   // 端末ごとに数を調整
   function populate(){
