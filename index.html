@@ -1544,6 +1544,61 @@ footer{
 }
 footer p{ margin: 0; }
 
+
+/* ========== Header Nav：丸背景をなくして、イラスト＋文字のみ ========== */
+
+/* a自体の“丸ボタン”化を上書きで解除 */
+header nav ul li a{
+  width: auto !important;
+  height: auto !important;
+  padding: 4px 6px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  /* レイアウトは縦積みのまま（アイコン上、文字下） */
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  text-decoration: none;
+  transition: transform .2s ease;
+}
+
+/* ホバー時はほんのり持ち上げる（丸枠は出さない） */
+header nav ul li a:hover{
+  transform: translateY(-2px);
+}
+
+/* アイコンを少し大きく・鮮やかに、でも“枠”は付けない */
+header nav ul li a img{
+  filter:
+    drop-shadow(0 3px 8px rgba(231, 22, 144, 0.3))
+    drop-shadow(0 0 6px rgba(255,255,255,.4))
+    saturate(1.2) contrast(1.1);
+}
+
+@media (min-width:768px){
+  header nav ul li a img{ width: 54px; }
+}
+header nav ul li a:hover img{
+  filter: drop-shadow(0 5px 14px rgba(231, 22, 144, 0.3))
+          saturate(1.25) contrast(1.15);
+}
+
+/* ラベル文字はそのまま使い、視認性だけ上げる */
+header nav ul li a span{
+  font-weight: 700;
+  /* 背景が淡いグラデでも埋もれにくい白系のハイライト */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.85),
+    0 0 8px rgba(255,255,255,.55);
+}
+
+
+
 </style>
 
 
