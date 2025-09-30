@@ -1579,6 +1579,134 @@ header nav ul li a span{
 }
 
 
+.btn {
+  background: linear-gradient(135deg, #ffd7f7, #e8d7ff, #d7f7ff);
+  color: #5C3B34;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(200,150,255,0.3);
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(200,150,255,0.5);
+}
+
+/* ★ 星（ポップなふちどり付き） */
+.yume-sparkles .sparkle{
+  position:absolute; pointer-events:none;
+  width: var(--s, 14px); height: var(--s, 14px);
+  left:0; top:0;
+  /* ふわっと上下＆左右ゆらゆら（既存があれば上書きでOK） */
+  animation: floatY var(--d,8s) ease-in-out infinite,
+             driftX calc(var(--d,8s) * 1.15) ease-in-out infinite;
+  /* 中のキラッと光 */
+  background: radial-gradient(circle at 50% 45%, #fff 0 40%, rgba(255,255,255,0) 70%);
+  opacity: .95;
+  /* ⭐星形にする */
+  clip-path: polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  /* ふちどり：白→ゆめパープルの二重アウトライン */
+  filter:
+    drop-shadow(0 0 0 2px #ffffff)
+    drop-shadow(0 0 0 4px #ead3ff)
+    drop-shadow(0 2px 6px rgba(180,130,255,.35));
+}
+
+/* サイズちがいを簡単に作る用（任意） */
+.yume-sparkles .sparkle.xs{ --s:10px; --d:7s; }
+.yume-sparkles .sparkle.md{ --s:16px; --d:9s; }
+.yume-sparkles .sparkle.lg{ --s:20px; --d:11s; }
+
+/* 上下・左右のゆらぎ（既存があれば流用） */
+@keyframes floatY { 0%{transform:translateY(0)} 50%{transform:translateY(-16px)} 100%{transform:translateY(0)} }
+@keyframes driftX { 0%{transform:translateX(0)} 50%{transform:translateX(12px)} 100%{transform:translateX(0)} }
+
+/* 動きが苦手な人の設定に配慮（任意） */
+@media (prefers-reduced-motion: reduce){
+  .yume-sparkles .sparkle{ animation-duration:.01ms; animation-iteration-count:1; }
+}
+/* === レイヤー（クリックの邪魔をしない） === */
+.sparkle-layer,
+.cloud-layer{
+  position: fixed; inset: 0;
+  pointer-events: none;       /* ← ボタン操作を邪魔しない */
+  z-index: 5;                 /* 必要なら数値を微調整 */
+}
+
+/* === ⭐ 星（キラキラ）=== */
+/* 8角スター＋“ポップなアウトライン”を drop-shadow で多重に */
+.sparkle {
+  position: absolute;
+  width: var(--s, 12px); height: var(--s, 12px);
+  /* 星形クリップ（8角スター） */
+  clip-path: polygon(50% 0%, 60% 35%, 100% 50%, 60% 65%, 50% 100%, 40% 65%, 0% 50%, 40% 35%);
+  background: radial-gradient(circle at 50% 45%, #fff 0 40%, rgba(255,255,255,0) 70%);
+  opacity: .95;
+  /* ポップなアウトライン（淡い縁取りを重ねる） */
+  filter:
+    drop-shadow(0 0 2px var(--yume-white))
+    drop-shadow(0 0 4px color-mix(in oklab, var(--yume-pink) 70%, transparent))
+    drop-shadow(0 0 6px color-mix(in oklab, var(--yume-lav) 60%, transparent))
+    drop-shadow(0 0 10px color-mix(in oklab, var(--yume-mint) 55%, transparent));
+  animation: sparkleFloat var(--d, 9s) ease-in-out infinite,
+             sparkleDrift calc(var(--d, 9s) * 1.1) ease-in-out infinite;
+}
+
+/* ふわ上下 */
+@keyframes sparkleFloat {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50%     { transform: translateY(-16px) rotate(8deg); }
+}
+/* ゆる横ゆれ */
+@keyframes sparkleDrift {
+  0%,100% { margin-left: 0; }
+  50%     { margin-left: 10px; }
+}
+
+/* 動きを苦手な人の設定（端末の“簡易アニメ”）を尊重 */
+@media (prefers-reduced-motion: reduce){
+  .sparkle{ animation: none; }
+}
+
+/* === ☁️ 雲（SVGもCSSもOK）=== */
+.cloud-puff{
+  position: absolute;
+  opacity: .9;
+  animation: cloudFloat var(--cd, 18s) ease-in-out infinite;
+  filter: drop-shadow(0 2px 6px rgba(180,130,255,.12));
+}
+@keyframes cloudFloat{
+  0%,100% { transform: translateY(0) }
+  50%     { transform: translateY(-12px) }
+}
+@media (prefers-reduced-motion: reduce){
+  .cloud-puff{ animation: none; }
+}
+
+/* ☁️ 雲の透明・乗算スタイル改良 */
+.cloud-puff {
+  position: absolute;
+  opacity: 0.5; /* ← 薄め（0.3〜0.5の範囲でお好みでOK） */
+  mix-blend-mode: multiply; /* ← 下の色と混ざる（乗算っぽく） */
+  animation: cloudFloat var(--cd, 18s) ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(180,130,255,.1));
+  pointer-events: none; /* ← クリックできるボタンを邪魔しない */
+  transition: opacity .4s ease;
+}
+
+.cloud-puff svg path {
+  fill: url(#cloudFill);
+  stroke: color-mix(in oklab, var(--yume-lav) 50%, transparent);
+  stroke-width: 1.6;
+  opacity: 0.7;
+}
+
+/* ホバーでちょっと濃くして動きを強調（オプション） */
+.cloud-puff:hover {
+  opacity: 0.55;
+}
 
 </style>
 
@@ -1665,6 +1793,8 @@ header nav ul li a span{
     <p><a class="btn" href="result.html">カードを引く</a></p>
 
    
+
+    
   </section>
 
   <!-- ヒーローの直後に“波”の仕切り（セクション間のつなぎ） -->
@@ -2113,7 +2243,142 @@ header nav ul li a span{
     }
   });
 </script>
+<!-- ✨キラキラ（星）をのせる層 -->
+<div class="sparkle-layer" aria-hidden="true"></div>
 
+<!-- ☁️雲をのせる層 -->
+<div class="cloud-layer" aria-hidden="true"></div>
+
+<script>
+(function(){
+  const STAR_COUNT_MOBILE = 22;
+  const STAR_COUNT_DESKTOP = 40;
+  const CLOUD_COUNT_MOBILE = 4;
+  const CLOUD_COUNT_DESKTOP = 7;
+
+  const sparkleLayer = document.querySelector('.sparkle-layer');
+  const cloudLayer   = document.querySelector('.cloud-layer');
+
+  if(!sparkleLayer || !cloudLayer) return;
+
+  // 被せたくない要素（ボタン、ヘッダーなど）
+  const avoidSelectors = ['.btn', 'button', 'header', 'nav'];
+  const getAvoidRects = () =>
+    Array.from(document.querySelectorAll(avoidSelectors.join(',')))
+      .map(el => el.getBoundingClientRect());
+
+  // ビューポート内ランダム座標（px）
+  function randPos(size = 0, padding = 8){
+    const w = window.innerWidth, h = window.innerHeight;
+    return {
+      left: Math.random() * (w - size - padding*2) + padding,
+      top : Math.random() * (h - size - padding*2) + padding
+    };
+  }
+
+  // 衝突判定（単純な矩形同士）
+  function intersects(r1, r2){
+    return !(r2.left > r1.right ||
+             r2.right < r1.left ||
+             r2.top > r1.bottom ||
+             r2.bottom < r1.top);
+  }
+
+  // 「避ける矩形」とぶつからない位置を探す
+  function placeWithoutOverlap(el, size){
+    const maxTry = 80;
+    const avoids = getAvoidRects().map(r => ({
+      left:r.left, top:r.top, right:r.right, bottom:r.bottom
+    }));
+    for(let i=0; i<maxTry; i++){
+      const {left, top} = randPos(size, 10);
+      const rect = { left, top, right:left+size, bottom:top+size };
+      const hit = avoids.some(a => intersects(rect, a));
+      if(!hit){
+        el.style.left = left + 'px';
+        el.style.top  = top + 'px';
+        return true;
+      }
+    }
+    // 見つからなければ最後の位置で妥協（ほぼ起きない）
+    const {left, top} = randPos(size, 10);
+    el.style.left = left + 'px';
+    el.style.top  = top + 'px';
+    return false;
+  }
+
+  // ⭐ 星をつくる
+  function createStar(){
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    // サイズと速度をランダム（既存パステルの世界観に合う軽さ）
+    const size = Math.round(8 + Math.random()*14);   // 8〜22px
+    const dur  = (8 + Math.random()*6).toFixed(1);   // 8〜14s
+    s.style.setProperty('--s', size + 'px');
+    s.style.setProperty('--d', dur + 's');
+    placeWithoutOverlap(s, size);
+    sparkleLayer.appendChild(s);
+  }
+
+  // ☁️ 雲をつくる（SVG雲：線と塗りは既存のゆめかわ配色に寄せる）
+  function createCloud(){
+    const wrap = document.createElement('div');
+    wrap.className = 'cloud-puff';
+    const width = Math.round(120 + Math.random()*220);    // 120〜340px
+    const height = Math.round(width * (0.55 + Math.random()*0.15));
+    wrap.style.width = width+'px';
+    wrap.style.height = height+'px';
+    wrap.style.setProperty('--cd', (14 + Math.random()*10) + 's');
+
+    // シンプルな雲SVG（やさしい塗り＋ラベンダーの線）
+    wrap.innerHTML = `
+      <svg viewBox="0 0 200 110" width="100%" height="100%" aria-hidden="true">
+        <defs>
+          <linearGradient id="cloudFill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"  stop-color="var(--yume-white)"/>
+            <stop offset="100%" stop-color="color-mix(in oklab, var(--yume-lav) 35%, #fff)"/>
+          </linearGradient>
+        </defs>
+        <path d="M40,80
+                 C20,78,15,55,35,50
+                 C35,25,70,20,85,35
+                 C95,15,130,15,140,35
+                 C160,35,172,50,165,62
+                 C185,68,180,90,155,90
+                 L55,90
+                 C50,90,45,85,40,80Z"
+              fill="url(#cloudFill)"
+              stroke="color-mix(in oklab, var(--yume-lav) 55%, #caa8ff)"
+              stroke-width="2" />
+      </svg>
+    `;
+
+    placeWithoutOverlap(wrap, Math.max(width, height));
+    cloudLayer.appendChild(wrap);
+  }
+
+  // 端末ごとに数を調整
+  function populate(){
+    sparkleLayer.innerHTML = '';
+    cloudLayer.innerHTML = '';
+
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    const stars = isDesktop ? STAR_COUNT_DESKTOP : STAR_COUNT_MOBILE;
+    const clouds = isDesktop ? CLOUD_COUNT_DESKTOP : CLOUD_COUNT_MOBILE;
+
+    for(let i=0; i<stars; i++) createStar();
+    for(let i=0; i<clouds; i++) createCloud();
+  }
+
+  // 初期化＆リサイズ時に再配置（“左に固まる”のを防ぐ）
+  window.addEventListener('load', populate);
+  window.addEventListener('resize', () => {
+    // 連打抑制
+    clearTimeout(window.__reflowTimer);
+    window.__reflowTimer = setTimeout(populate, 200);
+  });
+})();
+</script>
 
 </body>
 </html>
