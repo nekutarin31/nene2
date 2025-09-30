@@ -623,6 +623,20 @@ p, a, li, button, input, textarea, .btn {
                "Noto Serif JP", serif !important;
 }
 
+/* シェアボタン内部の整列（画像＋テキストをど真ん中に） */
+.share-btn{
+  display: inline-flex;         /* ボタン内をフレックス化 */
+  align-items: center;          /* 縦中央 */
+  justify-content: center;      /* 横中央 */
+  gap: .5em;                    /* 画像と文字の間隔 */
+}
+
+/* フッター中央寄せ */
+footer{
+  text-align: center;
+}
+footer p{ margin: 0; }
+
 
 </style>
 
@@ -689,14 +703,19 @@ p, a, li, button, input, textarea, .btn {
   </div>
 
   <!-- ―― ② 余分なハイフンは消しました ―― -->
+<!-- ―― ② 余分なハイフンは消しました ―― -->
 
- <a id="shareX" class="btn share-btn" target="_blank">
-  <img src="icons/logo-black.png" alt="Xアイコン">
-</a>
+<div class="share-buttons">
+  <a id="shareX" class="btn share-btn" target="_blank">
+    <img src="icons/logo-black.png" alt="Xアイコン">
+    <span>ポストする</span>
+  </a>
+</div>
 
-  <footer style="padding:2em 0">
-    <p>&copy; 2025 ワンオラクル</p>
-  </footer>
+<footer style="padding:2em 0">
+  <p>&copy; 2025 ワンオラクル</p>
+</footer>
+
 
   <script>
     const titles = [
