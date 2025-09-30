@@ -1733,6 +1733,26 @@ header nav ul li a span{
   50%     { transform: translateY(-25px); }
 }
 
+
+/* === ゆめかわ背景（全体にふんわり） === */
+body {
+  background:
+    /* やわらかい全体グラデーションベース */
+    linear-gradient(160deg,
+      color-mix(in oklab, var(--yume-pink) 35%, #fff8ff) 0%,
+      color-mix(in oklab, var(--yume-lav) 40%, #f7e5ff) 45%,
+      color-mix(in oklab, var(--yume-mint) 30%, #faffef) 100%),
+
+    /* 光の丸をうっすら重ねる */
+    radial-gradient(50rem 35rem at 15% 15%, rgba(255,200,255,.4) 0%, transparent 60%),
+    radial-gradient(60rem 45rem at 80% 80%, rgba(200,255,255,.35) 0%, transparent 65%),
+    var(--yume-white);
+
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
 </style>
 
 
