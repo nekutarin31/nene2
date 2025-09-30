@@ -1110,13 +1110,7 @@ section#hints h2 {
   color: var(--yume-brown);
 }
 
-/* ボタン本体は白ベース＋ブラウン枠に */
-header nav ul li a{
-  background: #fff;
-  border: 2px solid color-mix(in oklab, var(--yume-brown) 25%, #fff);
-  box-shadow: 0 4px 8px rgba(92,59,52,.10);
-  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-}
+
 
 /* ラベル文字色をブラウンに統一 */
 header nav ul li a span{
@@ -1224,19 +1218,6 @@ section#cards::after{
   --yume-brown:#5C3B34;
 }
 
-
-
-/* ナビ内の丸ボタンの見た目を統一（白地＋淡い枠＋軽い影） */
-header nav ul li a{
-  background: #fff !important;
-  border: 2px solid color-mix(in oklab, var(--yume-brown) 25%, #fff) !important;
-  box-shadow: 0 4px 8px rgba(92,59,52,.10) !important;
-  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-}
-header nav ul li a:hover{
-  transform: scale(1.05);
-  box-shadow: 0 6px 14px rgba(92,59,52,.18);
-}
 
 /* ラベル（span）の色をブラウンで統一 */
 header nav ul li a span{
