@@ -1,2448 +1,380 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="utf-8">
   <title>ワンオラクル</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
- <!-- Kaisei Opti を読み込む -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
-
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
-
- <style>
-  /*------------------------
-    カスタムプロパティ
-  ------------------------*/
-  :root {
-    --header-height-mobile: 70px;
-    --header-height-desktop: 80px;
-    --icon-size-mobile: 100px;
-    --icon-size-desktop: 100px;
-    --nav-gap-mobile: 8px;
-    --nav-gap-desktop: 16px;
-    --btn-radius: 12px;
-  /* ベース（色白） */
-  --yume-white:#ffffff;
-
-  /* パステル（主役3色） */
-  --yume-pink:#FFD7F7;   /* 可愛さ */
-  --yume-lav:#E8D7FF;    /* やさしさ */
-  --yume-mint:#D7F7FF;   /* 透明感 */
-
-  /* 締め色（文字/強調） */
-  --yume-brown:#5C3B34;
-
-  }
-
-  
-  /*------------------------
-    リセット & グローバル
-  ------------------------*/
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: var(--header-height-mobile);
-  }
-  @media (min-width: 768px) {
-    html {
-      scroll-padding-top: var(--header-height-desktop);
-    }
-  }
-
-  /*------------------------
-    中央コンテナ（白帯）
-  ------------------------*/
-.container {
-  background-color: #fff;
-  width: 90%;
-  max-width: 1100px;
-  margin: 0 auto;
-  /* ↓ ここに追加 */
-  padding-top: var(--header-height-mobile);
-}
-@media (min-width: 768px) {
-  .container {
-    padding-top: var(--header-height-desktop);
-  }
-}
-  /*------------------------
-    固定ヘッダー
-  ------------------------*/
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--header-height-mobile);
-    background-color:#FFD7F7;   /* 可愛さ */
-;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  @media (min-width: 768px) {
-    header {
-      height: var(--header-height-desktop);
-    }
-  }
- /* ナビを.container と同じ幅に */
-header nav {
-  /* もともとの高さ・内部レイアウトはそのまま */
-  width: 90%;            /* .container と同じ */
-  max-width: 800px;      /* .container の max-width と同じ */
-  margin: 0 auto;        /* 中央寄せ */
-  padding: 0;            /* 既存の左右 padding は不要になるのでリセット */
-}
-
-  @media (min-width: 768px) {
-    header nav {
-      padding: 0 var(--nav-gap-desktop);
-    }
-  }
-
-  
-/* ───────────────────────────────────────────────
-   ヘッダーナビ：アイコンを大きく＆幅を均等に配置
-──────────────────────────────────────────────── */
-
-/* ① li を flex:1 で均等幅に */
-header nav ul {
-  display: flex;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-header nav ul li {
-  flex: 1;                /* 各アイテムを等幅に */
-  display: flex;
-  justify-content: center;
-}
-
-/* ② a を大きく・正方形に */
-header nav ul li a {
-  width: 64px;            /* モバイル時のサイズ */
-  height: 64px;
-  border-radius: 50%;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-}
-@media (min-width: 768px) {
-  header nav ul li a {
-    width: 80px;          /* デスクトップ時のサイズ */
-    height: 80px;
-  }
-}
-
-/* ③ アイコン画像を拡大 */
-header nav ul li a img {
-  width: 40px;            /* モバイル時 */
-  height: auto;
-}
-@media (min-width: 768px) {
-  header nav ul li a img {
-    width: 40px;          /* デスクトップ時 */
-  }
-}
-
-  /*------------------------
-    セクション共通
-  ------------------------*/
-  section {
-    padding: 2em 1em;
-  }
- section#hero {
-  /* 上下左右の余白を増やしてゆったり見せる */
-  margin-top: 2em;       /* 上にマージン */
-  padding: 7em 1em 2em;  /* 上:4em 右左:1em 下:3em */
-}
-  section#hero,
-  section#hints,
-  section#cards {
-    text-align: center;
-  }
-
-  /*------------------------
-    ヒント & カード一覧
-  ------------------------*/
-  section#hints,
-  section#cards {
-    background-color: #FFFFFF;   /* 白いブロック */
-    border-radius: 8px;
-    margin: 2em 0;
-    padding: 2em 1em;
-  }
-  #cards .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
-    margin: 0 auto 2em;
-    max-width: 800px;
-  }
-  #cards img {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-   /*— 下部セクション（幅制限・左揃え） —*/
-  section#explanation,
-  section#qa,
-  section#about {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left;
-    line-height: 1.6;
-  }
-/* 各リンクをブロック表示＆改行 */
-.toc-section .toc-links a {
-  display: block;
-  margin: 0.25em 0;
-  text-decoration: none;
-  color: inherit;
-}
-
-/*--------------------------
-  全体のセクション余白を増やす
----------------------------*/
-section {
-  padding: 3em 1.5em;  /* 上下:3em、左右:1.5em */
-}
-
-/*--------------------------
-  解説・Q&A 内の記事群にゆとり
----------------------------*/
-.articles {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em; /* 記事同士の間隔 */
-}
-
-/*--------------------------
-  見出しと本文の間の余白
----------------------------*/
-.article_h2, .article_h3 {
-  margin-bottom: 0.75em;
-}
-
-
-
-/*--------------------------
-  箇条書き (<ul>, .dot) の項目間
----------------------------*/
-.dot li, .question-points li {
-  margin-bottom: 0.5em;
-}
-
-/*--------------------------
-  質問ブロック全体の余白
----------------------------*/
-.question-block {
-  margin: 2em 0;
-}
-
-/*--------------------------
-  質問例の Bad/Good セクションに余白
----------------------------*/
-.bad_good {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  margin-bottom: 1em;
-}
-
-/*--------------------------
-  すぐ下のテキスト(sub)にもスペース
----------------------------*/
-.text_sub {
-  margin-bottom: 1.5em;
-}
-
-/*--------------------------
-  example-block 自体にも余裕を
----------------------------*/
-.example-block {
-  margin-bottom: 1.5em;
-  padding: 1.2em;
-}
-
-/*--------------------------
-  目次ブロック内リンクにも余白
----------------------------*/
-.toc-section .toc-links a {
-  margin: 0.75em 0;  /* 上下:0.75em */
-}
- /* 追加スタイル */
-
-    .for_more_detail.tarot {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2em;
-      background: #fff0f5;
-      border-radius: 8px;
-    }
-    .article_ttl_h1 {
-      font-size: 2rem;
-      margin-bottom: 1em;
-      position: relative;
-      text-align: center;
-    }
-    .article_ttl_h1 .underline_wide_img {
-      display: block;
-      width: 100px;
-      height: 4px;
-      background: #ff6685;
-      margin: 0.5em auto;
-      border-radius: 2px;
-    }
-    .telling {
-      margin-bottom: 2em;
-    }
-    .telling .topic {
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-    .telling .number {
-      list-style: decimal inside;
-      margin-left: 1em;
-      margin-bottom: 0.25em;
-    }
-    .telling .sub {
-      display: block;
-      margin-left: 2em;
-      font-size: 0.9rem;
-      margin-bottom: 0.25em;
-    }
-    .articles {
-      display: flex;
-      flex-direction: column;
-      gap: 2em;
-    }
-    .article {
-      background: #fafafa;
-      padding: 1.5em;
-      border-radius: 8px;
-    }
-    .article_h2, .article_h3 {
-      margin-bottom: 0.75em;
-    }
-    .article_h3.sub {
-      font-size: 1.1rem;
-      margin-top: 1.5em;
-    }
-
-/* — Bad／Good を丸で囲む */
-.bad,
-.good {
-  display: inline-block;
-  border: 1px solid #333;      /* 枠線色 */
-  border-radius: 999px;         /* 丸く */
-  padding: 0.2em 0.6em;         /* 上下0.2em・左右0.6em */
-  font-size: 0.9em;
-  font-weight: bold;
-  color: #333;                  /* 文字色 */
-  margin-right: 0.5em;          /* ラベルとテキストの隙間 */
-  vertical-align: middle;
-}
-
-
-
-  /*------------------------
-    Divider
-  ------------------------*/
-  .divider_block {
-    width: 100%;
-    height: 1px;
-    background: #ddd;
-    margin: 2em 0;
-  }
-
-  /*------------------------
-    ボタン共通
-  ------------------------*/
-  .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: rgb(225, 166, 240);
-    color: #fff;
-    border: none;
-    border-radius: var(--btn-radius);
-    cursor: pointer;
-    text-decoration: none;
-    margin: 0.5em;
-  }
-
-  /*------------------------
-    Back to top
-  ------------------------*/
-  #backToTop {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #daa0e9;
-    color: #fff;
-    font-size: 24px;
-    line-height: 1;
-    border: none;
-    cursor: pointer;
-    display: none;
-    z-index: 1000;
-  }
-
-  /*------------------------
-    解説・Q&A・About 共通コンテナ
-  ------------------------*/
-  .for_more_detail.tarot {
-    max-width: 800px;
-    margin: 0 auto;
-  background:
-    radial-gradient(28rem 22rem at 8% 10%,  color-mix(in oklab, var(--yume-lav) 38%, transparent) 0 45%, transparent 60%),
-    radial-gradient(26rem 20rem at 90% 85%, color-mix(in oklab, var(--yume-pink) 32%, transparent) 0 45%, transparent 65%),
-    var(--yume-white);
-  border: 1px solid color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
-  border-radius: 12px;
-  box-shadow: 0 10px 26px rgba(180,130,255,.10);
-  padding: 2em 1.25em;
-}
-.for_more_detail.tarot .article,
-.for_more_detail.tarot .topic_img{
-  background:#fff;       /* 内側は白で読みやすく */
-  border-radius: 10px;
-
-
-    border-radius: 8px;
-    margin-top: calc(var(--header-height-mobile) + 1em);
-  }
-  @media (min-width: 768px) {
-    .for_more_detail.tarot {
-      margin-top: calc(var(--header-height-desktop) + 1em);
-    }
-  }
-  .article_ttl_h1 {
-    font-size: 2rem;
-    text-align: center;
-    position: relative;
-    margin-bottom: 1em;
-  }
-  .article_ttl_h1 .underline_wide_img {
-    display: block;
-    width: 100px;
-    height: 4px;
-    background: #ff6685;
-    margin: 0.5em auto;
-    border-radius: 2px;
-  }
-
-  /*------------------------
-    各記事ブロック（.article）
-  ------------------------*/
-  .article {
-    background-color: #fafafa;   /* デフォルト淡グレー */
-    padding: 1.5em;
-    border-radius: 8px;
-    margin-bottom: 1em;
-  }
-  .article_h2,
-  .article_h3 {
-    margin-bottom: 0.75em;
-  }
-  .article_h3.sub {
-    font-size: 1.1rem;
-    margin-top: 1.5em;
-  }
-  .text_main {
-    line-height: 1.8;
-    margin-bottom: 1em;
-  }
- 
-
-  /* 質問例ブロック */
-.example-block {
- background:
-    radial-gradient(28rem 22rem at 8% 10%,  color-mix(in oklab, var(--yume-lav) 45%, transparent) 0 45%, transparent 60%),
-    radial-gradient(26rem 20rem at 90% 85%, color-mix(in oklab, var(--yume-pink) 40%, transparent) 0 45%, transparent 65%),
-    var(--yume-white);
-  border:1px solid color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
-  border-radius: 8px;
-  padding: 1.2em;
-  margin-bottom: 2em; /* ブロック間の余白 */
-}
-
-/* Bad/Good + 解説 の間隔 */
-.example-block .bad_good {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5em;
-  margin-bottom: 0.8em;
-}
-
-/* — 各行の余白調整 */
-.example-block p {
-  margin: 0.5em 0;
-}
-
-/* — 解説テキスト */
-.text_sub {
-  margin-top: 0.8em;
-  line-height: 1.6;
-}
-
-  /*------------------------
-    画像ラッパー
-  ------------------------*/
-  .topic_img {
-    text-align: center;
-    margin-bottom: 1em;
-  }
-  .topic_img img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /*------------------------
-    ワンオラクル解説固有カスタム
-  ------------------------*/
-  /* 目次部分をで囲む */
-  .for_more_detail.tarot .telling {
-    background-color: #f7edf3;
-    padding: 1em;
-    border-radius: 8px;
-    margin-bottom: 2em;
-  }
-  /* 解説内記事は白に */
-  .for_more_detail.tarot .article {
-    background-color: #ffffff !important;
-  }
-  /* 解説の画像部分も白い箱に */
-  .for_more_detail.tarot .topic_img {
-    background-color: #ffffff;
-    padding: 1em;
-    border-radius: 8px;
-  }
-  /* すぐに使える質問例を */
-  .for_more_detail.tarot .example-block {
-    background-color: #f7edf3;
-    border: 1px solid #f7edf3;
-    padding: 1em;
-    margin-bottom: 2em;
-    border-radius: 8px;
-  }
-/*------------------------
-  セクションタイトルの装飾
-------------------------*/
-.section-title {
-  position: relative;
-  display: inline-block;      /* 下線をテキスト幅に揃えたいならinline-blockに */
-  padding-bottom: 0.25em;     /* 下線と文字の隙間 */
-  margin: 2em 0 1em;          /* 上下マージンはお好みで */
-  font-size: 1.5rem;          /* 見出しサイズ */
-  color: #333;                /* 文字色 */
-  border-bottom: 1px solid #333;  /* 下線 */
-  z-index: 1;
-}
-
-/* 背後に大きく薄い数字を置く */
-.section-title::before {
-  content: attr(data-number);
-  position: absolute;
-  top: -0.5em;                /* 数字の縦位置調整 */
-  left: 0;                    /* 数字の横位置 */
-  font-size: 6rem;            /* 背景数字の大きさ */
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.05); /* 薄いグレー */
-  z-index: -1;                /* テキストより背面 */
-}
-
-/* レスポンシブで数字を少し小さくしたい場合 */
-@media (max-width: 767px) {
-  .section-title::before {
-    font-size: 4rem;
-    top: -0.3em;
-  }
-}
-
-/* ── 目次ブロック共通 ── */
-.toc-block {
-  background-color: #f7edf3;    /* クリーム色の背景 */
-  border-radius: 8px;
-  padding: 2em 1.5em;
-  margin-bottom: 2em;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* タイトル */
-.toc-title {
-  position: relative;
-  font-size: 1.25rem;
-  text-align: center;
-  margin-bottom: 1em;
-  padding-bottom: 0.25em;
-  border-bottom: 1px solid #333;
-}
-
-/* リスト本体 */
-.toc-list {
-  list-style: none;
-  padding-left: 0;
-  counter-reset: toc-counter;
-}
-.toc-list > li {
-  counter-increment: toc-counter;
-  margin-bottom: 0.75em;
-}
-/* 番号の数字 */
-.toc-num {
-  display: inline-block;
-  width: 2em;
-  color: #AAA;
-  font-weight: bold;
-  margin-right: 0.5em;
-}
-/* リンク全体を左揃えブロックに */
-.toc-list a,
-.toc-sublist a {
-  display: block;
-  text-decoration: none;
-  color: #333;
-  text-align: left;
-}
-
-/* サブリスト */
-.toc-sublist {
-  list-style: none;
-  padding-left: 2.5em;
-  margin-top: 0.25em;
-}
-.toc-sublist li {
-  margin-bottom: 0.5em;
-}
-/* 目次のリンクを flex にして、番号と本文を同じ行に */
-.toc-block .toc-list > li > a {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;       /* 番号とテキストの間隔 */
-  text-decoration: none;
-}
-
-/* 番号部分 */
-.toc-block .toc-num {
-  flex-shrink: 0;
-  width: 2em;
-  text-align: right;
-  color: #AAA;
-  font-weight: bold;
-}
-
-/* サブリスト（質問のポイントなど）はブロック表示にしてインデント */
-.toc-block .toc-sublist {
-  list-style: none;
-  margin: 0.5em 0 0 2.5em;  /* 親項目からのインデント */
-  padding: 0;
-}
-.toc-block .toc-sublist li a {
-  display: block;
-  padding: 0.25em 0;
-}
-/* １段階目の箇条書き */
-.dot > li {
-  margin-bottom: 0.5em;
-}
-
-/* ２段階目以降は丸→中黒などを変化させる */
-.dot li li {
-  list-style: circle inside;
-  margin-top: 0.5em;
-  margin-left: 1em;
-}
-/* 親コンテナの左右パディングを少し減らす */
-.for_more_detail.tarot {
-  padding: 2em 0.5em;         /* ← 以前は 2em だったものを 1em に */
-}
-
-/* 紫の example-block を左右いっぱいに */
-.for_more_detail.tarot .example-block {
-  margin: 0 -1em 2em;       /* 親の左右パディングと合わせて */
-  padding: 1.5em;           /* 中の余白はお好みで */
-  background-color: #f7edf3;
-  border-color:    #f7edf3;
-  border-radius: 8px;
-}
-/* +——— container の最大幅を広げる ———+ */
-.container {
-  max-width: 1100px;     /* 例：800 → 1000px にアップ */
-  width: 90%;
-}
-@media (max-width: 767px) {
-  .container {
-    width: 100%;
-  }
-}
-/*──────────────────────────
-  １．「質問のポイント」の箇条書きを
-     ドットの下にテキストが落ちないように
-──────────────────────────*/
-/* ベースの .dot は外側バレット＋本文インデント */
-.dot {
-  list-style: disc outside;    /* バレットは要素の外側に */
-  margin: 1em 0;               /* 前後余白 */
-  padding-left: 1.5em;         /* バレット分のインデント */
-}
-.dot > li {
-  margin-bottom: 0.5em;
-}
-
-/* ネスト２段目以降は中黒に */
-.dot li li {
-  list-style: circle outside;
-  margin-top: 0.5em;
-  margin-left: 1em;            /* 更に内側へ */
-}
-
-/*──────────────────────────
-  ２．「ワンオラクルとは？」の画像を
-     枠いっぱいに大きく見せる
-──────────────────────────*/
-/* .article { padding:1.5em } に合わせて左右に−1.5em はみ出し */
-.for_more_detail.tarot .articles > .article:first-of-type .topic_img {
-  margin: 0 -1.5em 1em;        /* 上:0  左右:-1.5em  下:1em */
-  padding: 0;                  /* もし余白があれば消す */
-}
-/* はみ出した親幅いっぱいに画像を引き伸ばす */
-.for_more_detail.tarot .articles > .article:first-of-type .topic_img img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* ────────────────────────────────────────────
-   ヒーローセクション（#hero）の余白と見出しサイズ統一
-──────────────────────────────────────────── */
-
-/* 見出しと本文の間 */
-section#hero h1 {
-  margin-bottom: 0.75em;       /* 見出し下に空ける */
-  font-size: 2rem;             /* 他セクションの<h1>と同じサイズに */
-  line-height: 1.2;
-}
-
-/* 本文（サブテキスト）と画像の間 */
-section#hero p {
-  margin: 0.5em 0 1.5em;       /* 上:0.5em / 下:1.5em */
-  font-size: 1rem;
-}
-
-/* 画像とボタンの間 */
-section#hero img {
-  display: block;
-  margin: 0 auto 1.5em;        /* 下に余白 */
-  max-width: 100%;
-  height: auto;
-}
-
-/* ボタンと下のセクションとの余白 */
-section#hero .btn {
-  margin-bottom: 2em;
-}
-
-/* もし「ワンオラクルのやり方」などの見出しが <h2> ならこちらも同サイズに */
-.article_ttl_h1, 
-section#hero h1 {
-  font-size: 2rem;
-}
-
-
-/* ────────────────────────────────────────────
-   カード一覧セクション：タイトル大きく＆画像との余白
-──────────────────────────────────────────── */
-section#cards h2 {
-  font-size: 2rem;        /* 見出しを大きく */
-  margin-bottom: 1.5em;   /* 下に余白をつくる */
-}
-
-section#cards .grid {
-  margin-top: 1em;        /* タイトルとの間を開ける */
-  gap: 12px;              /* カード同士の間隔も少し広げ */
-}
-
-/* ────────────────────────────────────────────
-   占うときのヒントセクション：タイトル＆番号リストの余白調整
-──────────────────────────────────────────── */
-section#hints h2 {
-  font-size: 2rem;        /* 見出しを大きく */
-  margin-bottom: 1em;     /* 下に余白 */
-}
-
-/* 内部の番号リスト（1.2.3）のブロック表示・余白 */
-section#hints ul {
-  display: inline-block;  
-  text-align: left;
-  margin: 1em auto 1.5em; /* タイトル→リスト→下ボタンの余白 */
-  padding-left: 1.2em;    /* 番号リストのインデント */
-  list-style: decimal inside;
-}
-section#hints ul li {
-  margin-bottom: 0.6em;   /* 各項目の間隔 */
-}
-
-/* 「占うときのヒント」セクションを相対位置に */
-section#hints {
-  position: relative;
-  overflow: visible;
-}
-
-/* 中の要素は前面に */
-section#hints > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* 疑似要素１つでいびつ丸を見出し＋リストの裏に */
-section#hints::before {
-  content: "";
-  position: absolute;
-  /* サイズは調整OK */
-  width: 280px;
-  height: 260px;
-  background: rgba(242,224,255,0.8);
-  /* ちょいいびつに */
-  border-radius: 55% 45% 60% 40% / 50% 60% 40% 50%;
-  /* 見出しの下・真ん中あたりに */
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-
-/* ２）見出しに余白＋スクロールオフセット */
-.for_more_detail h3 {
-  /* 固定ヘッダー等がある場合は scroll-margin-top をヘッダー高さに */
-  scroll-margin-top: 80px;  /* 必要に応じて調整 */
-  /* セクション間の上下余白 */
-  margin-top: 4rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-/* ３）本文の余白 */
-.for_more_detail p {
-  margin-bottom: 2rem;
-  line-height: 1.8;
-}
-
-/* （目次部分は既存のスタイルがある前提） */
-
-
-
-/* -------------------
-   目次全体のラッパー
-   ------------------- */
-.toc-block {
- background:
-    radial-gradient(28rem 22rem at 8% 10%,  color-mix(in oklab, var(--yume-lav) 45%, transparent) 0 45%, transparent 60%),
-    radial-gradient(26rem 20rem at 90% 85%, color-mix(in oklab, var(--yume-pink) 40%, transparent) 0 45%, transparent 65%),
-    var(--yume-white);
-  border:1px solid color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
-  border-radius: 8px;         /* お好みで */
-  max-width: 700px;           /* 必要に応じて */
-  margin: 2rem auto;          /* 自動センター + 上下余白 */
-
-  /* ✨ ここがポイント ✨ */
-  /* 1) 固定heightがあれば外す */
-  /* 2) padding-top/bottomを均等かつ小さめに */
-  padding: 2rem 1.5rem;       /* 上下2rem／左右1.5rem */
-
-  /* 3) 項目を縦中央にしたいなら flexbox に */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;    /* 子要素を縦方向中央寄せ */
-}
-
-/* -------------------
-   目次タイトル（「目次」）の下線＆余白
-   ------------------- */
-.toc-block .toc-title {
-  margin: 0 0 1.25rem;        /* 下にだけ余白 */
-  padding-bottom: .5rem;
-  border-bottom: 1px solid #ccc;
-  text-align: center;
-}
-
-/* -------------------
-   リスト本体
-   ------------------- */
-.toc-block .toc-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.toc-block .toc-list li {
-  margin-bottom: .75rem;
-}
-
-.toc-block .toc-list li:last-child {
-  margin-bottom: 0;
-}
-
-.toc-block .toc-list a {
-  display: block;
-  padding: .25rem 0;          /* リンク内の上下空間 */
-  color: #5C3B34;
-  text-decoration: none;
-}
-
-/* index.html の <style> 内、セクション共通の下あたりに追加してください */
-section#intro {
-  border-radius: 8px;
-   margin: 0 auto 0em;
-  padding: 2em 1.5em;
-  max-width: 800px;
-  text-align: center;
-}
-@media (min-width: 768px) {
-  section#intro {
-    margin-top: calc(var(--header-height-desktop) + 1em);
-  }
-}
-
-section#intro .intro-text {
-  font-size: 1rem;
-  line-height: 1.8;
-  margin-bottom: 1.5em;
-  color: #5C3B34;
-}
-
-section#intro .intro-cta .btn {
-  padding: 12px 24px;
-  font-size: 1rem;
-}
-
-
-
-
-/* ボタンをまるく可愛く */
-.btn {
-  background: linear-gradient(135deg, #e7a8ff, #f9c7ff);
-  border-radius: 9999px;
-  border: 2px solid #f2d9ff;
-  padding: 12px 28px;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  box-shadow: 0 4px 10px rgba(180, 100, 255, 0.25);
-  transition: all 0.25s ease;
-}
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(180, 100, 255, 0.4);
-}
-
-/* ナビアイコンをふわっと */
-header nav ul li a {
-  background: linear-gradient(145deg, #fff, #f7ecff);
-  border: 2px solid #ead3ff;
-  box-shadow: 0 4px 8px rgba(180, 130, 255, 0.15);
-  transition: all 0.3s ease;
-}
-header nav ul li a:hover {
-  transform: scale(1.05);
-  background: linear-gradient(145deg, #fdf6ff, #f0e1ff);
-}
-
-
-/* カードイメージの枠をふんわり */
-#cardImg {
-  border-radius: 20px;
-  border: 3px solid #f3dcff;
-  box-shadow: 0 8px 20px rgba(200, 170, 255, 0.25);
-  background: #fff;
-  padding: 6px;
-}
-
-/* 詳細カードセクション */
-.detail-section {
-  background: linear-gradient(180deg, #fff, #fef8ff);
-  border-radius: 20px;
-  padding: 1.2em;
-  box-shadow: 0 3px 10px rgba(200, 150, 255, 0.15);
-}
-
-/* フッター */
-footer {
-  color: #aa88cc;
-  font-size: 0.9em;
-  text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
-}
-
-
-
-
-</style>
-
-<style>
-/* ===== Cloud Transition (共通) ===== */
-.cloud-overlay{
-  position:fixed; inset:0; overflow:hidden; z-index:9999;
-  pointer-events:none; background:transparent;
-}
-
-/* ゆめ可愛い雲の塗り＆アウトライン */
-.cloud svg .fill{ fill:#fff7ff; }
-.cloud svg .stroke{ stroke:#caa8ff; stroke-width:2; fill:none; }
-
-/* 覆うとき（index → result 遷移前） */
-@keyframes cloudIn {
-  0%   { transform: translate(var(--tx),var(--ty)) scale(0.6) rotate(var(--rot)); opacity:0; }
-  60%  { opacity:1; }
-  100% { transform: translate(0,0) scale(1) rotate(0deg); opacity:1; }
-}
-/* 晴れていくとき（result で） */
-@keyframes cloudOut {
-  0%   { transform: translate(0,0) scale(1); opacity:1; }
-  100% { transform: translate(var(--otx),var(--oty)) scale(1.1); opacity:0; }
-}
-
-/* 低速回線や簡易モーション配慮（必要なら） */
-@media (prefers-reduced-motion: reduce){
-  .cloud{ animation-duration:200ms !important; }
-}
-
-/* 雲が出る前にページ内容をフェードアウト */
-body.fade-out .main-root {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-</style>
-
-<style>
-/* ============ ゆめかわ背景（共通） ============ */
-/* ほんのりグラデーションの“雲”を重ねる（本文は上・背景は下） */
-.yume-hero,
-.yume-soft-bg{
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-/* ヒーロー：ふわ雲＋光の粒（背景専用レイヤー） */
-.yume-hero::before{
-  
-  content:"";
-  position:absolute; inset:-10%;
-  z-index:-1;
-  /* パステル雲を複数の radial-gradient で重ねる */
-  background:
-    radial-gradient(60rem 40rem at 10% -10%, rgba(255,247,255,.95) 0 40%, transparent 60%) ,
-    radial-gradient(40rem 28rem at 85% 20%,  rgba(232,215,255,.9) 0 35%, transparent 60%),
-    radial-gradient(32rem 24rem at 20% 80%,  rgba(215,247,255,.9) 0 40%, transparent 65%),
-    radial-gradient(50rem 36rem at 110% 90%, rgba(255,243,201,.85) 0 30%, transparent 60%);
-  filter: blur(0.2px);
-}
-
-
-
-/* ============ セクション間のウェーブ ============ */
-.yume-wave{
-  display:block; width:100%; height:64px; margin:-10px 0 0 0;
-  filter: drop-shadow(0 -2px 6px rgba(200,150,255,.18));
-}
-.yume-wave path{ fill:#fff; } /* 下のセクションと自然につなぐ */
-</style>
-
-<style>
-/* 本文可読性：濃いめブラウンを統一し、行間と最大行長を整える */
-body{ color: var(--yume-brown); }
-.for_more_detail.tarot p,
-section#explanation p,
-section#qa p,
-section#about p{ max-width: 70ch; }
-
-/* カード一覧は軽いモーションで「動く気持ちよさ」を＋ */
-#cards .grid a img{
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-#cards .grid a:hover img{
-  transform: translateY(-4px) rotate(-1.2deg);
-  box-shadow: 0 10px 20px rgba(180,130,255,.25);
-}
-</style>
-
-<style>
-/* --- 見出しの色を統一（締め色に） --- */
-.section-title,
-.article_ttl_h1,
-section#hero h1,
-section#cards h2,
-section#hints h2 {
-  color: var(--yume-brown);
-}
-
-/* 下線や区切り線もブラウン系に */
-.section-title { border-bottom: 1px solid color-mix(in oklab, var(--yume-brown) 55%, #fff); }
-.toc-title { border-bottom: 1px solid color-mix(in oklab, var(--yume-brown) 45%, #fff); }
-
-/* TOCのリンク色（本文と一貫） */
-.toc-block .toc-list a,
-.toc-block .toc-sublist a {
-  color: var(--yume-brown);
-}
-
-
-
-/* ラベル文字色をブラウンに統一 */
-header nav ul li a span{
-  color: var(--yume-brown);
-  font-weight: 700;
-}
-
-/* ホバー時は枠を少し濃く＋ほんのりリフト */
-header nav ul li a:hover{
-  transform: translateY(-2px);
-  border-color: color-mix(in oklab, var(--yume-brown) 45%, #fff);
-  box-shadow: 0 6px 14px rgba(92,59,52,.18);
-}
-/* #hints に複数のポップな丸（レイヤー）を敷く */
-section#hints{ position:relative; overflow:hidden; }
-section#hints::before,
-section#hints::after{
-  content:"";
-  position:absolute; inset:-10% -5% -5% -5%;
-  z-index:0; pointer-events:none;
-  background:
-    radial-gradient(180px 140px at 20% 25%,  color-mix(in oklab, var(--yume-pink) 55%, transparent) 0 60%, transparent 61%),
-    radial-gradient(220px 160px at 85% 30%,  color-mix(in oklab, var(--yume-lav) 55%,  transparent) 0 60%, transparent 61%),
-    radial-gradient(160px 120px at 60% 80%,  color-mix(in oklab, var(--yume-mint) 55%, transparent) 0 60%, transparent 61%),
-    radial-gradient(120px 90px  at 10% 90%,  color-mix(in oklab, var(--yume-pink) 45%, transparent) 0 60%, transparent 61%);
-  filter: blur(.2px);
-}
-section#hints::after{
-  inset:-12% -8% -8% -8%;
-  opacity:.6;
-  animation: hintsDrift 24s ease-in-out infinite;
-}
-@keyframes hintsDrift{
-  0%   { transform: translateY(0) }
-  50%  { transform: translateY(-10px) }
-  100% { transform: translateY(0) }
-}
-/* 前景（本文）を上に */
-section#hints > *{ position:relative; z-index:1; }
-
-/* 画面全体の背景（ページ最背面） */
-body{
-  background:
-    radial-gradient(60rem 40rem at -10% -10%, color-mix(in oklab, var(--yume-lav) 22%, #fff) 0 40%, transparent 60%),
-    radial-gradient(50rem 30rem at 110% 10%, color-mix(in oklab, var(--yume-mint) 22%, #fff) 0 35%, transparent 60%),
-    radial-gradient(70rem 50rem at 50% 120%, color-mix(in oklab, var(--yume-pink) 18%, #fff) 0 40%, transparent 65%),
-    var(--yume-white);
-}
-
-/* メインの白帯（.container）は既存どおり白で可読性を担保 */
-.container{
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(180,130,255,.08);
-}
-
-/* 既存の translate: var(--x) var(--y) を無効化し、位置は left/top% で決める */
-.yume-sparkles .sparkle{
-  translate: 0 0;  /* ← 位置決めはJSで left/top% を直接セット */
-}
-
-/* 追記：個々の雲を絶対配置に（left/top/width が効くように）*/
-.cloud { position: absolute; }
-
-
-/* 共通 */
-section#hints, section#cards{ position:relative; overflow:hidden; }
-section#hints > *, section#cards > *{ position:relative; z-index:1; }
-
-/* ヒント：ポップな丸＋ゆる揺れ（軽量） */
-section#hints::before,
-section#hints::after{
-  content:""; position:absolute; inset:-12% -8% -8% -8%; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(180px 140px at 18% 26%, color-mix(in oklab, var(--yume-pink) 55%, transparent) 0 60%, transparent 61%),
-    radial-gradient(220px 160px at 88% 30%, color-mix(in oklab, var(--yume-lav) 55%,  transparent) 0 60%, transparent 61%),
-    radial-gradient(160px 120px at 62% 78%, color-mix(in oklab, var(--yume-mint) 55%, transparent) 0 60%, transparent 61%),
-    radial-gradient(120px 90px  at 10% 88%, color-mix(in oklab, var(--yume-pink) 40%, transparent) 0 60%, transparent 61%);
-}
-section#hints::after{ opacity:.65; animation:hintsDrift 24s ease-in-out infinite; }
-@keyframes hintsDrift{ 0%{transform:translateY(0)} 50%{transform:translateY(-10px)} 100%{transform:translateY(0)} }
-
-/* カード一覧：淡雲 + ドットパターン */
-section#cards::before{
-  content:""; position:absolute; inset:-10%; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(60rem 40rem at 0% -10%,  color-mix(in oklab, var(--yume-lav) 22%, #fff) 0 40%, transparent 60%),
-    radial-gradient(50rem 30rem at 105% 10%, color-mix(in oklab, var(--yume-mint) 22%, #fff) 0 35%, transparent 60%),
-    radial-gradient(70rem 50rem at 50% 120%, color-mix(in oklab, var(--yume-pink) 18%, #fff) 0 40%, transparent 65%),
-    var(--yume-white);
-}
-/* 細かいドットで“布感”をプラス（超軽量SVG） */
-section#cards::after{
-  content:""; position:absolute; inset:0; z-index:0; opacity:.25; pointer-events:none;
-  background-image: radial-gradient(currentColor 1px, transparent 1.5px);
-  color: color-mix(in oklab, var(--yume-lav) 40%, var(--yume-white));
-  background-size: 14px 14px;
-  mix-blend-mode: multiply;
-}
-
-
-/* === Header/Nav を index の見た目に統一（上書き用） === */
-:root{
-  --yume-pink:#FFD7F7;
-  --yume-brown:#5C3B34;
-}
-
-
-/* ラベル（span）の色をブラウンで統一 */
-header nav ul li a span{
-  color: var(--yume-brown) !important;
-}
-
-/* 幅合わせ（どちらのページでも同じレイアウト幅に） */
-header nav{ width: 90%; max-width: 800px; margin: 0 auto; padding: 0; }
-
-
-/* 1200x1000 の中央ステージ */
-.cloud-stage{
-  position:absolute;
-  width:1200px;
-  height:1000px;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  pointer-events:none;
-}
-
-
-/* === Kaisei Opti に全体統一（最終オーバーライド） === */
-:root{
-  /* 必要なら文字色などもここで統一できます（任意） */
-  --text-color: var(--yume-brown, #5C3B34);
-}
-
-/* 本文・見出し・ナビなどサイト全体を Kaisei Opti に */
-html, body, header, nav, section, article,
-h1, h2, h3, h4, h5, h6,
-p, a, li, button, input, textarea, .btn, .toc-block, .for_more_detail {
-  font-family: "Kaisei Opti", "Hiragino Mincho ProN", "Yu Mincho",
-               "Noto Serif JP", serif !important;
-  color: var(--text-color);
-}
-
-/* 読みやすさの基本（和文セリフ向けの行高＆字間） */
-body { line-height: 1.8; letter-spacing: .02em; }
-
-/* 見出しは少しタイトに（お好みで調整可） */
-h1, h2, h3 { line-height: 1.4; letter-spacing: .01em; }
-
-/* ナビのラベルなど、小さめ文字のにじみ軽減 */
-small, nav span, .btn, .toc-block .toc-list a { letter-spacing: 0; }
-
-
-/* === 虹色グラデのヘッダー（共通・最後に入れる）=== */
-header{
-  /* 虹色の材料（やさしい夢かわトーン） */
-  --r1:#ffd7f7; --r2:#ffe8d7; --r3:#fff3c9; --r4:#d7f7ff; --r5:#e8d7ff;
-  background: linear-gradient(90deg, var(--r1), var(--r2), var(--r3), var(--r4), var(--r5), var(--r1)) !important;
-  background-size: 400% 100%;
-  animation: headerRainbow 18s ease-in-out infinite;
-}
-
-@keyframes headerRainbow{
-  0%   { background-position:   0% 0; }
-  50%  { background-position: 100% 0; }
-  100% { background-position:   0% 0; }
-}
-
-/* === 初回だけのローディング === */
-#first-visit-loader {
-  position: fixed; inset: 0; z-index: 4000;
-  display: grid; place-items: center;
-  background: radial-gradient(1000px 800px at 50% 50%, rgba(255,255,255,.85) 0 40%, rgba(255,255,255,.5) 70%, transparent 100%);
-  transition: opacity .6s ease, visibility .6s ease;
-}
-
-/* ゆめかわ背景にじみ円 */
-#first-visit-loader .blob {
-  position: absolute; border-radius: 50%; filter: blur(38px);
-  opacity: .85; mix-blend-mode: screen;
-  animation: blobMove var(--d, 18s) ease-in-out infinite;
-}
-#first-visit-loader .b1 {
-  background: radial-gradient(circle at 30% 30%, var(--yume-pink,#FFD7F7) 0 55%, transparent 60%);
-  width: 55vmin; height: 55vmin; left: -10%; top: -6%; --d: 18s;
-}
-#first-visit-loader .b2 {
-  background: radial-gradient(circle at 65% 40%, var(--yume-lav,#E8D7FF) 0 55%, transparent 60%);
-  width: 60vmin; height: 60vmin; right: -8%; top: 10%; --d: 20s; animation-delay: -3s;
-}
-#first-visit-loader .b3 {
-  background: radial-gradient(circle at 40% 70%, var(--yume-mint,#D7F7FF) 0 55%, transparent 60%);
-  width: 68vmin; height: 68vmin; left: 10%; bottom: -12%; --d: 22s; animation-delay: -6s;
-}
-@keyframes blobMove {
-  0% { transform: translate(0,0) scale(1);}
-  40%{ transform: translate(5%,-3%) scale(1.05);}
-  70%{ transform: translate(-3%,4%) scale(1.04);}
-  100%{ transform: translate(0,0) scale(1);}
-}
-
-/* 泡ぽこアニメ */
-.loader-bubbles{
-  display:flex; gap:10px;
-}
-.loader-bubbles .b{
-  width:18px; height:18px; border-radius:50%;
-  background: var(--yume-lav,#883688);
-  opacity:.6; animation: bubble 1.5s infinite ease-in-out;
-}
-.loader-bubbles .b:nth-child(2){ animation-delay:.25s; }
-.loader-bubbles .b:nth-child(3){ animation-delay:.5s; }
-@keyframes bubble{
-  0%,80%,100%{ transform: translateY(0); opacity:.5; }
-  40%{ transform: translateY(-12px); opacity:1; }
-}
-
-.loader-text{
-  font-family:"Kaisei Opti","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
-  font-size:18px; color:var(--yume-brown,#5C3B34);
-  margin-top:12px;
-}
-
-/* 消えるアニメ */
-#first-visit-loader.hide{
-  opacity:0; visibility:hidden; pointer-events:none;
-}
-
-
-
-
-</style>
-<style>
-/* === ゆめかわローディング（背景が透けない・滲んだ玉が動く） === */
-#first-visit-loader {
-  position: fixed; inset: 0; z-index: 4000;
-  display: grid; place-items: center;
-  background: rgb(218, 146, 202); /* 背景を濃くして透け防止 */
-  overflow: hidden;
-  transition: opacity .6s ease, visibility .6s ease;
-}
-
-/* 動く滲んだグラデーション玉 */
-#first-visit-loader .blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px); /* 滲みを強く */
-  opacity: 0.85;
-  mix-blend-mode: screen;
-  animation: blobFloat var(--d, 20s) ease-in-out infinite;
-}
-
-/* 玉それぞれの色とサイズ */
-#first-visit-loader .b1 {
-  background: radial-gradient(circle at 30% 30%, var(--yume-pink,#FFD7F7) 0 60%, transparent 70%);
-  width: 70vmin; height: 70vmin;
-  left: -10%; top: -10%;
-  --d: 24s;
-}
-#first-visit-loader .b2 {
-  background: radial-gradient(circle at 70% 40%, var(--yume-lav,#E8D7FF) 0 60%, transparent 70%);
-  width: 75vmin; height: 75vmin;
-  right: -15%; top: 5%;
-  --d: 26s;
-  animation-delay: -4s;
-}
-#first-visit-loader .b3 {
-  background: radial-gradient(circle at 40% 70%, var(--yume-mint,#D7F7FF) 0 60%, transparent 70%);
-  width: 80vmin; height: 80vmin;
-  left: 5%; bottom: -15%;
-  --d: 28s;
-  animation-delay: -8s;
-}
-
-/* ゆっくり動くアニメーション */
-@keyframes blobFloat {
-  0%   { transform: translate(0,0) scale(1); }
-  25%  { transform: translate(8%, -6%) scale(1.05); }
-  50%  { transform: translate(-6%, 8%) scale(1.1); }
-  75%  { transform: translate(5%, -4%) scale(1.03); }
-  100% { transform: translate(0,0) scale(1); }
-}
-
-/* ローディングの中身 */
-#first-visit-loader .loader-bubbles{
-  display:flex; gap:10px;
-}
-#first-visit-loader .bubbles .b,
-#first-visit-loader .loader-bubbles .b {
-  width:18px; height:18px; border-radius:50%;
-  background: var(--yume-lav,#a382ce);
-  opacity:.6; animation: bubble 1.5s infinite ease-in-out;
-}
-#first-visit-loader .bubbles .b:nth-child(2),
-#first-visit-loader .loader-bubbles .b:nth-child(2){ animation-delay:.25s; }
-#first-visit-loader .bubbles .b:nth-child(3),
-#first-visit-loader .loader-bubbles .b:nth-child(3){ animation-delay:.5s; }
-
-@keyframes bubble {
-  0%,80%,100%{ transform: translateY(0); opacity:.5; }
-  40%{ transform: translateY(-12px); opacity:1; }
-}
-
-#first-visit-loader .loader-text {
-  font-family:"Kaisei Opti","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
-  font-size:18px;
-  color:var(--yume-brown,#5C3B34);
-  margin-top:12px;
-}
-
-/* フェードアウト */
-#first-visit-loader.hide {
-  opacity:0; visibility:hidden; pointer-events:none;
-}
-
-
-/* === 1) 背景はピンクのまま、玉が沈まないようチューニング === */
-#first-visit-loader{
-  /* 既存のピンク背景はそのまま活かす */
-  background: rgb(218, 146, 202);
-  /* 下の内容がにじみと混ざらないよう、すこしだけ白のベールを足すとコントラストUP */
-  background-image:
-    radial-gradient(1200px 900px at 50% 40%, rgba(255,255,255,.12) 0 50%, transparent 70%);
-}
-
-/* === 2) にじみ玉（blobs）：中央の玉 b2 を“目立つ色”＆ブレンド変更で浮かせる === */
-#first-visit-loader .blob{
-  filter: blur(70px);             /* にじみUP（既存より強め） */
-  opacity: .88;
-  mix-blend-mode: screen;         /* デフォは screen のまま */
-}
-#first-visit-loader .b2{
-  /* ピンク背景に沈まない“相補系”のミントブルー寄りに強調 */
-  --mint-strong: color-mix(in oklab, var(--yume-mint, #D7F7FF) 85%, #9EE7FF);
-  background: radial-gradient(circle at 55% 45%, var(--mint-strong) 0 62%, transparent 72%);
-  /* ここがポイント：screen だとピンクに溶ける→ normal にして前面へ */
-  mix-blend-mode: normal !important;
-  opacity: .95;                   /* ほんのり濃く */
-  filter: blur(60px) saturate(1.25);
-  /* 位置とサイズも少しだけ主張 */
-  width: 82vmin; height: 82vmin;
-  right: -10%; top: -2%;
-}
-/* ふわっとした白いハロー（輪郭）を足して“存在感”を上げる */
-#first-visit-loader .b2::after{
-  content:""; position:absolute; inset:-8%;
-  border-radius:50%;
-  box-shadow:
-    0 0 0 12px rgba(255,255,255,.20),
-    0 0 80px 30px rgba(255,255,255,.18);
-}
-
-/* === 3) 小さな“ぽこぽこ玉”をもっと目立たせる（コントラスト＆輪郭＆発光） === */
-#first-visit-loader .loader-bubbles{ 
-  position: relative; z-index: 3;   /* 背景の blobs より前に */
-  gap: 12px;
-}
-#first-visit-loader .loader-bubbles .b{
-  width: 22px; height: 22px;        /* ちょい大きく */
-  border-radius: 50%;
-  /* 立体っぽい内側グラデ＋白いハローで埋もれない */
-  background:
-    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #FFE9FF 36% 72%, #C27BFF 73% 100%);
-  box-shadow:
-    0 0 0 3px rgba(255,255,255,.90),       /* 白フチでピンク背景から分離 */
-    0 6px 16px rgba(150, 70, 255, .35),    /* 発光っぽい影 */
-    inset 0 -4px 10px rgba(130, 60, 230, .25);
-  mix-blend-mode: normal;                  /* ここも“溶けない”ように normal */
-  opacity: 1;                              /* くっきり */
-}
-/* 3色交互にして華やかさUP（ピンク背景で映える色） */
-#first-visit-loader .loader-bubbles .b:nth-child(1){
-  background:
-    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #E7F6FF 36% 72%, #5EB7FF 73% 100%);
-  box-shadow:
-    0 0 0 3px rgba(255,255,255,.92), 0 6px 16px rgba(50,140,255,.35), inset 0 -4px 10px rgba(30,120,240,.22);
-}
-#first-visit-loader .loader-bubbles .b:nth-child(2){
-  background:
-    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #FFF5D6 36% 72%, #FFC957 73% 100%);
-  box-shadow:
-    0 0 0 3px rgba(255,255,255,.92), 0 6px 16px rgba(255,170,70,.35), inset 0 -4px 10px rgba(220,140,40,.22);
-}
-#first-visit-loader .loader-bubbles .b:nth-child(3){
-  background:
-    radial-gradient(circle at 30% 30%, #FFFFFF 0 35%, #F2E3FF 36% 72%, #B07CFF 73% 100%);
-  box-shadow:
-    0 0 0 3px rgba(255,255,255,.92), 0 6px 16px rgba(176,124,255,.35), inset 0 -4px 10px rgba(150,90,240,.22);
-}
-
-/* アニメの上下幅も少し大きくして目に入りやすく */
-@keyframes bubble{
-  0%,80%,100%{ transform: translateY(0); opacity:.9; }
-  40%{ transform: translateY(-16px); opacity:1; }
-}
-
-/* === 4) ローダー中央のテキスト＆バブルを最前面に固定（背景に埋もれない） === */
-#first-visit-loader .loader-stage > div:last-child{
-  position: relative;
-  z-index: 4;   /* blobs より確実に前へ */
-}
-#first-visit-loader .loader-text{
-  color: var(--yume-brown, #5C3B34);
-  text-shadow: 0 2px 10px rgba(255,255,255,.6); /* ピンク面でも読みやすく */
-}
-
-
-/* フッター中央寄せ */
-footer{
-  text-align: center;
-}
-footer p{ margin: 0; }
-
-
-/* ========== Header Nav：丸背景をなくして、イラスト＋文字のみ ========== */
-
-/* a自体の“丸ボタン”化を上書きで解除 */
-header nav ul li a{
-  width: auto !important;
-  height: auto !important;
-  padding: 4px 6px !important;
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-
-  /* レイアウトは縦積みのまま（アイコン上、文字下） */
-  display: inline-flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 4px !important;
-  text-decoration: none;
-  transition: transform .2s ease;
-}
-
-/* ホバー時はほんのり持ち上げる（丸枠は出さない） */
-header nav ul li a:hover{
-  transform: translateY(-2px);
-}
-
-/* アイコンを少し大きく・鮮やかに、でも“枠”は付けない */
-header nav ul li a img{
-  filter:
-    drop-shadow(0 3px 8px rgba(231, 22, 144, 0.3))
-    drop-shadow(0 0 6px rgba(255,255,255,.4))
-    saturate(1.2) contrast(1.1);
-}
-
-@media (min-width:768px){
-  header nav ul li a img{ width: 54px; }
-}
-header nav ul li a:hover img{
-  filter: drop-shadow(0 5px 14px rgba(231, 22, 144, 0.3))
-          saturate(1.25) contrast(1.15);
-}
-
-/* ラベル文字はそのまま使い、視認性だけ上げる */
-header nav ul li a span{
-  font-weight: 700;
-  /* 背景が淡いグラデでも埋もれにくい白系のハイライト */
-  text-shadow:
-    0 1px 0 rgba(255,255,255,.85),
-    0 0 8px rgba(255,255,255,.55);
-}
-
-
-.btn {
-  background: linear-gradient(135deg, #ffd7f7, #e8d7ff, #d7f7ff);
-  color: #5C3B34;
-  border-radius: 50px;
-  padding: 12px 28px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(200,150,255,0.3);
-}
-
-.btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(200,150,255,0.5);
-}
-
-/* ★ 星（ポップなふちどり付き） */
-.yume-sparkles .sparkle{
-  position:absolute; pointer-events:none;
-  width: var(--s, 14px); height: var(--s, 14px);
-  left:0; top:0;
-  /* ふわっと上下＆左右ゆらゆら（既存があれば上書きでOK） */
-  animation: floatY var(--d,8s) ease-in-out infinite,
-             driftX calc(var(--d,8s) * 1.15) ease-in-out infinite;
-  /* 中のキラッと光 */
-  background: radial-gradient(circle at 50% 45%, #fff 0 40%, rgba(255,255,255,0) 70%);
-  opacity: .95;
-  /* ⭐星形にする */
-  clip-path: polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
-  /* ふちどり：白→ゆめパープルの二重アウトライン */
-  filter:
-    drop-shadow(0 0 0 2px #ffffff)
-    drop-shadow(0 0 0 4px #ead3ff)
-    drop-shadow(0 2px 6px rgba(180,130,255,.35));
-}
-
-/* サイズちがいを簡単に作る用（任意） */
-.yume-sparkles .sparkle.xs{ --s:10px; --d:7s; }
-.yume-sparkles .sparkle.md{ --s:16px; --d:9s; }
-.yume-sparkles .sparkle.lg{ --s:20px; --d:11s; }
-
-/* 上下・左右のゆらぎ（既存があれば流用） */
-@keyframes floatY { 0%{transform:translateY(0)} 50%{transform:translateY(-16px)} 100%{transform:translateY(0)} }
-@keyframes driftX { 0%{transform:translateX(0)} 50%{transform:translateX(12px)} 100%{transform:translateX(0)} }
-
-/* 動きが苦手な人の設定に配慮（任意） */
-@media (prefers-reduced-motion: reduce){
-  .yume-sparkles .sparkle{ animation-duration:.01ms; animation-iteration-count:1; }
-}
-/* === レイヤー（クリックの邪魔をしない） === */
-.sparkle-layer,
-.cloud-layer{
-  position: fixed; inset: 0;
-  pointer-events: none;       /* ← ボタン操作を邪魔しない */
-  z-index: 5;                 /* 必要なら数値を微調整 */
-}
-
-/* === ⭐ 星（キラキラ）=== */
-/* 8角スター＋“ポップなアウトライン”を drop-shadow で多重に */
-.sparkle {
-  position: absolute;
-  width: var(--s, 12px); height: var(--s, 12px);
-  /* 星形クリップ（8角スター） */
-  clip-path: polygon(50% 0%, 60% 35%, 100% 50%, 60% 65%, 50% 100%, 40% 65%, 0% 50%, 40% 35%);
-  background: radial-gradient(circle at 50% 45%, #fff 0 40%, rgba(255,255,255,0) 70%);
-  opacity: .95;
-  /* ポップなアウトライン（淡い縁取りを重ねる） */
-  filter:
-    drop-shadow(0 0 2px var(--yume-white))
-    drop-shadow(0 0 4px color-mix(in oklab, var(--yume-pink) 70%, transparent))
-    drop-shadow(0 0 6px color-mix(in oklab, var(--yume-lav) 60%, transparent))
-    drop-shadow(0 0 10px color-mix(in oklab, var(--yume-mint) 55%, transparent));
-  animation: sparkleFloat var(--d, 9s) ease-in-out infinite,
-             sparkleDrift calc(var(--d, 9s) * 1.1) ease-in-out infinite;
-}
-
-/* ふわ上下 */
-@keyframes sparkleFloat {
-  0%,100% { transform: translateY(0) rotate(0deg); }
-  50%     { transform: translateY(-16px) rotate(8deg); }
-}
-/* ゆる横ゆれ */
-@keyframes sparkleDrift {
-  0%,100% { margin-left: 0; }
-  50%     { margin-left: 10px; }
-}
-
-/* 動きを苦手な人の設定（端末の“簡易アニメ”）を尊重 */
-@media (prefers-reduced-motion: reduce){
-  .sparkle{ animation: none; }
-}
-
-/* === ☁️ 雲（SVGもCSSもOK）=== */
-.cloud-puff{
-  position: absolute;
-  opacity: .9;
-  animation: cloudFloat var(--cd, 18s) ease-in-out infinite;
-  filter: drop-shadow(0 2px 6px rgba(180,130,255,.12));
-}
-@keyframes cloudFloat{
-  0%,100% { transform: translateY(0) }
-  50%     { transform: translateY(-12px) }
-}
-@media (prefers-reduced-motion: reduce){
-  .cloud-puff{ animation: none; }
-}
-
-/* ☁️ 雲の透明・乗算スタイル改良 */
-.cloud-puff {
-  position: absolute;
-  opacity: 0.3; /* ← 薄め（0.3〜0.5の範囲でお好みでOK） */
-  mix-blend-mode: multiply; /* ← 下の色と混ざる（乗算っぽく） */
-  animation: cloudFloat var(--cd, 18s) ease-in-out infinite;
-  filter: drop-shadow(0 3px 6px rgba(180,130,255,.1));
-  pointer-events: none; /* ← クリックできるボタンを邪魔しない */
-  transition: opacity .4s ease;
-}
-
-.cloud-puff svg path {
-  fill: url(#cloudFill);
-  stroke: color-mix(in oklab, var(--yume-lav) 50%, transparent);
-  stroke-width: 1.6;
-  opacity: 0.7;
-}
-
-/* ホバーでちょっと濃くして動きを強調（オプション） */
-.cloud-puff:hover {
-  opacity: 0.55;
-}
-/* さらに薄く＆下の色と自然に混ざる */
-.cloud-puff{
-  mix-blend-mode: multiply;   /* ← 乗算っぽいブレンドで透け感UP */
-  position: absolute;
-  pointer-events: none;
-  /* 左右スライド（外側）＋ふわっと上下（内側 .cloud-body で付与） */
-  animation: cloudSlide var(--slide, 8s) linear infinite alternate;
-  transition: opacity .3s ease;
-}
-/* 内側（SVG）が上下にゆらぐ：transformを分けて衝突しないようにするのがポイント */
-.cloud-puff .cloud-body{
-  animation: cloudFloat var(--cd, 8s) ease-in-out infinite;
-}
-
-/* 左右スライド用（外側でX方向だけ） */
-@keyframes cloudSlide{
-  from { transform: translateX(var(--from, -25vw)); }
-  to   { transform: translateX(var(--to,    25vw)); }
-}
-
-/* 既存の上下ゆらぎ（Y方向だけ） */
-@keyframes cloudFloat{
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-25px); }
-}
-
-
-/* === ゆめかわ背景（全体にふんわり） === */
-body {
-  background:
-    /* やわらかい全体グラデーションベース */
-    linear-gradient(160deg,
-      color-mix(in oklab, var(--yume-pink) 35%, #fff8ff) 0%,
-      color-mix(in oklab, var(--yume-lav) 40%, #f7e5ff) 45%,
-      color-mix(in oklab, var(--yume-mint) 30%, #faffef) 100%),
-
-    /* 光の丸をうっすら重ねる */
-    radial-gradient(50rem 35rem at 15% 15%, rgba(255,200,255,.4) 0%, transparent 60%),
-    radial-gradient(60rem 45rem at 80% 80%, rgba(200,255,255,.35) 0%, transparent 65%),
-    var(--yume-white);
-
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-}
-
-</style>
-
+  <!-- Kaisei Opti を読み込む -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 
 </head>
+
 <body>
-<!-- ★ 初回だけの可愛いローディング -->
-<div id="first-visit-loader" hidden>
-  <div class="loader-stage">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
-    <div style="display:grid;place-items:center;z-index:1;position:relative;">
-      <div class="loader-bubbles">
-        <div class="b"></div><div class="b"></div><div class="b"></div>
+  <!-- ★ 初回だけの可愛いローディング -->
+  <div id="first-visit-loader" hidden>
+    <div class="loader-stage">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <div style="display:grid;place-items:center;z-index:1;position:relative;">
+        <div class="loader-bubbles">
+          <div class="b"></div>
+          <div class="b"></div>
+          <div class="b"></div>
+        </div>
+        <p class="loader-text">…読み込み中</p>
       </div>
-      <p class="loader-text">はじめまして…読み込み中</p>
     </div>
   </div>
-</div>
 
 
-    <div class="main-root">
-   <div class="container">
+  <div class="main-root">
+    <div class="container">
 
-     <!-- ① ここからイントロを追加 -->
-  <section id="intro" class="intro yume-soft-bg">
-      <h1 class="section-title">はじめに</h1>
-      <p class="intro-text">
-        ワンオラクルは、〈あなたの今〉にフォーカスしたシンプルな1枚引きのオラクルカード占いサイトです。  
-        毎日のヒントや行動のアドバイスを、カード1枚から受け取ってみましょう。
-      </p>
-      <p class="intro-cta">
-        <a class="btn" href="#hero">まずはカードを引いてみる</a>
-      </p>
-</section>
-    <!-- ① ここまで -->
-  <!-- ヘッダー -->
- <header>
-  <nav>
-    <ul>
-      <!-- ① ここを追加 -->
-      <li>
-        <a href="#hero">
-          <img src="icons/00.png" alt="トップアイコン">
-          <span>draw</span>
-        </a>
-      </li>
-      <!-- ───────────────────────── -->
-      <li>
-        <a href="#cards">
-          <img src="icons/01.png" alt="カード一覧">
-          <span>list</span>
-        </a>
-      </li>
-      <li>
-        <a href="#explanation">
-          <img src="icons/02.png" alt="解説">
-          <span>How to</span>
-        </a>
-      </li>
-      <li>
-        <a href="#qa">
-          <img src="icons/03.png" alt="Q&A">
-          <span>Q&A</span>
-        </a>
-      </li>
-      <li>
-        <a href="#about">
-          <img src="icons/04.png" alt="About">
-          <span>About</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-</header>
-  <!-- ヒーロー -->
- <section id="hero" class="yume-hero yume-sparkles" data-sparkles="26">
-   <div class="sparkles" aria-hidden="true"></div>
-    <h1>ワンオラクル</h1>
-
-    <b>聞きたいことを具体的に思い浮かべて</b><br>今日の過ごし方・恋愛・仕事・金運など…<br>今あなたが知りたいことは？<br>下に続く占い方のヒント・やり方も参考にしてね</p>
-    <img src="images/hero.png" alt="タロットイメージ" style="max-width:100%;height:300px;">
-    <p><a class="btn" href="result.html">カードを引く</a></p>
-
-   
-
-    
-  </section>
-
-  <!-- ヒーローの直後に“波”の仕切り（セクション間のつなぎ） -->
-<svg class="yume-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-  <path d="M0,40 C180,90 360,0 540,20 C720,40 900,110 1080,80 C1260,50 1350,65 1440,50 L1440,120 L0,120 Z"/>
-</svg>
-
-  <!-- ヒント三か条 -->
-<section id="hints" class="yume-soft-bg">
-    <h2>占うときのヒント</h2>
-    <ul style="list-style:decimal inside; display:inline-block; text-align:left;">
-      <li>同じ質問は繰り返さないで</li>
-      <li>引く前に深呼吸してリラックスして</li>
-      <li>引いたカードの行動をしてみよう</li>
-    </ul>
-    <p><a class="btn" href="#explanation">ワンオラクルのやり方を見る</a></p>
-  </section>
-
-  <!-- カード一覧 -->
-<section id="cards" class="yume-soft-bg">
-    <h2>カード一覧</h2>
-    <p>カードをタップして詳細を見る</p>
-    <div class="grid">
-      <!-- 0～21まで順番に -->
-      <a href="result.html?index=0"><img src="cards/0.png"  alt="カード0：愚者"></a>
-      <a href="result.html?index=1"><img src="cards/1.png"  alt="カード1：魔術師"></a>
-      <a href="result.html?index=2"><img src="cards/2.png"  alt="カード2：女教皇"></a>
-      <a href="result.html?index=3"><img src="cards/3.png"  alt="カード3：女帝"></a>
-      <a href="result.html?index=4"><img src="cards/4.png"  alt="カード4：皇帝"></a>
-      <a href="result.html?index=5"><img src="cards/5.png"  alt="カード5：法王"></a>
-      <a href="result.html?index=6"><img src="cards/6.png"  alt="カード6：恋人"></a>
-      <a href="result.html?index=7"><img src="cards/7.png"  alt="カード7：戦車"></a>
-      <a href="result.html?index=8"><img src="cards/8.png"  alt="カード8：力"></a>
-      <a href="result.html?index=9"><img src="cards/9.png"  alt="カード9：隠者"></a>
-      <a href="result.html?index=10"><img src="cards/10.png" alt="カード10：運命の輪"></a>
-      <a href="result.html?index=11"><img src="cards/11.png" alt="カード11：正義"></a>
-      <a href="result.html?index=12"><img src="cards/12.png" alt="カード12：吊された男"></a>
-      <a href="result.html?index=13"><img src="cards/13.png" alt="カード13：死神"></a>
-      <a href="result.html?index=14"><img src="cards/14.png" alt="カード14：節制"></a>
-      <a href="result.html?index=15"><img src="cards/15.png" alt="カード15：悪魔"></a>
-      <a href="result.html?index=16"><img src="cards/16.png" alt="カード16：塔"></a>
-      <a href="result.html?index=17"><img src="cards/17.png" alt="カード17：星"></a>
-      <a href="result.html?index=18"><img src="cards/18.png" alt="カード18：月"></a>
-      <a href="result.html?index=19"><img src="cards/19.png" alt="カード19：太陽"></a>
-      <a href="result.html?index=20"><img src="cards/20.png" alt="カード20：審判"></a>
-      <a href="result.html?index=21"><img src="cards/21.png" alt="カード21：世界"></a>
-    </div>
-  </section>
-
-  <!-- 解説セクション -->
-<section id="explanation" class="yume-soft-bg">
-  <div class="divider_block"></div>
-  <div class="for_more_detail tarot">
-    <h2 class="article_ttl_h1"><span>ワンオラクルのやり方</span></h2>
-    <span class="underline_wide_img"></span>
-
-    <!-- ── 目次ブロック ── -->
-    <div class="toc-block">
-      <h3 class="toc-title" data-number="02">目次</h3>
-      <ol class="toc-list">
-        <li>
-          <a href="#h2_1"><span class="toc-num">01</span> ワンオラクルとは？</a>
-        </li>
-        <li>
-          <a href="#h2_2"><span class="toc-num">02</span> ワンオラクルでは具体的に質問しよう</a>
-          <ol class="toc-sublist">
-            <li><a href="#h3_1">質問のポイント</a></li>
-            <li><a href="#h3_2">すぐに使える質問例</a></li>
-          </ol>
-        </li>
-      </ol>
-    </div>
-      <div class="articles">
- <h2 id="h2_1" class="section-title" data-number="01">ワンオラクルとは？</h2>
-        <div class="article">
-          <div class="topic_img"><img src="images/orakuru.png" alt="ワンオラクルのイメージ"></div>
-          <p class="text_main">ワンオラクルは、カードを1枚だけ引いて、そのカードから得られるメッセージやアドバイスを読み解く占術です。シンプルにテーマを絞ることで、的確な示唆を受け取ることができます。</p>
-        </div>
-  <h2 id="h2_2" class="section-title" data-number="02">ワンオラクルでは具体的に質問しよう</h2>
-        <div class="article">
-          <p class="text_main">ワンオラクルは一問一答です。より具体的な質問を頭に浮かべましょう。</p>
-          <h3 id="h3_1" class="article_h3 sub">質問のポイント</h3>
-          <ul class="dot">
-            <li>「誰」を占いたいか—自分・相手</li>
-            <li>「いつのこと」を占いたいか—過去・現在・未来</li>
-            <li>「なに」を占いで得たいかーアドバイス・今の状況・相手や自分の心</li>
+      <!-- ① ここからイントロを追加 -->
+      <!--<section id="intro" class="intro yume-soft-bg">
+        <h1 class="section-title">はじめに</h1>
+        <p class="intro-text">
+          ワンオラクルは、〈あなたの今〉にフォーカスしたシンプルな1枚引きのオラクルカード占いサイトです。
+          毎日のヒントや行動のアドバイスを、カード1枚から受け取ってみましょう。
+        </p>
+        <p class="intro-cta">
+          <a class="btn" href="#hero">まずはカードを引いてみる</a>
+        </p>
+      </section>
+      <-- ① ここまで -->
+      <!-- ヘッダー -->
+      <header>
+        <nav>
+          <ul>
+            <!-- ① ここを追加 -->
+            <li>
+              <a href="#hero">
+                <img src="icons/00.png" alt="トップアイコン">
+                <span>draw</span>
+              </a>
+            </li>
+            <!-- ───────────────────────── -->
+            <li>
+              <a href="#cards">
+                <img src="icons/01.png" alt="カード一覧">
+                <span>list</span>
+              </a>
+            </li>
+            <li>
+              <a href="#explanation">
+                <img src="icons/02.png" alt="解説">
+                <span>How to</span>
+              </a>
+            </li>
+            <li>
+              <a href="#qa">
+                <img src="icons/03.png" alt="Q&A">
+                <span>Q&A</span>
+              </a>
+            </li>
+            <li>
+              <a href="#about">
+                <img src="icons/04.png" alt="About">
+                <span>About</span>
+              </a>
+            </li>
           </ul>
-          <p class="text_main">タロットでは結果の良し悪しではなく、結果からどんなアドバイスを得られるかのほうが重要です。
-<br></br>
-もし質問があいまいなままカードをひいてしまうと ・結果の良し悪しに執着してしまい、カードからのアドバイスを行動に移せない ・漠然とした答えしか返ってこず、満足できない ・勝手に都合のいい解釈をしてしまう など、正しく結果と向き合うことができなくなってしまいます。
-<br></br>質問を用意するときは「自分はどうしたいのか」という意思を明確にし、さらに「それを叶えるのはどうすればいいのか」という具体案をセットにするといい質問に近づきます。</p>
-          <h3 id="h3_2" class="article_h3 sub">すぐに使える質問例</h3>
-     <div class="example-block">
-  <div class="bad_good">
-    <span class="label bad">Bad</span>
-    <p><b>彼氏はできる？</b></p>
-  </div>
-  <div class="bad_good">
-    <span class="label good">Good</span>
-    <p><b>半年以内に結婚を前提とした相手と付き合うにはどうすればいい？</b></p>
-  </div>
-  <p class="text_sub">
-   「彼氏はできる？」だと漠然としすぎています。「彼氏が欲しい」という意思を前提に、「いつまでに」「どんな相手と」と「どうすれば」付き合えるのかまで具体化させましょう。
-  </p>
-</div>
+        </nav>
+      </header>
+      <!-- ヒーロー -->
+      <section id="hero" class="yume-hero yume-sparkles" data-sparkles="26">
+        <div class="sparkles" aria-hidden="true"></div>
+        <h1>ワンオラクル</h1>
 
-<div class="example-block">
-  <div class="bad_good">
-    <span class="label bad">Bad</span>
-    <p><b>今回のプレゼンはうまくいく？</b></p>
-  </div>
-  <div class="bad_good">
-    <span class="label good">Good</span>
-    <p><b>プレゼンを成功させるために必要な準備や心構えは？</b></p>
-  </div>
-  <p class="text_sub">
-    うまくいくかどうかの結果をタロットに求めると、他力本願になってしまいます。プレゼンを前にできることや考え方について質問することで、イメージトレーニングもしやすくなるはず。｢成功させる｣という意志も自信も強くなるでしょう。
-  </p>
-</div>
- <div class="example-block">
-  <div class="bad_good">
-    <span class="label bad">Bad</span>
-    <p><b>
-ケンカした友達はまだ怒っている？</b></p>
-  </div>
-  <div class="bad_good">
-    <span class="label good">Good</span>
-    <p><b>友達と仲直りするにはどんな言葉で謝ればいい？</b></p>
-  </div>
-  <p class="text_sub">
-    友達の様子も気になりますが、謝ることが先決。感情より行動について質問しましょう。｢仲直りのためにどうすればいい？｣という質問もOKですが、｢言葉｣や｢最初に出す話題｣など、できるだけ細部について質問してみると、カードを読みやすくなります。
-  </p>
-</div>
+        <b>聞きたいことを具体的に思い浮かべて</b><br>今日の過ごし方・恋愛・仕事・金運など…<br>今あなたが知りたいことは？<br>下に続く占い方のヒント・やり方も参考にしてね</p>
+        <img src="images/hero.png" alt="タロットイメージ" style="max-width:100%;height:300px;">
+        <p><a class="btn" href="result.html">カードを引く</a></p>
 
-<div class="example-block">
-  <div class="bad_good">
-    <span class="label bad">Bad</span>
-    <p><b>今、 大きい買い物をしてもいい？</b></p>
-  </div>
-  <div class="bad_good">
-    <span class="label good">Good</span>
-    <p><b>なぜ私は買うかどうかを迷っているの？</b></p>
-  </div>
-  <p class="text_sub">
-    最終的に購入するかどうかを決めるのは自分しかいません。どうして迷いが生まれているのか、その原因を探る質問をしてみると、自分では意識していなかったことや見落としていたポイント、忘れていた事柄などに気付くきっかけになるでしょう。
-  </p>
-</div>
- </section>
 
-  <!-- Q&Aセクション -->
-  <section id="qa" class="yume-soft-bg">
-    <a id="qa_h1"></a>
-    <div class="divider_block"></div>
-    <div class="for_more_detail tarot">
-      <h1 class="article_ttl_h1"><span>ワンオラクルQ&A</span></h1>
-      <span class="underline_wide_img"></span>
-     <div class="toc-block">
-  <h3 class="toc-title" data-number="03">目次</h3>
-  <ol class="toc-list">
-    <li>
-      <a href="#h3_3">
-        <span class="toc-num">01</span>
-        Q1. 同じ質問を何度もしてもいいの？
-      </a>
-    </li>
-    <li>
-      <a href="#h3_4">
-        <span class="toc-num">02</span>
-        Q2. ピンとこない結果がでたらどうすればいいの？
-      </a>
-    </li>
-  </ol>
-</div>
-      <div class="articles">
-        <div class="article">
-          <h3 id="h3_3" class="article_h3 sub">Q1. 同じ質問を何度もしてもいいの？</h3>
-          <p class="text_main"><strong>A.</strong> <b>大丈夫です。しかし、時間をおきましょう。</b>
-             <br>
-一度結果やアドバイスを受けて、行動したり気持ちを入れ替えたりしたあとであればOKです。<br>しかし結果に納得いかないからといって何度も引き直すと自分に都合のいい結果しか受け入れることができなくなります。それでは意味がないので、まずは結果を受け入れて行動してみましょう。
 
-</p>
+
+      </section>
+
+      <!-- ヒーローの直後に“波”の仕切り（セクション間のつなぎ） -->
+      <svg class="yume-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,40 C180,90 360,0 540,20 C720,40 900,110 1080,80 C1260,50 1350,65 1440,50 L1440,120 L0,120 Z" />
+      </svg>
+
+      <!-- ヒント三か条 -->
+      <section id="hints" class="yume-soft-bg">
+        <h2>占うときのヒント</h2>
+        <ul style="list-style:decimal inside; display:inline-block; text-align:left;">
+          <li>同じ質問は繰り返さないで</li>
+          <li>引く前に深呼吸してリラックスして</li>
+          <li>引いたカードの行動をしてみよう</li>
+        </ul>
+        <p><a class="btn" href="#explanation">ワンオラクルのやり方を見る</a></p>
+      </section>
+
+      <!-- カード一覧 -->
+      <section id="cards" class="yume-soft-bg">
+        <h2>カード一覧</h2>
+        <p>カードをタップして詳細を見る</p>
+        <div class="grid">
+          <!-- 0～21まで順番に -->
+          <a href="result.html?index=0"><img src="cards/0.png" alt="カード0：MUSIC"></a>
+          <a href="result.html?index=1"><img src="cards/1.png" alt="カード1：ACTION"></a>
+          <a href="result.html?index=2"><img src="cards/2.png" alt="カード2：INNER CHILD"></a>
+          <a href="result.html?index=3"><img src="cards/3.png" alt="カード3：RELIEVE TENSION"></a>
+          <a href="result.html?index=4"><img src="cards/4.png" alt="カード4：PASSION"></a>
+          <a href="result.html?index=5"><img src="cards/5.png" alt="カード5：OPEN YOUR HEART"></a>
+          <a href="result.html?index=6"><img src="cards/6.png" alt="カード6：TRAVEL"></a>
+          <a href="result.html?index=7"><img src="cards/7.png" alt="カード7：REJUVENATE"></a>
+          <a href="result.html?index=8"><img src="cards/8.png" alt="カード8：SELF AFFIRMATION"></a>
+          <a href="result.html?index=9"><img src="cards/9.png" alt="カード9：WRITE OUT"></a>
+          <a href="result.html?index=10"><img src="cards/10.png" alt="カード10：CONNECT WITH NATURE"></a>
+          <a href="result.html?index=11"><img src="cards/11.png" alt="カード11：DRAW BOUNDARIES"></a>
+          <a href="result.html?index=12"><img src="cards/12.png" alt="カード12：TRIAL AND ERROR"></a>
+          <a href="result.html?index=13"><img src="cards/13.png" alt="カード13：MOVING FORWARD"></a>
+          <a href="result.html?index=14"><img src="cards/14.png" alt="カード14：EXPRESSING MY FEELINGS"></a>
+          <a href="result.html?index=15"><img src="cards/15.png" alt="カード15：SPARKLE"></a>
+          <a href="result.html?index=16"><img src="cards/16.png" alt="カード16：ENJOY"></a>
+          <a href="result.html?index=17"><img src="cards/17.png" alt="カード17：LOOK AT"></a>
+          <a href="result.html?index=18"><img src="cards/18.png" alt="カード18：RELUX"></a>
+          <a href="result.html?index=19"><img src="cards/19.png" alt="カード19：HIT"></a>
+          <a href="result.html?index=20"><img src="cards/20.png" alt="カード20：CLEAN UP"></a>
+          <a href="result.html?index=21"><img src="cards/21.png" alt="カード21：CELEBRATION"></a>
         </div>
-        <div class="article">
-          <h3 id="h3_4" class="article_h3 sub">Q2. ピンとこない結果がでたらどうすればいいの？</h3>
-          <p class="text_main"><strong>A.</strong> <b>行動のヒントにしましょう。占いをさらに掘り下げるのもオススメです。</b>
-             <br>
-｢なぜこのカードが出たんだろう？｣と考えれば、何か気付きを得ることができるでしょう。<br>また、なぜこの結果が出たのか、別の方法はないのかをカードに質問してみるのも1つの方法。カードの答えは｢保証付きの予告｣ではないことを忘れないで。現実を作るのはあくまでも自分自身の行動です。</p>
+      </section>
+
+      <!-- 解説セクション -->
+      <section id="explanation" class="yume-soft-bg">
+        <div class="divider_block"></div>
+        <div class="for_more_detail tarot">
+          <h2 class="article_ttl_h1"><span>ワンオラクルのやり方</span></h2>
+          <span class="underline_wide_img"></span>
+
+          <!-- ── 目次ブロック ── -->
+          <div class="toc-block">
+            <h3 class="toc-title" data-number="02">目次</h3>
+            <ol class="toc-list">
+              <li>
+                <a href="#h2_1"><span class="toc-num">01</span> ワンオラクルとは？</a>
+              </li>
+              <li>
+                <a href="#h2_2"><span class="toc-num">02</span> ワンオラクルでは具体的に質問しよう</a>
+                <ol class="toc-sublist">
+                  <li><a href="#h3_1">質問のポイント</a></li>
+                  <li><a href="#h3_2">すぐに使える質問例</a></li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+          <div class="articles">
+            <h2 id="h2_1" class="section-title" data-number="01">ワンオラクルとは？</h2>
+            <div class="article">
+              <div class="topic_img"><img src="images/orakuru.png" alt="ワンオラクルのイメージ"></div>
+              <p class="text_main">ワンオラクルは、カードを1枚だけ引いて、そのカードから得られるメッセージやアドバイスを読み解く占術です。シンプルにテーマを絞ることで、的確な示唆を受け取ることができます。
+              </p>
+            </div>
+            <h2 id="h2_2" class="section-title" data-number="02">ワンオラクルでは具体的に質問しよう</h2>
+            <div class="article">
+              <p class="text_main">ワンオラクルは一問一答です。より具体的な質問を頭に浮かべましょう。</p>
+              <h3 id="h3_1" class="article_h3 sub">質問のポイント</h3>
+              <ul class="dot">
+                <li>「誰」を占いたいか—自分・相手</li>
+                <li>「いつのこと」を占いたいか—過去・現在・未来</li>
+                <li>「なに」を占いで得たいかーアドバイス・今の状況・相手や自分の心</li>
+              </ul>
+              <p class="text_main">オラクルカードでは結果の良し悪しではなく、結果からどんなアドバイスを得られるかのほうが重要です。
+                <br></br>
+                もし質問があいまいなままカードをひいてしまうと ・結果の良し悪しに執着してしまい、カードからのアドバイスを行動に移せない ・漠然とした答えしか返ってこず、満足できない ・勝手に都合のいい解釈をしてしまう
+                など、正しく結果と向き合うことができなくなってしまいます。
+                <br></br>質問を用意するときは「自分はどうしたいのか」という意思を明確にし、さらに「それを叶えるのはどうすればいいのか」という具体案をセットにするといい質問に近づきます。
+              </p>
+              <h3 id="h3_2" class="article_h3 sub">すぐに使える質問例</h3>
+              <div class="example-block">
+                <div class="bad_good">
+                  <span class="label bad">Bad</span>
+                  <p><b>彼氏はできる？</b></p>
+                </div>
+                <div class="bad_good">
+                  <span class="label good">Good</span>
+                  <p><b>半年以内に結婚を前提とした相手と付き合うにはどうすればいい？</b></p>
+                </div>
+                <p class="text_sub">
+                  「彼氏はできる？」だと漠然としすぎています。「彼氏が欲しい」という意思を前提に、「いつまでに」「どんな相手と」と「どうすれば」付き合えるのかまで具体化させましょう。
+                </p>
+              </div>
+
+              <div class="example-block">
+                <div class="bad_good">
+                  <span class="label bad">Bad</span>
+                  <p><b>今回のプレゼンはうまくいく？</b></p>
+                </div>
+                <div class="bad_good">
+                  <span class="label good">Good</span>
+                  <p><b>プレゼンを成功させるために必要な準備や心構えは？</b></p>
+                </div>
+                <p class="text_sub">
+                  うまくいくかどうかの結果をタロットに求めると、他力本願になってしまいます。プレゼンを前にできることや考え方について質問することで、イメージトレーニングもしやすくなるはず。｢成功させる｣という意志も自信も強くなるでしょう。
+                </p>
+              </div>
+              <div class="example-block">
+                <div class="bad_good">
+                  <span class="label bad">Bad</span>
+                  <p><b>
+                      ケンカした友達はまだ怒っている？</b></p>
+                </div>
+                <div class="bad_good">
+                  <span class="label good">Good</span>
+                  <p><b>友達と仲直りするにはどんな言葉で謝ればいい？</b></p>
+                </div>
+                <p class="text_sub">
+                  友達の様子も気になりますが、謝ることが先決。感情より行動について質問しましょう。｢仲直りのためにどうすればいい？｣という質問もOKですが、｢言葉｣や｢最初に出す話題｣など、できるだけ細部について質問してみると、カードを読みやすくなります。
+                </p>
+              </div>
+
+              <div class="example-block">
+                <div class="bad_good">
+                  <span class="label bad">Bad</span>
+                  <p><b>今、 大きい買い物をしてもいい？</b></p>
+                </div>
+                <div class="bad_good">
+                  <span class="label good">Good</span>
+                  <p><b>なぜ私は買うかどうかを迷っているの？</b></p>
+                </div>
+                <p class="text_sub">
+                  最終的に購入するかどうかを決めるのは自分しかいません。どうして迷いが生まれているのか、その原因を探る質問をしてみると、自分では意識していなかったことや見落としていたポイント、忘れていた事柄などに気付くきっかけになるでしょう。
+                </p>
+              </div>
+      </section>
+
+      <!-- Q&Aセクション -->
+      <section id="qa" class="yume-soft-bg">
+        <a id="qa_h1"></a>
+        <div class="divider_block"></div>
+        <div class="for_more_detail tarot">
+          <h1 class="article_ttl_h1"><span>ワンオラクルQ&A</span></h1>
+          <span class="underline_wide_img"></span>
+          <div class="toc-block">
+            <h3 class="toc-title" data-number="03">目次</h3>
+            <ol class="toc-list">
+              <li>
+                <a href="#h3_3">
+                  <span class="toc-num">01</span>
+                  Q1. 同じ質問を何度もしてもいいの？
+                </a>
+              </li>
+              <li>
+                <a href="#h3_4">
+                  <span class="toc-num">02</span>
+                  Q2. ピンとこない結果がでたらどうすればいいの？
+                </a>
+              </li>
+            </ol>
+          </div>
+          <div class="articles">
+            <div class="article">
+              <h3 id="h3_3" class="article_h3 sub">Q1. 同じ質問を何度もしてもいいの？</h3>
+              <p class="text_main"><strong>A.</strong> <b>大丈夫です。しかし、時間をおきましょう。</b>
+                <br>
+                一度結果やアドバイスを受けて、行動したり気持ちを入れ替えたりしたあとであればOKです。<br>しかし結果に納得いかないからといって何度も引き直すと自分に都合のいい結果しか受け入れることができなくなります。それでは意味がないので、まずは結果を受け入れて行動してみましょう。
+
+              </p>
+            </div>
+            <div class="article">
+              <h3 id="h3_4" class="article_h3 sub">Q2. ピンとこない結果がでたらどうすればいいの？</h3>
+              <p class="text_main"><strong>A.</strong> <b>行動のヒントにしましょう。占いをさらに掘り下げるのもオススメです。</b>
+                <br>
+                ｢なぜこのカードが出たんだろう？｣と考えれば、何か気付きを得ることができるでしょう。<br>また、なぜこの結果が出たのか、別の方法はないのかをカードに質問してみるのも1つの方法。カードの答えは｢保証付きの予告｣ではないことを忘れないで。現実を作るのはあくまでも自分自身の行動です。
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-<!-- Aboutセクション -->
-<section id="about" class="yume-soft-bg">
-  <a id="about_h1"></a>
-  <div class="divider_block"></div>
-  <div class="for_more_detail tarot">
-    <h1 class="article_ttl_h1"><span>About</span></h1>
-    <span class="underline_wide_img"></span>
+      <!-- Aboutセクション -->
+      <section id="about" class="yume-soft-bg">
+        <a id="about_h1"></a>
+        <div class="divider_block"></div>
+        <div class="for_more_detail tarot">
+          <h1 class="article_ttl_h1"><span>About</span></h1>
+          <span class="underline_wide_img"></span>
 
-    <!-- 目次 -->
-    <div class="toc-block">
-      <h3 class="toc-title" data-number="04">目次</h3>
-      <ol class="toc-list">
-        <li>
-          <a href="#about_h3_1">
-            <span class="toc-num">01</span>
-            カード制作背景
-          </a>
-        </li>
-        <li>
-          <a href="#about_h3_2">
-            <span class="toc-num">02</span>
-            カードに込めた思い
-          </a>
-        </li>
-        <li>
-          <a href="#about_h3_3">
-            <span class="toc-num">03</span>
-            作者紹介
-          </a>
-        </li>
-      </ol>
-    </div>
+          <!-- 目次 -->
+          <div class="toc-block">
+            <h3 class="toc-title" data-number="04">目次</h3>
+            <ol class="toc-list">
+              <li>
+                <a href="#about_h3_1">
+                  <span class="toc-num">01</span>
+                  カード制作背景
+                </a>
+              </li>
+              <li>
+                <a href="#about_h3_2">
+                  <span class="toc-num">02</span>
+                  カードに込めた思い
+                </a>
+              </li>
+              <li>
+                <a href="#about_h3_3">
+                  <span class="toc-num">03</span>
+                  作者紹介
+                </a>
+              </li>
+            </ol>
+          </div>
 
-    <!-- 各セクション -->
-  <div class="article">
-    <h3 id="about_h3_1">カード制作背景</h3>
-    <p>
-      このオラクルカードは、現在の日常に根ざしたモチーフを下に制作しました。
-       <br>
-       カード一枚一枚に、具体的な行動を描き、わかりやすく日常に取り入れる事ができるようにしています。
-        制作の際にはデジタルを用い、「ポップでゆめかわいい」を心がけました。
-    </p>
-    </div>
- <div class="article">
-    <h3 id="about_h3_2">カードに込めた思い</h3>
-    <p>
-      私がこのカードに込めたのは「小さな気づきが人生を豊かにする」というメッセージです。
-       <br>
-      日々の中で見過ごしがちなサインや直感を大切にしてほしいという願いを込め、
-      カード一つひとつに具体的なメッセージを添えています。
-    </p>
-    </div>
- <div class="article">
-    <h3 id="about_h3_3">作者紹介</h3>
-    <p>
-      Miasyです。
-       <br>
-       私もオラクルカードに救われた一人です。皆さんのセルフケアに役に立てば幸いです。
-    </p>
-    </div>
+          <!-- 各セクション -->
+          <div class="article">
+            <h3 id="about_h3_1">カード制作背景</h3>
+            <p>
+              このオラクルカードは、現在の日常に根ざしたモチーフを下に制作しました。
+              <br>
+              カードには、日常的な行動を多く描き、わかりやすく日常に取り入れる事ができるようにしています。
+              制作の際にはデジタルを用い、「ポップでゆめかわいい」を心がけました。
+            </p>
+          </div>
+          <div class="article">
+            <h3 id="about_h3_2">カードに込めた思い</h3>
+            <p>
+              私がこのカードに込めたのは「小さな気づきが人生を豊かにする」というメッセージです。
+              <br>
+              日々の中で見過ごしがちなサインや直感を大切にしてほしいという願いを込め、
+              カード一つひとつに具体的なメッセージを添えています。
+            </p>
+          </div>
+          <div class="article">
+            <h3 id="about_h3_3">作者紹介</h3>
+            <p>
+              ネクタ　リンです。
+              <br>
+              私もオラクルカードに救われた一人です。皆さんのセルフケアに役に立てば幸いです。
+            </p>
+          </div>
 
+        </div>
+      </section>
+
+      <footer style="padding:2em 0">
+        <p>&copy; 2025 ワンオラクル</p>
+      </footer>
+
+    </div>
   </div>
-</section>
 
-  <footer style="padding:2em 0">
-    <p>&copy; 2025 ワンオラクル</p>
-  </footer>
-
-
- </div>
- </div>
-
-   <!-- Back to top ボタン -->
+  <!-- Back to top ボタン -->
   <button id="backToTop" title="トップへ戻る">↑</button>
 
-  <script>
-    // Back to top 表示制御と動作
-    const backBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      backBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
-    });
-    backBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
+  <!-- ✨キラキラ（星）をのせる層 -->
+  <div class="sparkle-layer" aria-hidden="true"></div>
 
-
-<script>
-/* ==== ゆめかわ Sparkles ==== */
-(function(){
-  const rootPrefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-  const containers = document.querySelectorAll('.yume-sparkles .sparkles');
-  containers.forEach(box=>{
-    const host = box.closest('.yume-sparkles');
-    const n = Number(host?.dataset?.sparkles || 20);
-    const palette = ["#ffd7f7","#e8d7ff","#d7f7ff","#fff3c9"];
-    for(let i=0;i<n;i++){
-      const el = document.createElement('span');
-      el.className = 'sparkle' + (Math.random()>.5 ? ' is-star' : '');
-      const s = 6 + Math.random()*16;                 // サイズ
-      const d = 6 + Math.random()*8;                  // 速度
-      const x = Math.random()*100, y = Math.random()*100;
-      el.style.setProperty('--s', s+'px');
-      el.style.setProperty('--d', d+'s');
-      el.style.setProperty('--x', x+'%');
-      el.style.setProperty('--y', y+'%');
-      el.style.setProperty('--c', palette[(Math.random()*palette.length)|0]);
-      el.style.left = 0; el.style.top = 0;
-      el.style.transform = `translate(${x}%, ${y}%)`;
-      if(!rootPrefersReduced){ el.style.animationDelay = (-Math.random()*d)+'s'; }
-      box.appendChild(el);
-    }
-    // パフォーマンス：画面に見えている時だけアニメさせる
-    const io = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        box.style.visibility = e.isIntersecting ? 'visible' : 'hidden';
-      });
-    },{threshold:0.05});
-    io.observe(host);
-  });
-})();
-</script>
-
-
-
-<script>
-/* ===== Cloud Transition (index側) — フェイルセーフ付き ===== */
-(function(){
-  document.addEventListener('click', function(e){
-    const a = e.target.closest('a[href]');
-    if(!a) return;
-    const href = a.getAttribute('href') || "";
-    if(!href.startsWith('result.html')) return;
-
-    e.preventDefault();
-
-    // 1) まずフェードアウト
-    document.body.classList.add('fade-out');
-
-    // 2) フォールバック：万一アニメ失敗でも確実に遷移（最大2.8s後）
-    let navigated = false;
-    const fallback = setTimeout(() => {
-      if (!navigated) { navigated = true; window.location.href = href; }
-    }, 2800);
-
-    // 3) 雲アニメ→完了時に遷移
-    setTimeout(() => {
-      runCloudCover(() => {
-        if (!navigated) {
-          navigated = true;
-          clearTimeout(fallback);
-          window.location.href = href;
-        }
-      });
-    }, 400);
-  });
-
-  // ★★★ この関数 全体を置き換え ★★★
-  function runCloudCover(onDone){
-    // 画面全体のオーバーレイ
-    const overlay = document.createElement('div');
-    overlay.className = 'cloud-overlay';
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(overlay);
-
-    // 1200x1000 の“舞台”を中央に
-    const stage = document.createElement('div');
-    stage.className = 'cloud-stage';
-    overlay.appendChild(stage);
-
-    // 固定範囲 & 固定個数
-    const STAGE_W = 1200;
-    const STAGE_H = 1000;
-    const COUNT   = 30;
-
-    for(let i=0;i<COUNT;i++){
-      const cloud = document.createElement('div');
-      cloud.className = 'cloud';
-
-      // 雲サイズは px 固定（PCでもスマホと同じ見た目）
-      const size = rand(100, 200);
-      const x = rand(0, STAGE_W - size);
-      const y = rand(0, STAGE_H - Math.floor(size*0.6));
-      const dur = rand(480, 900);
-      const rot = rand(-12, 12);
-
-      Object.assign(cloud.style, {
-        position: 'absolute',
-        left: x + 'px',
-        top:  y + 'px',
-        width: size + 'px',                // ← ここが px 固定
-        '--tx': (x > STAGE_W/2 ? '-40px' : '40px'),
-        '--ty': (y > STAGE_H/2 ? '-30px' : '30px'),
-        '--rot': rot + 'deg',
-        animation: `cloudIn ${dur}ms ease-out ${i*14}ms forwards`
-      });
-
-      cloud.innerHTML = cloudSVG();
-      stage.appendChild(cloud);
-    }
-
-    // 終了タイミング（COUNT を使う！）
-    const maxDelay = 900 + COUNT*14 + 160;
-    setTimeout(()=>{ onDone && onDone(); }, maxDelay);
-
-    function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
-  }
-  // ★★★ 置き換え ここまで ★★★
-
-  function cloudSVG(){
-    return `
-    <svg viewBox="0 0 200 120" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img">
-      <defs><radialGradient id="g" cx="50%" cy="45%" r="70%">
-        <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#fff7ff"/></radialGradient></defs>
-      <path class="fill" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z" fill="url(#g)"/>
-      <path class="stroke" d="M60 90c-22 0-40-14-40-32 0-14 11-26 26-30 6-13 20-22 36-22 17 0 31 10 37 24 3-1 6-1 9-1 20 0 36 14 36 31s-16 30-36 30H60z"/>
-      <circle cx="70" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-      <circle cx="130" cy="72" r="4" fill="#ffd6f6" opacity=".9"/>
-    </svg>`;
-  }
-})();
-</script>
-
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const loader = document.getElementById('first-visit-loader');
-    if (!loader) return;
-    loader.hidden = false;
-
-    const html = document.documentElement;
-    const prevOverflow = html.style.overflow;
-    html.style.overflow = 'hidden';
-
-    const MIN_SHOW = 3000;
-    let minTimePassed = false;
-    let pageLoaded = false;
-
-    setTimeout(() => { minTimePassed = true; tryHide(); }, MIN_SHOW);
-    window.addEventListener('load', () => { pageLoaded = true; tryHide(); });
-
-    const FORCE_CLOSE = setTimeout(() => {
-      minTimePassed = true;
-      pageLoaded = true;
-      tryHide();
-    }, 10000);
-
-    function tryHide(){
-      if (minTimePassed && pageLoaded) {
-        clearTimeout(FORCE_CLOSE);
-        loader.classList.add('hide');
-        html.style.overflow = prevOverflow || '';
-        setTimeout(() => loader.remove(), 700);
-      }
-    }
-  });
-</script>
-<!-- ✨キラキラ（星）をのせる層 -->
-<div class="sparkle-layer" aria-hidden="true"></div>
-
-<!-- ☁️雲をのせる層 -->
-<div class="cloud-layer" aria-hidden="true"></div>
-
-<script>
-(function(){
-  const STAR_COUNT_MOBILE = 22;
-  const STAR_COUNT_DESKTOP = 40;
-  const CLOUD_COUNT_MOBILE = 4;
-  const CLOUD_COUNT_DESKTOP = 7;
-
-  const sparkleLayer = document.querySelector('.sparkle-layer');
-  const cloudLayer   = document.querySelector('.cloud-layer');
-
-  if(!sparkleLayer || !cloudLayer) return;
-
-  // 被せたくない要素（ボタン、ヘッダーなど）
-  const avoidSelectors = ['.btn', 'button', 'header', 'nav'];
-  const getAvoidRects = () =>
-    Array.from(document.querySelectorAll(avoidSelectors.join(',')))
-      .map(el => el.getBoundingClientRect());
-
-  // ビューポート内ランダム座標（px）
-  function randPos(size = 0, padding = 8){
-    const w = window.innerWidth, h = window.innerHeight;
-    return {
-      left: Math.random() * (w - size - padding*2) + padding,
-      top : Math.random() * (h - size - padding*2) + padding
-    };
-  }
-
-  // 衝突判定（単純な矩形同士）
-  function intersects(r1, r2){
-    return !(r2.left > r1.right ||
-             r2.right < r1.left ||
-             r2.top > r1.bottom ||
-             r2.bottom < r1.top);
-  }
-
-  // 「避ける矩形」とぶつからない位置を探す
-  function placeWithoutOverlap(el, size){
-    const maxTry = 80;
-    const avoids = getAvoidRects().map(r => ({
-      left:r.left, top:r.top, right:r.right, bottom:r.bottom
-    }));
-    for(let i=0; i<maxTry; i++){
-      const {left, top} = randPos(size, 10);
-      const rect = { left, top, right:left+size, bottom:top+size };
-      const hit = avoids.some(a => intersects(rect, a));
-      if(!hit){
-        el.style.left = left + 'px';
-        el.style.top  = top + 'px';
-        return true;
-      }
-    }
-    // 見つからなければ最後の位置で妥協（ほぼ起きない）
-    const {left, top} = randPos(size, 10);
-    el.style.left = left + 'px';
-    el.style.top  = top + 'px';
-    return false;
-  }
-
-  // ⭐ 星をつくる
-  function createStar(){
-    const s = document.createElement('div');
-    s.className = 'sparkle';
-    // サイズと速度をランダム（既存パステルの世界観に合う軽さ）
-    const size = Math.round(8 + Math.random()*14);   // 8〜22px
-    const dur  = (8 + Math.random()*6).toFixed(1);   // 8〜14s
-    s.style.setProperty('--s', size + 'px');
-    s.style.setProperty('--d', dur + 's');
-    placeWithoutOverlap(s, size);
-    sparkleLayer.appendChild(s);
-  }
-
-  // ☁️ 雲をつくる（SVG雲：線と塗りは既存のゆめかわ配色に寄せる）
- /* ……すでにある即時関数の中の createCloud を置き換え …… */
-function createCloud(){
-  const wrap = document.createElement('div');
-  wrap.className = 'cloud-puff';
-
-  // サイズ（小さめで軽い雲に）
-  const width  = Math.round(120 + Math.random()*180);   // 120〜300px
-  const height = Math.round(width * (0.55 + Math.random()*0.15));
-  wrap.style.width  = width+'px';
-  wrap.style.height = height+'px';
-
-  // ふわふわ上下のスピード
-  wrap.style.setProperty('--cd', (14 + Math.random()*10) + 's');
-
-  // 左右スライドの幅と速さ（小さめにして“ボタンを横切りにくい”よう配慮）
-  const slideDur = (24 + Math.random()*14) + 's';   // 24〜38s
-  const rangeVW  = (4 + Math.random()*4) + 'vw';    // 4〜8vw（横ゆれ幅）
-  // 右→左スタート or 左→右スタートをランダムに
-  const invert   = Math.random() > 0.5 ? 1 : -1;
-  wrap.style.setProperty('--slide', slideDur);
-  wrap.style.setProperty('--from',  `calc(${invert * -1} * ${rangeVW})`);
-  wrap.style.setProperty('--to',    `calc(${invert *  1} * ${rangeVW})`);
-
-  // 初期座標はこれまで通り「避けたい場所」をよけて配置
-  const maxWH = Math.max(width, height);
-  placeWithoutOverlap(wrap, maxWH);
-
-  // 内側に SVG を入れる（内側だけ上下ふわふわ）
-  wrap.innerHTML = `
-    <div class="cloud-body" aria-hidden="true">
-      <svg viewBox="0 0 200 110" width="100%" height="100%">
-        <defs>
-          <linearGradient id="cloudFill" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%"  stop-color="var(--yume-white)"/>
-            <stop offset="100%" stop-color="color-mix(in oklab, var(--yume-lav) 35%, #fff)"/>
-          </linearGradient>
-        </defs>
-        <path d="M40,80
-                 C20,78,15,55,35,50
-                 C35,25,70,20,85,35
-                 C95,15,130,15,140,35
-                 C160,35,172,50,165,62
-                 C185,68,180,90,155,90
-                 L55,90
-                 C50,90,45,85,40,80Z"
-              fill="url(#cloudFill)"
-              stroke="color-mix(in oklab, var(--yume-lav) 55%, #caa8ff)"
-              stroke-width="2" />
-      </svg>
-    </div>
-  `;
-
-  cloudLayer.appendChild(wrap);
-}
-
-  // 端末ごとに数を調整
-  function populate(){
-    sparkleLayer.innerHTML = '';
-    cloudLayer.innerHTML = '';
-
-    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-    const stars = isDesktop ? STAR_COUNT_DESKTOP : STAR_COUNT_MOBILE;
-    const clouds = isDesktop ? CLOUD_COUNT_DESKTOP : CLOUD_COUNT_MOBILE;
-
-    for(let i=0; i<stars; i++) createStar();
-    for(let i=0; i<clouds; i++) createCloud();
-  }
-
-  // 初期化＆リサイズ時に再配置（“左に固まる”のを防ぐ）
-  window.addEventListener('load', populate);
-  window.addEventListener('resize', () => {
-    // 連打抑制
-    clearTimeout(window.__reflowTimer);
-    window.__reflowTimer = setTimeout(populate, 200);
-  });
-})();
-</script>
+  <!-- ☁️雲をのせる層 -->
+  <div class="cloud-layer" aria-hidden="true"></div>
 
 </body>
 </html>
